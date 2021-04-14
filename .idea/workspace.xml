@@ -2,15 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="3f0d50e5-383b-4096-bbca-9fa49146a809" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/Component/TextHighlight.js" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/src/Component/TextHighlight2.js" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/src/Component/TextHiglight.css" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/src/Component/Textighlight2.css" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/src/Component/buttonAnotate.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -229,7 +226,7 @@
       <updated>1617718782003</updated>
       <workItem from="1617718783408" duration="1630000" />
       <workItem from="1617732649884" duration="7834000" />
-      <workItem from="1618400034341" duration="2861000" />
+      <workItem from="1618400034341" duration="3096000" />
     </task>
     <task id="LOCAL-00001" summary="Build project">
       <created>1617719702471</created>
@@ -238,17 +235,24 @@
       <option name="project" value="LOCAL" />
       <updated>1617719702471</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Test Texthiglight library">
+      <created>1618408538845</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1618408538845</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="12325000" />
+    <option name="totallyTimeSpent" value="12560000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1680" height="956" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.24954791" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.24954791" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="npm" order="2" side_tool="true" />
       <window_info id="Favorites" order="3" side_tool="true" />
@@ -262,7 +266,7 @@
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Version Control" order="8" weight="0.32911393" />
       <window_info anchor="bottom" id="Event Log" order="9" side_tool="true" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="10" visible="true" weight="0.3310185" />
+      <window_info anchor="bottom" id="Terminal" order="10" visible="true" weight="0.3310185" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -313,7 +317,8 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Build project" />
-    <option name="LAST_COMMIT_MESSAGE" value="Build project" />
+    <MESSAGE value="Test Texthiglight library" />
+    <option name="LAST_COMMIT_MESSAGE" value="Test Texthiglight library" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/src/setupTests.js">

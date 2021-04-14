@@ -1,0 +1,11 @@
+.compoTexts{
+    height: 100%;
+    width: 90%;
+    padding: 5%;
+    margin: 10%;
+    border-color: black;
+    border-width: medium;
+    text-align: center;
+    border-style: solid;
+    border-radius: 10px;
+}
