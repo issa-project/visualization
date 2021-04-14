@@ -1,11 +1,14 @@
 .compoTexts{
     height: 100%;
-    width: 90%;
+    width: 80%;
     padding: 5%;
     margin: 10%;
-    border-color: black;
-    border-width: medium;
-    text-align: center;
+    border-color:grey;
+    border-width:5px;
     border-style: solid;
-    border-radius: 10px;
+    border-radius: 30px;
+    background-color: whitesmoke;
+    font-family: "Times New Roman";
+    font-size: 20px;
+
 }

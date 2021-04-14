@@ -1,6 +1,6 @@
 import React , { Component } from 'react';
 import './Textighlight2.css';
-
+import LoadingButton from './buttonAnnotate';
 
 
 class TextHighlight2 extends Component {
@@ -15,7 +15,9 @@ class TextHighlight2 extends Component {
                 An amplicon of the size expected from SARS-CoV was obtained from 28/120 samples using the enhanced real-time PCR method.
                 Conventional PCR and real-time PCR alone identified fewer SARS-CoV positive cases. Results were confirmed by viral culture in 3/28 cases. The limit of detection of the enhanced real-time PCR method was 102-fold higher than the standard real-time PCR assay and 107-fold higher than conventional PCR methods.
                 The increased sensitivity of the assay may help control the spread of the disease during future SARS outbreaks.
+                <LoadingButton/>
             </div>
+
         )
     }
 
