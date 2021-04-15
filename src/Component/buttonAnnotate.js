@@ -17,7 +17,7 @@ function LoadingButton() {
         }
     }, [isLoading]);
 
-    const handleClick = () => setLoading(true);
+    const handleClick = () => setLoading( true);
 
     return (
         <Button
