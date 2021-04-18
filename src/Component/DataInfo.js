@@ -8,15 +8,15 @@ const DataInfo = (props) => {
     const toggle = () => setPopoverOpen(!popoverOpen);
 
     return (
-        <div className="entity">
-            <Button id="Popover1" type="button">
-                PCR
+        <span className="entity">
+            <Button id={props.index} type="button">
+                {props.word}
             </Button>
-            <Popover placement="top" isOpen={popoverOpen} target="Popover1" toggle={toggle}>
-                <PopoverHeader> PCR </PopoverHeader>
-                <PopoverBody> in vitro method for producing large amounts of specific DNA or RNA fragments from small amounts of short oligonucleotide primers. </PopoverBody>
+            <Popover placement="top" isOpen={popoverOpen} target={props.index} toggle={toggle}>
+                <PopoverHeader> {props.title} </PopoverHeader>
+                <PopoverBody> {props.content} </PopoverBody>
             </Popover>
-        </div>
+        </span>
     );
 }
 
