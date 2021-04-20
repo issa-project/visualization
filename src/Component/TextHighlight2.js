@@ -10,13 +10,14 @@ class TextHighlight2 extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            text: `Abstract An enhanced polymerase chain reaction PCR assay to detect the coronavirus associated with severe acute respiratory syndrome (SARS-CoV) was developed in which a target gene pre-amplification step preceded TaqMan real-time fluorescent PCR.
-                Clinical samples were collected from 120 patients diagnosed as suspected or probable SARS cases and analyzed by conventional PCR followed by agarose gel electrophoresis, conventional TaqMan real-time PCR, and our enhanced TaqMan real-time PCR assays.
-                An amplicon of the size expected from SARS-CoV was obtained from 28/120 samples using the enhanced real-time PCR method.
-                Conventional PCR and real-time PCR alone identified fewer SARS-CoV positive cases. Results were confirmed by viral culture in 3/28 cases. The limit of detection of the enhanced real-time PCR method was 102-fold higher than the standard real-time PCR assay and 107-fold higher than conventional PCR methods.
-                The increased sensitivity of the assay may help control the spread of the disease during future SARS outbreaks.`,
-            meta:  [ {start: 27, end : 40, title : "titre 1", content : "conteent 1"}, {start: 100, end : 110, title : "titre 2", content : "conteent 2"},
-                {start: 127, end : 140, title : "titre 3", content : "conteent 3"}]
+            text: `An enhanced polymerase chain reaction (PCR) assay to detect the coronavirus associated with severe acute respiratory syndrome (SARS-CoV) was developed in which a target gene pre-amplification step preceded TaqMan real-time fluorescent PCR. Clinical samples were collected from 120 patients diagnosed as suspected or probable SARS cases and analyzed by conventional PCR followed by agarose gel electrophoresis, conventional TaqMan real-time PCR, and our enhanced TaqMan real-time PCR assays. An amplicon of the size expected from SARS-CoV was obtained from 28/120 samples using the enhanced real-time PCR method. Conventional PCR and real-time PCR alone identified fewer SARS-CoV positive cases. Results were confirmed by viral culture in 3/28 cases. The limit of detection of the enhanced real-time PCR method was 102-fold higher than the standard real-time PCR assay and 107-fold higher than conventional PCR methods. The increased sensitivity of the assay may help control the spread of the disease during future SARS outbreaks.`,
+            meta:  [
+                {start: 64, end : 75, title : "coronavirus", content : "group of related viruses that cause diseases in mammals and birds", linkData :"https://www.wikidata.org/wiki/Q89469904"},
+                {start: 127, end : 135, title : "SARS-CoV", content : "viral strain that causes severe acute respiratory syndrome (SARS)", linkData :"https://www.wikidata.org/wiki/Q85438966"},
+                {start: 235, end : 238, title : "PCR", content : "In vitro method for producing large amounts of specific DNA or RNA fragments from small amounts of short oligonucleotide primers", linkData : "http://wikidata.org/entity/Q176996"},
+                ],
+
+
 
         }
     }
