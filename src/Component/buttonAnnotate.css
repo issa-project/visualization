@@ -1,7 +1,6 @@
 
 .buttonA {
     display: inline-block;
-    background-color: whitesmoke;
     text-transform: uppercase;
     padding: 20px 30px;
     border-radius: 5px;
@@ -11,6 +10,7 @@
     float: right;
     position: relative;
     margin-top: 40px;
+    background-color: grey;
 
 }
 

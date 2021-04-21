@@ -22,7 +22,7 @@ function LoadingButton() {
     return (
         <Button
             className="buttonA"
-            variant="dark"
+            variant="secondary"
             disabled={isLoading}
             onClick={!isLoading ? handleClick : null}
         >

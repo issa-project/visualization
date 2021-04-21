@@ -1,6 +1,6 @@
 import React ,{ Component } from 'react';
-//import DataInfo from './DataInfo'
-//import LoadingButton from './buttonAnnotate'
+
+import LoadingButton from './buttonAnnotate'
 import './Textighlight2.css';
 import DataInfo from "./DataInfo";
 
@@ -57,7 +57,11 @@ class TextHighlight2 extends Component {
         let r = this.state.text.substring(begin);
         console.log(r);
         result.push(<span>{ r }</span>);
-        return <div className="compoTexts"> {result} </div>
+
+        return <div className="compoTexts"> {result}
+        <LoadingButton/>
+        </div>
+
     }
 
 

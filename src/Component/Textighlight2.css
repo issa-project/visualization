@@ -3,11 +3,11 @@
     width: 80%;
     padding: 5%;
     margin: 10%;
-    border-color:grey;
-    border-width:5px;
+    border-color:whitesmoke;
+    border-width:8px;
     border-style: solid;
     border-radius: 30px;
-    background-color: whitesmoke;
+    background-color: white;
     font-family: "Times New Roman";
     font-size: 20px;
 
@@ -15,4 +15,8 @@
 
 .dataInfo {
 width: 60px;
+}
+
+.html{
+    background-color: whitesmoke;
 }
