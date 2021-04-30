@@ -13,6 +13,7 @@ function LoadingButton() {
         if (isLoading) {
             simulateNetworkRequest().then(() => {
                 setLoading(false);
+
             });
         }
     }, [isLoading]);
