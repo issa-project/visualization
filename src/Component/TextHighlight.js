@@ -6,6 +6,15 @@ import DataInfo from "./DataInfo";
 
 class TextHighlight extends Component {
 
+    /**
+     *
+     * @param id
+     * @param text
+     * @param begin
+     * @param e
+     * @param result
+     */
+
     wrap(id, text, begin, e, result) {
         let s1 = text.substring(begin, e.start);
         let w = text.substring(e.start, e.end + 1);
@@ -30,7 +39,7 @@ class TextHighlight extends Component {
             {start: 100, end : 110, title : "titre 2", content : "conteent 2"},
             {start: 127, end : 140, title : "titre 3", content : "conteent 3"}
         ];
-        
+
 
         let result = [];
         let begin = 0;
