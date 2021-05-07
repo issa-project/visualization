@@ -36,9 +36,9 @@ class TextHighlight2 extends Component {
         }
         let title = e.title.substring(0);
         let content = e.content.substring(0);
-        result.push(<span>{s1}</span>);
+        result.push(<span> {s1}</span>);
         result.push (
-            <DataInfo index={id} word={w} title={title} content={content}  />
+            <DataInfo index={id} word={w} title={title} content={content}/>
         )
 
     }
