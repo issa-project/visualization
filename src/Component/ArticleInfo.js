@@ -14,19 +14,21 @@ class ArticleInfo extends Component {
                         <span className="date">2020</span>
                         <span className="type">Academic Article and research paper </span>
                         <span className="auteurs">Li Hui Wang,Chen Dillon ,Natalie Wong,Freda Pui-Fan Chan,Paul Cheung,Albert Fung </span>
-                        <span className="nbPage">116 pages.</span>
+                        <span className="nbPage">116 pages. </span>
                         <span className="idArticle">ISBN 978-2869-778388-9</span>
                     </p>
                     </div>
+                    <div className="Divider"></div>
 
-                    <div>
-                        <p>
-                            Version publiée - <span className="nameVersion"> Français </span>
-                            Sous licence <span className="versionPDF">CC0 1.0</span>
-                            Sans restriction de droits pour le monde entier.
-                            <span className="namePDF"> Livre OCEAN FORESCOM VFinale 2020.pdf</span>
-                        </p>
+                    <div className="pdfDowl">
                         <img src={pdfDow} alt="pdf"/>
+                        <p>
+                            <span className="subPdfDowl">Version publiée - <span className="nameVersion"> Français </span></span>
+                            <span className="subPdfDowl">Sous licence <span className="versionPDF">CC0 1.0</span></span>
+                            <span className="subPdfDowl"> Sans restriction de droits pour le monde entier.</span>
+                            <span className="subPdfDowl"> Livre OCEAN FORESCOM VFinale 2020.pdf</span>
+                        </p>
+
 
                     </div>
 
