@@ -11,6 +11,7 @@ const DataInfo = (props) => {
     const toggle = () => setPopoverOpen(!popoverOpen);
 
     return (
+
         <span className="entity">
             <Button id={props.index} type="button">
                 {props.word}

@@ -58,7 +58,7 @@ class TextHighlight2 extends Component {
         console.log(r);
         result.push(<span>{ r }</span>);
 
-        return <div className="compoTexts"> {result}
+        return <div className="compoTexts"> <span className="Title">Resume</span> : {result}
         <LoadingButton/>
         </div>
 

@@ -8,7 +8,7 @@ class ArticleInfo extends Component {
     render () {
         return (
             <div className="compoTitle">
-                <div className="Title">
+                <div className="ArticleTitle">
                     <div>
                     <p className="TitleText">A real-time PCR for SARS-coronavirus incorporating target gene pre-amplification
                         <span className="date">2020</span>
