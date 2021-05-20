@@ -1,4 +1,4 @@
-#ISSA RDF DATA Modeling
+# ISSA RDF DATA Modeling
 
 ##Namespaces
 Below we use the following namespaces:
