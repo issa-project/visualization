@@ -18,7 +18,7 @@ class TextHighlight2 extends Component {
                 {start: 64, end :null, title : "coronavirus", content : "group of related viruses that cause diseases in mammals and birds", linkData :"https://www.wikidata.org/wiki/Q89469904"},
                 {start: 127, end : 135, title : "SARS-CoV", content : "viral strain that causes severe acute respiratory syndrome (SARS)", linkData :"https://www.wikidata.org/wiki/Q85438966"},
                 {start: 235, end : 238, title : "PCR", content : "In vitro method for producing large amounts of specific DNA or RNA fragments from small amounts of short oligonucleotide primers", linkData : "http://wikidata.org/entity/Q176996"},
-                ],
+                ]
         }
     }
 

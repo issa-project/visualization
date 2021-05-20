@@ -21,3 +21,13 @@
 .html{
     background-color: whitesmoke;
 }
+
+
+/*
+Changer la taille du composant button d'entity
+ */
+.buttonW {
+    padding: 0px;
+    margin: 0px;
+
+}
