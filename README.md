@@ -1,6 +1,6 @@
 # ISSA RDF DATA Modeling
 
-##Namespaces
+## Namespaces
 Below we use the following namespaces:
 ```turtle
 @prefix rdfs:   <http://www.w3.org/2000/01/rdf-schema#>.
@@ -26,7 +26,7 @@ Below we use the following namespaces:
 @prefix bibo: <http://purl.org/ontology/bibo/> .
 ```
 
-##Article metadata
+## Article metadata
 Article URIs are formatted as http://ns.inria.fr/covid19/issa/article_id where article_id may be either the article SHA hash or its PCM identifier.
 
 Article metadata includes the following items:
