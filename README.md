@@ -18,7 +18,6 @@ Below we use the following namespaces:
 @prefix schema: <http://schema.org/>.
 
 @prefix covidp: <http://ns.inria.fr/covid19/property/> .
-@prefix bibo: <http://purl.org/ontology/bibo/> .
 ```
 
 ## Article metadata
