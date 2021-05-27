@@ -72,7 +72,37 @@ Here is an example of article metadata:
   covidp:hasTitle <http://ns.inria.fr/covid19/issa/f74923b3ce82c984a7ae3e0c2754c9e33c60554f#title> ;
   dct:abstract <http://ns.inria.fr/covid19/issa/f74923b3ce82c984a7ae3e0c2754c9e33c60554f#abstract> ;
   covidp:hasBody <http://ns.inria.fr/covid19/issa/f74923b3ce82c984a7ae3e0c2754c9e33c60554f#body_text> .
+ 
+```
+## Named entities
 
+The named entities identified in an article are described as **annotations** using the **[Web Annotations Vocabulary](https://www.w3.org/TR/annotation-vocab/)**.
+Each annotation consists of the following information:
+- the article it is about (`schema:about`)
+- the annotation target (`oa:hasTarget`) describes the piece of text identified as a named entity as follows:
+    - the source (`oa:hasSource`) is the part of the article where the named entity was detected
+    - the selecor (`oa:hasSelector`) gives the named entity raw text (`oa:exact`) and its location whithin the source (`oa:start` and `oa:end`)
+- the annotation body (`oa:hasBody`) gives the URI of the resource identified as representing the named entity (e.g. a Wikidata URI)
+- domains related to the named entity (`dct:subject`)
+
+Example:
+```turtle
+_:b40150806	
+    a                   oa:Annotation, prov:Entity;
+    schema:about        <http://ns.inria.fr/covid19/f74923b3ce82c984a7ae3e0c2754c9e33c60554f>;
+    dct:subject         "Engineering", "Biology";
+    
+    covidpr:confidence	"1"^^xsd:decimal;
+    oa:hasBody          <http://wikidata.org/entity/Q176996>;
+    oa:hasTarget [
+        oa:hasSource    <http://ns.inria.fr/covid19/f74923b3ce82c984a7ae3e0c2754c9e33c60554f#abstract>;
+        oa:hasSelector  [
+            a           oa:TextPositionSelector, oa:TextQuoteSelector;
+            oa:exact    "PCR";
+            oa:start    "235";
+            oa:end      "238"
+        ]
+    ];
 ```
 
 
