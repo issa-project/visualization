@@ -17,11 +17,6 @@ Below we use the following namespaces:
 @prefix prov:   <http://www.w3.org/ns/prov#>.
 @prefix schema: <http://schema.org/>.
 
-@prefix aif:    <http://www.arg.dundee.ac.uk/aif#>.    # Argument Interchange Format
-@prefix amo:    <http://purl.org/spar/amo/>.           # Argument Model Ontology (Toulmin)
-@prefix sioca:  <http://rdfs.org/sioc/argument#>.      # SIOC Argumentation Module
-@prefix umls:   <http://bioportal.bioontology.org/ontologies/umls/>.
-
 @prefix covidp: <http://ns.inria.fr/covid19/property/> .
 @prefix bibo: <http://purl.org/ontology/bibo/> .
 ```
