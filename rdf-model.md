@@ -50,28 +50,28 @@ Furthermore, each article is linked to its parts (title, abstract, body) as foll
 Here is an example of article metadata:
 ```
 <http://ns.inria.fr/issa/f74923b3ce82c984a7ae3e0c2754c9e33c60554f>
-  a schema:ScholarlyArticle, bibo:AcademicArticle, <http://purl.org/spar/fabio/ResearchPaper> ;
-  rdfs:isDefinedBy <http://ns.inria.fr/issa/dataset-1-2> ;
+  a                         schema:ScholarlyArticle, bibo:AcademicArticle, fabio:ResearchPaper ;
+  rdfs:isDefinedBy          <http://ns.inria.fr/issa/dataset-1-2> ;
   
-  dct:title "A real-time PCR for SARS-coronavirus incorporating target gene pre-amplification" ;
-  dce:creator "Tam, Siu-Lun", "Lin, Sau-Wah", "Yu, -H", "Collins, Richard", "Chan, Paul", "Wong, Freda Pui-Fan", "Dillon, Natalie", "Fung, Yin-Wan", "Cheung, Albert", "Yu, -Hoi", "Li, Hui", "Wang, Chen", "Lau,", "Lok, Ting" ;
-  dct:issued "2003-12-26"^^xsd:date ;
-  dct:license "els-covid" ;
-  schema:url <https://doi.org/10.1016/j.bbrc.2003.11.064> ;
-  dct:source "Elsevier; Medline; PMC" ;
-  schema:publication "Biochemical and Biophysical Research Communications" ;
+  dct:title                 "A real-time PCR for SARS-coronavirus incorporating target gene pre-amplification" ;
+  dce:creator                "Tam, Siu-Lun", "Lin, Sau-Wah", "Yu, -H", "Collins, Richard", "Chan, Paul", "Wong, Freda Pui-Fan", "Dillon, Natalie", "Fung, Yin-Wan", "Cheung, Albert", "Yu, -Hoi", "Li, Hui", "Wang, Chen", "Lau,", "Lok, Ting" ;
+  dct:issued                "2003-12-26"^^xsd:date ;
+  dct:license               "els-covid" ;
+  schema:url                <https://doi.org/10.1016/j.bbrc.2003.11.064> ;
+  dct:source                "Elsevier; Medline; PMC" ;
+  schema:publication        "Biochemical and Biophysical Research Communications" ;
 
-  bibo:doi "10.1016/j.bbrc.2003.11.064" ;
-  bibo:pmid "14652014" ;
+  bibo:doi                  "10.1016/j.bbrc.2003.11.064" ;
+  bibo:pmid                 "14652014" ;
   fabio:hasPubMedCentralId "PMC7111096" ;
-  fabio:hasPubMedId "14652014" ;
+  fabio:hasPubMedId         "14652014" ;
   
-  dct:language <http://id.loc.gov/vocabulary/iso639-1/en>;
-  dce:language "eng";
+  dct:language              <http://id.loc.gov/vocabulary/iso639-1/en>;
+  dce:language              "eng";
   
-  issap:hasTitle <http://ns.inria.fr/issa/f74923b3ce82c984a7ae3e0c2754c9e33c60554f#title> ;
-  dct:abstract <http://ns.inria.fr/issa/f74923b3ce82c984a7ae3e0c2754c9e33c60554f#abstract> ;
-  issap:hasBody <http://ns.inria.fr/issa/f74923b3ce82c984a7ae3e0c2754c9e33c60554f#body_text> .
+  issap:hasTitle            <http://ns.inria.fr/issa/f74923b3ce82c984a7ae3e0c2754c9e33c60554f#title> ;
+  dct:abstract              <http://ns.inria.fr/issa/f74923b3ce82c984a7ae3e0c2754c9e33c60554f#abstract> ;
+  issap:hasBody             <http://ns.inria.fr/issa/f74923b3ce82c984a7ae3e0c2754c9e33c60554f#body_text> .
  
 ```
 ## Global descriptors
