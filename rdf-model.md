@@ -48,7 +48,7 @@ Furthermore, each article is linked to its parts (title, abstract, body) as foll
 - `issap:hasBody  <http://ns.inria.fr/issa/paper_id#body_text>`.
 
 Here is an example of article metadata:
-```
+```turtle
 <http://ns.inria.fr/issa/f74923b3ce82c984a7ae3e0c2754c9e33c60554f>
   a                         schema:ScholarlyArticle, bibo:AcademicArticle, fabio:ResearchPaper ;
   rdfs:isDefinedBy          <http://ns.inria.fr/issa/dataset-1-2> ;
