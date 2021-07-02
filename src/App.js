@@ -1,10 +1,15 @@
 
 import './App.css';
+/*
 import TextHighlight2 from './Component/TextHighlight2';
 import { Footer }  from './Component/Footer';
 import ArticleInfo from './Component/ArticleInfo';
 import KeyWord from './Component/KeyWord';
+*/
 import NavBar from './Component/NavBar';
+
+
+import ArticleInfo from "./Component/ArticleInfo";
 
 
 function App() {
@@ -12,9 +17,7 @@ function App() {
       <div>
           <NavBar/>
           <ArticleInfo/>
-          <TextHighlight2/>
-          <KeyWord/>
-          <Footer/>
+
       </div>
 
 
@@ -23,6 +26,11 @@ function App() {
 
 
   );
+
 }
 
 export default App;
+
+
+
+
