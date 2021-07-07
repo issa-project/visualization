@@ -1,11 +1,10 @@
 
 import './App.css';
-/*
-import TextHighlight2 from './Component/TextHighlight2';
+
+import TextHighlight from './Component/TextHighlight';
 import { Footer }  from './Component/Footer';
-import ArticleInfo from './Component/ArticleInfo';
 import KeyWord from './Component/KeyWord';
-*/
+
 import NavBar from './Component/NavBar';
 
 
@@ -17,6 +16,9 @@ function App() {
       <div>
           <NavBar/>
           <ArticleInfo/>
+          <TextHighlight/>
+          <KeyWord/>
+          <Footer/>
 
       </div>
 

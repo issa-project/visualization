@@ -2,7 +2,7 @@ import React ,{ useEffect , useState} from 'react';
 import './ArticleInfo.css';
 import pdfDow from './pdf2.png';
 import axios from 'axios';
-import {forEach} from "react-bootstrap/cjs/ElementChildren";
+//import {forEach} from "react-bootstrap/cjs/ElementChildren";
 
 
 /*
@@ -40,16 +40,16 @@ const ArticleInfo = () => {
 
             })
     }, []);
-
+/*
     useEffect(() => {
         axios("http://localhost:3000/getArticleAuthors/f74923b3ce82c984a7ae3e0c2754c9e33c60554f")
             .then(response => {
                 forEach(authors,response.data.result[0]){
-                    
+
                 }
             })
     }, []);
-
+*/
 
 
 
