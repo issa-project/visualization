@@ -6,29 +6,67 @@ import DataInfo from "./DataInfo";
 import axios from 'axios';
 
 const TextHighlight = () => {
+
+    /**
+     *
+     */
+
     const [resume, setResume] = useState('');
     const [namedEntities, setEntities] = useState('');
 
 
-
+    /**
+     * Call
+     */
     useEffect(() => {
         axios("http://localhost:3000/getArticleMetadata/f74923b3ce82c984a7ae3e0c2754c9e33c60554f")
             .then(response => {
-                //console.log(response.data.result[0].abs);
-                setResume(response.data.result[0].abs)
-
+                //console.log((response.data.result[0].abs).substr(9,));
+                setResume((response.data.result[0].abs).substr(9,));
             })
     }, []);
 
+
+
+    /**
+     *
+     * @param list
+     */
+
+    function cleanArray(list) {
+        let arrayClean = list ;
+        for (let i = 0; i < arrayClean.length - 1; i++) {
+            if(arrayClean[i].nameEntity === list[i+1].nameEntity.toLowerCase()){
+                list.splice(i +1 ,1);
+            }
+            if(arrayClean[i].nameEntity === arrayClean[i].nameEntity.toUpperCase()){
+                list.splice(i,1);
+            }
+        }
+        console.log(arrayClean);
+    }
+    console.log("Clean Array----------> \n"+cleanArray(namedEntities));
+
+    /**
+     * Call
+     */
     useEffect(() => {
         axios("http://localhost:3000/getArticleNamedEntities/f74923b3ce82c984a7ae3e0c2754c9e33c60554f")
             .then(response => {
-                //console.log(response.data.result);
-                setEntities(response.data.result);
+                setEntities(response.data.result.sort(compare));
             })
     }, []);
 
 
+
+    /**
+     *
+     * @param id
+     * @param text
+     * @param begin
+     * @param e
+     * @param result
+     */
     function wrap(id, text, begin, e, result){
         let s1 = text.substring(begin, e.startPos);
         let w ="".substring(0);
@@ -37,7 +75,7 @@ const TextHighlight = () => {
             w = text.substring(e.startPos, e.startPos + (e.nameEntity).length)
         }
         else {
-            w = text.substring(e.start, e.end + 1);
+            w = text.substring(e.startPos, e.endPos + 1);
         }
         let title = e.nameEntity.substring(0);
         let content = e.nameEntity.substring(0);
@@ -49,18 +87,36 @@ const TextHighlight = () => {
 
 
 
+
+    /**
+     *
+     * @param a
+     * @param b
+     * @returns {number}
+     */
+    function compare( a, b ) {
+        if ( a.startPos < b.startPos ){
+        return -1;
+    }
+    if ( a.startPos > b.startPos ){
+        return 1;
+    }
+    return 0;
+    }
+
+
+
     let result = [];
     let begin = 0;
-
+    //console.log(namedEntities);
     for (let i = 0; i < namedEntities.length; i++) {
-        console.log("Tail List " + namedEntities.length)
         wrap("word-" + i, resume, begin, namedEntities[i], result);
         begin = namedEntities[i].startPos + (namedEntities[i].nameEntity).length + 1;
-        //console.log(begin)
+        //console.log(begin);
     }
 
     let r = resume.substring(begin);
-    console.log(r);
+    //console.log(r);
 
     result.push(<span>{r}</span>);
 
@@ -104,6 +160,9 @@ export default TextHighlight;
 
 
 /*
+
+
+"An enhanced polymerase chain reaction (PCR) assay to detect the coronavirus associated with severe acute respiratory syndrome (SARS-CoV) was developed in which a target gene pre-amplification step preceded TaqMan real-time fluorescent PCR. Clinical samples were collected from 120 patients diagnosed as suspected or probable SARS cases and analyzed by conventional PCR followed by agarose gel electrophoresis, conventional TaqMan real-time PCR, and our enhanced TaqMan real-time PCR assays. An amplicon of the size expected from SARS-CoV was obtained from 28/120 samples using the enhanced real-time PCR method. Conventional PCR and real-time PCR alone identified fewer SARS-CoV positive cases. Results were confirmed by viral culture in 3/28 cases. The limit of detection of the enhanced real-time PCR method was 102-fold higher than the standard real-time PCR assay and 107-fold higher than conventional PCR methods. The increased sensitivity of the assay may help control the spread of the disease during future SARS outbreaks."
 
 import React, {Component, useEffect, useState} from 'react';
 
