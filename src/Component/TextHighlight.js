@@ -28,6 +28,18 @@ const TextHighlight = () => {
 
 
 
+
+    /**
+     * Call
+     */
+    useEffect(() => {
+        axios("http://localhost:3000/getArticleNamedEntities/f74923b3ce82c984a7ae3e0c2754c9e33c60554f")
+            .then(response => {
+                setEntities(response.data.result.sort(compare));
+            })
+    }, []);
+
+
     /**
      *
      * @param list
@@ -43,19 +55,9 @@ const TextHighlight = () => {
                 list.splice(i,1);
             }
         }
-        console.log(arrayClean);
+        return arrayClean;
     }
-    console.log("Clean Array----------> \n"+cleanArray(namedEntities));
 
-    /**
-     * Call
-     */
-    useEffect(() => {
-        axios("http://localhost:3000/getArticleNamedEntities/f74923b3ce82c984a7ae3e0c2754c9e33c60554f")
-            .then(response => {
-                setEntities(response.data.result.sort(compare));
-            })
-    }, []);
 
 
 
@@ -108,10 +110,13 @@ const TextHighlight = () => {
 
     let result = [];
     let begin = 0;
-    //console.log(namedEntities);
-    for (let i = 0; i < namedEntities.length; i++) {
-        wrap("word-" + i, resume, begin, namedEntities[i], result);
-        begin = namedEntities[i].startPos + (namedEntities[i].nameEntity).length + 1;
+    let cleanList = cleanArray(namedEntities);
+    //console.log("List clean ------->" + cleanList);
+    console.log("------------> namedEntities"+namedEntities);
+    console.log("------------->cleanList"+cleanList);
+    for (let i = 0; i < cleanList.length; i++) {
+        wrap("word-" + i, resume, begin, cleanList[i], result);
+        begin = cleanList[i].startPos + (cleanList[i].nameEntity).length + 1;
         //console.log(begin);
     }
 
@@ -123,7 +128,7 @@ const TextHighlight = () => {
 
 
     return(
-        <div className="compoTexts"><span className="Title">Resume</span> : {result}
+        <div className="compoTexts"><span className="Title">Resume</span>:{result}
             <LoadingButton/>
         </div>
 
