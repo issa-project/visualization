@@ -54,8 +54,13 @@ const TextHighlight = () => {
             if(arrayClean[i].nameEntity === arrayClean[i].nameEntity.toUpperCase()){
                 list.splice(i,1);
             }
+
+            if(i === 2) {
+                list.splice(i,1);
+            }
         }
-        //console.log("cleanList --->"+arrayClean);
+
+        console.log("cleanList --->"+arrayClean);
         return arrayClean;
     }
 
@@ -74,8 +79,8 @@ const TextHighlight = () => {
     function wrap(id, text, begin, e, result){
         let s1 = text.substring(begin, e.startPos);
         let w ="".substring(0);
-        console.log(e.nameEntity+" : "+e.endPos);
-
+        //console.log(e.nameEntity+" : "+ e.startPos +" : "+e.endPos);
+        //-->console.log("text_s11 : "+ s1 + " begin : " +begin + " startPos : " + e.startPos);
         if (e.endPos === undefined){
             w = text.substring(e.startPos, e.startPos + (e.nameEntity).length);
             //console.log("----> word"+ w);
@@ -125,14 +130,15 @@ const TextHighlight = () => {
     let result = [];
     let begin = 0;
     let cleanList = cleanArray(namedEntities);
-    //console.log(cleanList);
+    console.log(cleanList);
 
     for (let i = 0; i < cleanList.length; i++) {
         wrap("word-" + i, resume, begin, cleanList[i], result);
-        begin = cleanList[i].startPos + (cleanList[i].nameEntity).length + 1;
-        //console.log(begin);
+        //-->console.log("begin : " + begin +"= cleanList[i].startPos : " +cleanList[i].startPos +" + cleanList[i].nameEntity.length + 1 : "+cleanList[i].nameEntity.length);
+        begin = cleanList[i].startPos + cleanList[i].nameEntity.length + 1;
+        //-->console.log(begin);
     }
-
+    console.log(begin);
     let r = resume.substring(begin);
     //console.log(r);
     //console.log(result);
