@@ -16,7 +16,7 @@ const TextHighlight = () => {
 
 
     /**
-     * Call
+     * Call  + config (localhost + Port ) ---> .env
      */
     useEffect(() => {
         axios("http://localhost:3000/getArticleMetadata/f74923b3ce82c984a7ae3e0c2754c9e33c60554f")
@@ -30,7 +30,7 @@ const TextHighlight = () => {
 
 
     /**
-     * Call
+     * Call  + config (localhost + Port ) ---> .env
      */
     useEffect(() => {
         axios("http://localhost:3000/getArticleNamedEntities/f74923b3ce82c984a7ae3e0c2754c9e33c60554f")
@@ -55,6 +55,7 @@ const TextHighlight = () => {
                 list.splice(i,1);
             }
         }
+        //console.log("cleanList --->"+arrayClean);
         return arrayClean;
     }
 
@@ -69,15 +70,19 @@ const TextHighlight = () => {
      * @param e
      * @param result
      */
+
     function wrap(id, text, begin, e, result){
         let s1 = text.substring(begin, e.startPos);
         let w ="".substring(0);
+        console.log(e.nameEntity+" : "+e.endPos);
 
-        if (e.endPos === null){
-            w = text.substring(e.startPos, e.startPos + (e.nameEntity).length)
+        if (e.endPos === undefined){
+            w = text.substring(e.startPos, e.startPos + (e.nameEntity).length);
+            //console.log("----> word"+ w);
         }
         else {
             w = text.substring(e.startPos, e.endPos + 1);
+            //console.log("----> word"+ w);
         }
         let title = e.nameEntity.substring(0);
         let content = e.nameEntity.substring(0);
@@ -86,8 +91,6 @@ const TextHighlight = () => {
             <DataInfo index={id} word={w} title={title} content={content}/>
         )
     }
-
-
 
 
     /**
@@ -106,14 +109,24 @@ const TextHighlight = () => {
     return 0;
     }
 
+    /*
+    An enhanced polymerase chain reaction (PCR) assay to detect the coronavirus associated with severe acute respiratory syndrome (SARS-CoV)
+    was developed in which a target gene pre-amplification step preceded TaqMan real-time fluorescent PCR. Clinical samples were collected
+    from 120 patients diagnosed as suspected or probable SARS cases and analyzed by conventional PCR followed by agarose gel
+    electrophoresis, conventional TaqMan real-time PCR, and our enhanced TaqMan real-time PCR assays. An amplicon of the size expected
+    from SARS-CoV was obtained from 28/120 samples using the enhanced real-time PCR method.
+    Conventional PCR and real-time PCR alone identified fewer SARS-CoV positive cases. Results were confirmed by viral culture in 3/28 cases.
+    The limit of detection of the enhanced real-time PCR method was 102-fold higher than the standard real-time PCR assay and 107-fold higher than conventional PCR methods.
+    The increased sensitivity of the assay may help control the spread of the disease during future SARS outbreaks.
+     */
+
 
 
     let result = [];
     let begin = 0;
     let cleanList = cleanArray(namedEntities);
-    //console.log("List clean ------->" + cleanList);
-    console.log("------------> namedEntities"+namedEntities);
-    console.log("------------->cleanList"+cleanList);
+    //console.log(cleanList);
+
     for (let i = 0; i < cleanList.length; i++) {
         wrap("word-" + i, resume, begin, cleanList[i], result);
         begin = cleanList[i].startPos + (cleanList[i].nameEntity).length + 1;
@@ -122,6 +135,7 @@ const TextHighlight = () => {
 
     let r = resume.substring(begin);
     //console.log(r);
+    //console.log(result);
 
     result.push(<span>{r}</span>);
 
