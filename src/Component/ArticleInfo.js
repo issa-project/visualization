@@ -2,7 +2,8 @@ import React ,{ useEffect , useState} from 'react';
 import './ArticleInfo.css';
 import pdfDow from './pdf2.png';
 import axios from 'axios';
-//import {forEach} from "react-bootstrap/cjs/ElementChildren";
+require('dotenv').config();
+
 
 
 /*
@@ -20,19 +21,12 @@ const ArticleInfo = () => {
     const [title, setTitle] = useState('');
     const [date, setDate] = useState('');
     const [type, setPub] = useState('');
+    const [authors , setAuthors] = useState('');
 
 
-    /*
+
     useEffect(() => {
-        execLibRequest(`https://covidontheweb.inria.fr/sparql`,`select *
-    where {
-    <http://ns.inria.fr/covid19/f74923b3ce82c984a7ae3e0c2754c9e33c60554f> dct:title ?title.
-    }LIMIT 10`)
-            .then(res => setTitle(res[0].title))
-    }, []);
-    */
-    useEffect(() => {
-        axios("http://localhost:3000/getArticleMetadata/f74923b3ce82c984a7ae3e0c2754c9e33c60554f")
+        axios("http://localhost:"+process.env.REACT_APP_PORT+"/getArticleMetadata/"+process.env.REACT_APP_ARTICLE_ID)
             .then(response => {
                 setTitle(response.data.result[0].title);
                 setDate(response.data.result[0].date);
@@ -40,16 +34,21 @@ const ArticleInfo = () => {
 
             })
     }, []);
-/*
-    useEffect(() => {
-        axios("http://localhost:3000/getArticleAuthors/f74923b3ce82c984a7ae3e0c2754c9e33c60554f")
-            .then(response => {
-                forEach(authors,response.data.result[0]){
 
-                }
+
+    useEffect( () => {
+        axios("http://localhost:"+process.env.REACT_APP_PORT+"/getArticleAuthors/"+process.env.REACT_APP_ARTICLE_ID)
+            .then(response => {
+                let authorsST = ''.substring(0);
+                let listAuthors = response.data.result;
+                listAuthors.forEach(element => authorsST = authorsST + element.authors.replace(',' , '') + ", " );
+                //console.log(listAuthors[2].authors);
+                setAuthors(authorsST);
+                //console.log("authors -----------------------> :"+ authorsST);
             })
-    }, []);
-*/
+
+    });
+
 
 
 
@@ -60,7 +59,7 @@ const ArticleInfo = () => {
                     <p className="TitleText"> {title}
                         <span className="date">{date}</span>
                         <span className="type"> {type} </span>
-                        <span className="auteurs">Li Hui Wang,Chen Dillon ,Natalie Wong,Freda Pui-Fan Chan,Paul Cheung,Albert Fung </span>
+                        <span className="auteurs"> {authors}</span>
                         <span className="nbPage">116 pages. </span>
                         <span className="idArticle">ISBN 978-2869-778388-9</span>
                     </p>
