@@ -1,16 +1,33 @@
 
 import './App.css';
 
-import TextHighlight from './Component/TextHighlight';
-import { Footer }  from './Component/Footer';
-import KeyWord from './Component/KeyWord';
+//import TextHighlight from './Component/TextHighlight';
+//import { Footer }  from './Component/Footer';
+//import KeyWord from './Component/KeyWord';
 
-import NavBar from './Component/NavBar';
-
-
-import ArticleInfo from "./Component/ArticleInfo";
+//import NavBar from './Component/NavBar';
 
 
+//import ArticleInfo from "./Component/ArticleInfo";
+import MapComponent from "./Component/Map";
+
+
+function App() {
+  return (
+      <div>
+          <MapComponent/>
+
+      </div>
+
+
+  );
+
+}
+
+export default App;
+
+
+/*
 function App() {
   return (
       <div>
@@ -26,9 +43,5 @@ function App() {
   );
 
 }
-
-export default App;
-
-
-
+ */
 
