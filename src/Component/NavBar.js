@@ -12,8 +12,8 @@ class NavBar extends Component {
                 </Navbar.Brand>
                 <img src={agrilogo} alt="logo"></img>
                 <Nav className="mr-auto">
-                    <Nav.Link href="#home">Advanced Search</Nav.Link>
-                    <Nav.Link href="#features"> Cirad Authors</Nav.Link>
+                    <Nav.Link href="#Map">Map</Nav.Link>
+                    <Nav.Link href="#Authors"> Cirad Authors</Nav.Link>
                 </Nav>
                 <Form inline>
                     <FormControl type="text" placeholder="Search" className="mr-sm-2" />
