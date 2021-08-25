@@ -149,9 +149,8 @@ const MapComponent = () => {
     }, [shapes]);
 
     return (
-        <div>
-            <MapContainer className="Map" center={[18, 105]} zoom={5} scrollWheelZoom={true}>
-                llllll
+        <div className="Map">
+            <MapContainer center={[18, 105]} zoom={5} scrollWheelZoom={true} style={{ height: '100vh' , width: '100wh'}}>
                 <TileLayer
                     attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
                     /*url="https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png"*/
