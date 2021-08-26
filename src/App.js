@@ -1,26 +1,36 @@
 
 import './App.css';
-import TextHighlight2 from './Component/TextHighlight2';
+
+import TextHighlight from './Component/TextHighlight';
 import { Footer }  from './Component/Footer';
-import ArticleInfo from './Component/ArticleInfo';
+import KeyWord from './Component/KeyWord';
 import NavBar from './Component/NavBar';
+import ArticleInfo from "./Component/ArticleInfo";
+import MapComponent from "./Component/Map";
 
 
 function App() {
-  return (
-      <div>
-          <NavBar/>
-          <ArticleInfo/>
-          <TextHighlight2/>
+    return (
+        <div>
+            <NavBar/>
+            <ArticleInfo/>
+            <TextHighlight/>
+            <KeyWord/>
+            <MapComponent/>
             <Footer/>
-      </div>
 
 
+        </div>
 
 
+    );
 
-
-  );
 }
 
 export default App;
+
+
+/*
+
+ */
+

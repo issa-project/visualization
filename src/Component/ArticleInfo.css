@@ -11,4 +11,57 @@
     background-color: white;
     font-family: "Times New Roman";
     font-size: 20px;
+    font-weight: bold;
+}
+
+.ArticleTitle{
+text-align: center;
+    border-bottom: #00CED1;
+    border-width: 10px;
+
+}
+
+.Type{
+display: block;
+}
+
+.date{
+    display: block;
+}
+.type{
+    display: block;
+}
+
+.auteurs{
+    display: block;
+
+}
+
+
+/*
+Dans cette partie on définis tout les caractéristiques css du composant de téléchargement de PDF
+ */
+.pdfDowl {
+    width: 50%;
+    text-align: center;
+    display: inline-block;
+
+}
+.Divider{
+    margin-left: 10%;
+   border-top: 1px solid grey;
+   position: absolute;
+    width: 50%;
+    text-align: center;
+
+
+}
+
+.subPdfDowl{
+    display: block;
+}
+
+.namePDF{
+    display: block;
+
 }

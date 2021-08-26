@@ -13,9 +13,9 @@ function LoadingButton() {
         if (isLoading) {
             simulateNetworkRequest().then(() => {
                 setLoading(false);
-
             });
         }
+
     }, [isLoading]);
 
     const handleClick = () => setLoading( true);
