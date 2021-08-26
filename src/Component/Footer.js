@@ -4,6 +4,7 @@ import './Footer.css';
 //import logo from '../logoPoly.png';
 import logo2 from '../inriaLogo.png'
 
+
 export const Footer = () => (
     <div className="panelFooter">
 

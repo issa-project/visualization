@@ -5,15 +5,13 @@ import axios from 'axios';
 require('dotenv').config();
 
 
-
-/*
-const data = execLibRequest(`https://covidontheweb.inria.fr/sparql`,`select *
-    where {
-    <http://ns.inria.fr/covid19/f74923b3ce82c984a7ae3e0c2754c9e33c60554f> dct:title ?title.
-    }LIMIT 10`);
-
-    //response.data.result[0].title
-*/
+/**
+ * @Presentation
+ * C'est le composant ArticleInfo qui nous affiche les informations de présentation d'un article :
+ * titre,date, type de l'article , date de publication ...
+ * @returns ce composant nous retourne le premier composant qui le composant de présentation de l'article
+ *
+ */
 
 const ArticleInfo = () => {
 
@@ -24,6 +22,16 @@ const ArticleInfo = () => {
     const [authors , setAuthors] = useState('');
 
 
+    /**
+     * @Présentation :
+     * On récupère de notre backend les informations suivantes :
+     * - Titre
+     * - date
+     * - type
+     * @Adresse :
+     * http://localhost:3000/getArticleMetadata/f74923b3ce82c984a7ae3e0c2754c9e33c60554f
+     *
+     */
 
     useEffect(() => {
         axios("http://localhost:"+process.env.REACT_APP_PORT+"/getArticleMetadata/"+process.env.REACT_APP_ARTICLE_ID)
@@ -35,6 +43,17 @@ const ArticleInfo = () => {
             })
     }, []);
 
+    /**
+     * @Présentation :
+     * On récupère de notre backend les informations suivantes :
+     *  - Liste des autheurs
+     *
+     * Ainsi le foreach nous permet de lister tout les auteurs dans une list
+     * @Exemple : {"result": [ {"authors": "Li, Hui"},{"authors": "Wang, Chen"}, ... ] } --------------> [ "Li Hui" , "Wang, Chen" ]
+     * @Adresse:
+     * http://localhost:3000/getArticleAuthors/f74923b3ce82c984a7ae3e0c2754c9e33c60554f
+     *
+     */
 
     useEffect( () => {
         axios("http://localhost:"+process.env.REACT_APP_PORT+"/getArticleAuthors/"+process.env.REACT_APP_ARTICLE_ID)

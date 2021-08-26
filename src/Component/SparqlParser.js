@@ -1,5 +1,10 @@
 import {execLibRequest} from 'UseSparqlLib'
 
+
+/**
+ *
+ * @type {string}
+ */
 const endpoint = `https://covidontheweb.inria.fr/sparql`;
 
 const querryTitle = `select *

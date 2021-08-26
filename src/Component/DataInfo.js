@@ -5,6 +5,12 @@ import wikiLogo from './wiki.png';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 
+/**
+ * Ce Composant qui est un hook représente la pop-up affiché dans le composant textHilight :
+ * @param  index : identifiant de chaque pop-up , title : le titre de la pop-up , content : le contenue de la pop-up
+ * @returns {*}
+ * @constructor
+ */
 const DataInfo = (props) => {
     const [popoverOpen, setPopoverOpen] = useState(false);
 

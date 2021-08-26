@@ -4,14 +4,20 @@ import React from "react";
 import "./KeyWord.css";
 
 
+/**
+ * @Presentation
+ * Ce composant nous affiche la liste des descripteurs en utilisant la fonction wrap
+ */
 
 class KeyWord extends Component {
 
     /**
+     * @Presentation
+     * Cette fonction nous permet de highLighter les mots et de wraper le mot en question dans une pop-up grace au composant DataInfo
      *
-     * @param id
-     * @param descriptor
-     * @param result
+     * @param id : c'est l'id de chaque pop-up
+     * @param descriptor : C'est l'objet qui contient les données de chaque descripteur
+     * @param result : le composant DataInfo avec les bonnes avec les informations saisie
      */
 
     wrap(id, descriptor, result){

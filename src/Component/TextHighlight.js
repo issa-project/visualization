@@ -6,11 +6,13 @@ import Button from 'react-bootstrap/Button'
 import './buttonAnnotate.css';
 import axios from 'axios';
 
+/**
+ * @Presentation
+ * Ce composant s'occupe de l'affichage des entités nommés hil
+ * @returns {*}
+ * @constructor
+ */
 const TextHighlight = () => {
-
-    /**
-     *
-     */
 
     const [resume, setResume] = useState('');
     const [namedEntities, setEntities] = useState('');

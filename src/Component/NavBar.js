@@ -2,7 +2,9 @@ import {Component} from "react";
 import { Navbar, Nav ,Button , Form , FormControl} from "react-bootstrap";
 import agrilogo from './Agritrop.png';
 
-
+/**
+ * Ce composant représente la navBar tout en haut de notre page web
+ */
 class NavBar extends Component {
 
     render() {

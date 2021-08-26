@@ -4,7 +4,13 @@ import LoadingButton from './buttonAnnotate'
 import './Textighlight2.css';
 import DataInfo from "./DataInfo";
 
-
+/**
+ * @Presentation
+ * C'est la première version de composant TextHighLight que j'ai effectuer avec un component et non un hook .
+ * Cette première version nous permet de comprendre précisément comment marche notre algo de Highlight.
+ *
+ * -----> voir composant TextHighLight qui est la version Final
+ */
 
 class TextHighlight2 extends Component {
     constructor(props) {
