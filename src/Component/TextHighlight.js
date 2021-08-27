@@ -1,16 +1,18 @@
 
 import React, {useEffect, useState} from 'react';
-import './Textighlight2.css';
+import './TextHighlight.css';
 import DataInfo from "./DataInfo";
 import Button from 'react-bootstrap/Button'
 import './buttonAnnotate.css';
 import axios from 'axios';
 
+
 /**
  * @Presentation
- * Ce composant s'occupe de l'affichage des entités nommés hil
- * @returns {*}
- * @constructor
+ * Ce composant s'occupe de l'affichage des entités nommés highlighter dans le résumer de l'article
+ *
+ * @return
+ * Ce composant retourne le deuxième composant afficher dans notre interface web
  */
 const TextHighlight = () => {
 
@@ -22,11 +24,19 @@ const TextHighlight = () => {
 
 
 
-    /**s
-     * Call  + config (localhost + Port ) ---> .env
+    /**
+     * @Presentation
+     * On récupère de notre back-end grâce à un appel ,le résumé de l'article en question.
+     * Après avoir récupérer le résumé on enlève les 9 premiers Char.
+     *
+     * @Example : "Abstract An enhanced polymerase chain reaction (PCR) assay to detect the coronavirus associated with se ..."
+     * ---> "An enhanced polymerase chain reaction (PCR) assay to detect the coronavirus associated with se ..."
+     *
+     * @Adresse: http://localhost:3000/getArticleMetadata/f74923b3ce82c984a7ae3e0c2754c9e33c60554f
+     *
      */
     useEffect(() => {
-        axios("http://localhost:3000/getArticleMetadata/f74923b3ce82c984a7ae3e0c2754c9e33c60554f")
+        axios(process.env.REACT_APP_BACKEND_URL+"/getArticleMetadata/f74923b3ce82c984a7ae3e0c2754c9e33c60554f")
             .then(response => {
                 //console.log((response.data.result[0].abs).substr(9,));
                 setResume((response.data.result[0].abs).substr(9,));
@@ -37,10 +47,17 @@ const TextHighlight = () => {
 
 
     /**
-     * Call  + config (localhost + Port ) ---> .env
+     * @Presentation :
+     * On récupère de notre back-end grace à un appel , la liste des entitées nommés.
+     * Après avoir récupérer la liste des entitées nommés, on trie cette liste.
+     *
+     * @Exemple : "result": {"nameEntity": "AMPLIFICATION","startPos": 187,"endPos": 199} ,{"nameEntity": "CONFIRMED BY","startPos": 723,"endPos": 734} ... }
+     *
+     * @Adresse : http://localhost:3000/getArticleNamedEntities/f74923b3ce82c984a7ae3e0c2754c9e33c60554f
+     *
      */
     useEffect(() => {
-        axios("http://localhost:3000/getArticleNamedEntities/f74923b3ce82c984a7ae3e0c2754c9e33c60554f")
+        axios(process.env.REACT_APP_BACKEND_URL+"/getArticleNamedEntities/f74923b3ce82c984a7ae3e0c2754c9e33c60554f")
             .then(response => {
                 setEntities(response.data.result.sort(compare));
             })
@@ -50,7 +67,7 @@ const TextHighlight = () => {
 
 
     /**
-     *
+     * C
      * @param list
      */
 
@@ -89,7 +106,7 @@ const TextHighlight = () => {
         //-->console.log("text_s11 : "+ s1 + " begin : " +begin + " startPos : " + e.startPos);
         if (e.endPos === undefined){
             w = text.substring(e.startPos, e.startPos + (e.nameEntity).length);
-            //console.log("----> word"+ w);
+            console.log("----> word"+ (e.nameEntity).length);
         }
         else {
             w = text.substring(e.startPos, e.endPos + 1);

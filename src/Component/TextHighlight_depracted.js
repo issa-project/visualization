@@ -1,7 +1,7 @@
 import React ,{ Component } from 'react';
 
 import LoadingButton from './buttonAnnotate'
-import './Textighlight2.css';
+import './TextHighlight_depracted.css';
 import DataInfo from "./DataInfo";
 
 /**

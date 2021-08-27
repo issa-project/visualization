@@ -1,7 +1,7 @@
-import {Component} from "react";
-import DataInfo from "./DataInfo";
-import React from "react";
+import React ,{useState , useEffect} from 'react';
+import DataInfoDescripteur from "./DataInfoDescripteur";
 import "./KeyWord.css";
+import axios from "axios";
 
 
 /**
@@ -9,7 +9,19 @@ import "./KeyWord.css";
  * Ce composant nous affiche la liste des descripteurs en utilisant la fonction wrap
  */
 
-class KeyWord extends Component {
+const KeyWord = () => {
+
+    const [listDescriptor ,setListDescriptor] = useState('');
+
+
+    useEffect(() => {
+        axios("http://localhost:"+process.env.REACT_APP_PORT+"/getArticleDescriptors/"+process.env.REACT_APP_ARTICLE_ID)
+            .then(response => {
+                //console.log(response.data.result);
+                setListDescriptor(response.data.result);
+
+            })
+    }, []);
 
     /**
      * @Presentation
@@ -20,32 +32,25 @@ class KeyWord extends Component {
      * @param result : le composant DataInfo avec les bonnes avec les informations saisie
      */
 
-    wrap(id, descriptor, result){
-        let title = descriptor.title.substring(0);
-        let content = descriptor.content.substring(0);
+    function wrap(id, descriptor, result){
+        let title = descriptor.nameDescriptor.substring(12, descriptor.nameDescriptor.length -1);
+        let content = descriptor.nameDescriptor.substring(12,descriptor.nameDescriptor.length -1);
+        let link = descriptor.linkDescriptor.substring(0);
             result.push (
-                <DataInfo index={id} word={title} title={title} content={content}  />
-                )
+                <DataInfoDescripteur index={id} word={title} title={title} content={content} link={link}  />
+                );
             result.push(<span>          </span>);
     }
 
 
-    render () {
-        /**
-         *
-         * @type {*[]}
-         */
-
-        let descriptor = [
-            {title : "coronavirus", content : "group of related viruses that cause diseases in mammals and birds"},
-            {title : "SARS-CoV", content : "viral strain that causes severe acute respiratory syndrome (SARS)"},
-            {title : "PCR", content : "In vitro method for producing large amounts of specific DNA or RNA fragments from small amounts of short oligonucleotide primers"}
-        ];
+        let descriptor = listDescriptor;
 
 
         let result = [];
         for (let i = 0; i < descriptor.length; i++) {
-            this.wrap("word-desc-" + i,descriptor[i], result);
+            console.log("taille ----------------_>"+descriptor.length);
+            console.log(descriptor[i]);
+            wrap("word-desc-" + i,descriptor[i], result);
         }
 
         return <div>
@@ -57,8 +62,8 @@ class KeyWord extends Component {
 
 
         </div>
-    }
 
 
-}
+
+};
 export default KeyWord;

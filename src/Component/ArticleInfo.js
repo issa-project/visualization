@@ -20,6 +20,7 @@ const ArticleInfo = () => {
     const [date, setDate] = useState('');
     const [type, setPub] = useState('');
     const [authors , setAuthors] = useState('');
+    const [linkPdf , setLinkPDF] = useState('');
 
 
     /**
@@ -34,11 +35,12 @@ const ArticleInfo = () => {
      */
 
     useEffect(() => {
-        axios("http://localhost:"+process.env.REACT_APP_PORT+"/getArticleMetadata/"+process.env.REACT_APP_ARTICLE_ID)
+        axios(process.env.REACT_APP_BACKEND_URL+"/getArticleMetadata/"+process.env.REACT_APP_ARTICLE_ID)
             .then(response => {
                 setTitle(response.data.result[0].title);
                 setDate(response.data.result[0].date);
                 setPub(response.data.result[0].pub);
+                setLinkPDF(response.data.result[0].linkPDF);
 
             })
     }, []);
@@ -56,7 +58,7 @@ const ArticleInfo = () => {
      */
 
     useEffect( () => {
-        axios("http://localhost:"+process.env.REACT_APP_PORT+"/getArticleAuthors/"+process.env.REACT_APP_ARTICLE_ID)
+        axios(process.env.REACT_APP_BACKEND_URL+"/getArticleAuthors/"+process.env.REACT_APP_ARTICLE_ID)
             .then(response => {
                 let authorsST = ''.substring(0);
                 let listAuthors = response.data.result;
@@ -67,6 +69,7 @@ const ArticleInfo = () => {
             })
 
     });
+
 
 
 
@@ -84,8 +87,12 @@ const ArticleInfo = () => {
                     </p>
                     </div>
                     <div className="Divider"></div>
+
                     <div className="pdfDowl">
-                        <img src={pdfDow} alt="pdf"/>
+                        <a href={linkPdf}>
+                            <img src={pdfDow} alt="pdf"/>
+                        </a>
+
                         <p>
                             <span className="subPdfDowl">Version publiée - <span className="nameVersion"> Français </span></span>
                             <span className="subPdfDowl">Sous licence <span className="versionPDF">CC0 1.0</span></span>

@@ -6,6 +6,7 @@ import {useEffect, useState} from "react";
 import icon from 'leaflet/dist/images/marker-icon.png';
 import iconShadow from 'leaflet/dist/images/marker-shadow.png';
 import axios from 'axios';
+import React from "react";
 
 const MapComponent = () => {
 
@@ -38,6 +39,7 @@ const MapComponent = () => {
             `  ?parentFeature gn:name ?nameParentFeature}.` +
             `}`
         const url = 'http://localhost:8890/sparql'
+
         useEffect(() => {
             if (marker === undefined){
                 sparql(url, query).then((data) => {
@@ -149,25 +151,28 @@ const MapComponent = () => {
     }, [shapes]);
 
     return (
-        <div className="Map">
-            <MapContainer center={[18, 105]} zoom={5} scrollWheelZoom={true} style={{ height: '100vh' , width: '100wh'}}>
-                <TileLayer
-                    attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-                    /*url="https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png"*/
-                    url="https://{s}.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png"
-                />
-                {geonames !== undefined && shapes !== undefined &&
-                geonames.entities.map((entity) => {
-                        if (entity.Id_geonames !== undefined) {
-                            return <Point key={entity.rawName} lang = {geonames.lang} shapes = {shapes} entity={entity}/>
-                        } else {
-                            return null;
+
+            <div className="compoTexts">
+                <span className="Title">Map :</span>
+                <MapContainer center={[18, 105]} zoom={5} scrollWheelZoom={true} style={{ height: '100vh' , width: '100wh'}}>
+                    <TileLayer
+                        attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+                        /*url="https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png"*/
+                        url="https://{s}.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png"
+                    />
+                    {geonames !== undefined && shapes !== undefined &&
+                    geonames.entities.map((entity) => {
+                            if (entity.Id_geonames !== undefined) {
+                                return <Point key={entity.rawName} lang = {geonames.lang} shapes = {shapes} entity={entity}/>
+                            } else {
+                                return null;
+                            }
                         }
+                    )
                     }
-                )
-                }
-            </MapContainer>
-        </div>
+                </MapContainer>
+            </div>
+
     );
 };
 

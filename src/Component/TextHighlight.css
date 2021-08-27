@@ -1,0 +1,84 @@
+
+.buttonA {
+    display: inline-block;
+    text-transform: uppercase;
+    padding: 20px 30px;
+    border-radius: 5px;
+    cursor: pointer;
+    -webkit-transition: all ease-in-out 300ms;
+    transition: all ease-in-out 300ms;
+    float: right;
+    position: relative;
+    margin-top: 40px;
+    background-color: grey;
+
+}
+
+.buttonA:hover {
+    -webkit-transform: translate(0px, -10px) scale(1.2);
+    transform: translate(0px, -10px) scale(1.1);
+    background-color: grey;
+    color: whitesmoke;
+}
+
+.compoTexts{
+    height: 100%;
+    width: 80%;
+    padding: 5%;
+    margin: 10%;
+    border-color:whitesmoke;
+    border-width:8px;
+    border-style: solid;
+    border-radius: 30px;
+    background-color: white;
+    font-family: "Times New Roman";
+    font-size: 20px;
+
+}
+
+.dataInfo {
+    width: 60px;
+}
+
+.html{
+    background-color: whitesmoke;
+}
+
+.Title{
+    font-size: large;
+    color:grey;
+    font-family: "Times New Roman";
+    font-weight: bold;
+    font-size:25px;
+    margin-bottom:30px ;
+}.compoTexts{
+     height: 100%;
+     width: 80%;
+     padding: 5%;
+     margin: 10%;
+     border-color:whitesmoke;
+     border-width:8px;
+     border-style: solid;
+     border-radius: 30px;
+     background-color: white;
+     font-family: "Times New Roman";
+     font-size: 20px;
+
+ }
+
+.dataInfo {
+    width: 60px;
+}
+
+.html{
+    background-color: whitesmoke;
+}
+
+.Title{
+    font-size: large;
+    color:grey;
+    font-family: "Times New Roman";
+    font-weight: bold;
+    font-size:25px;
+    margin-bottom:30px ;
+}
