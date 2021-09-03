@@ -5,6 +5,8 @@ In the project directory, you can run:
 
 ### `yarn start`
 
+Note for Windows users: you may need to authorize the execution of scripts on Powershell (as admin): `set-executionpolicy unrestricted`
+
 Runs the app in the development mode.\
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
