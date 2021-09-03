@@ -1,6 +1,6 @@
 import React ,{ useEffect , useState} from 'react';
 import './ArticleInfo.css';
-import pdfDow from './pdf2.png';
+import fileIcon from './images/file_icon.png';
 import axios from 'axios';
 require('dotenv').config();
 
@@ -15,33 +15,35 @@ require('dotenv').config();
 
 const ArticleInfo = () => {
 
-
     const [title, setTitle] = useState('');
     const [date, setDate] = useState('');
-    const [type, setPub] = useState('');
-    const [authors , setAuthors] = useState('');
-    const [linkPdf , setLinkPDF] = useState('');
+    const [pub, setPub] = useState('');
+    const [authors, setAuthors] = useState('');
+    const [linkPdf, setLinkPDF] = useState('');
+    const [url, setUrl] = useState('');
+    const [license, setLicense] = useState('');
+    const [lang, setLang] = useState('');
 
 
     /**
      * @Présentation :
-     * On récupère de notre backend les informations suivantes :
-     * - Titre
-     * - date
-     * - type
      * @Adresse :
      * http://localhost:3000/getArticleMetadata/f74923b3ce82c984a7ae3e0c2754c9e33c60554f
-     *
      */
-
     useEffect(() => {
         axios(process.env.REACT_APP_BACKEND_URL+"/getArticleMetadata/"+process.env.REACT_APP_ARTICLE_ID)
             .then(response => {
                 setTitle(response.data.result[0].title);
-                setDate(response.data.result[0].date);
+                setDate(response.data.result[0].date.substring(0, 4));
                 setPub(response.data.result[0].pub);
                 setLinkPDF(response.data.result[0].linkPDF);
+                setUrl(response.data.result[0].url);
+                setLicense(response.data.result[0].license);
 
+                var lang = response.data.result[0].lang;
+                if (lang == "eng") lang = "English"
+                else if (lang == "fre") lang = "French";
+                setLang(lang);
             })
     }, []);
 
@@ -62,7 +64,10 @@ const ArticleInfo = () => {
             .then(response => {
                 let authorsST = ''.substring(0);
                 let listAuthors = response.data.result;
-                listAuthors.forEach(element => authorsST = authorsST + element.authors.replace(',' , '') + ", " );
+                listAuthors.forEach(element =>
+                    authorsST = authorsST + element.authors.replace(',' , '') + ", " );
+                // Remove the last ", "
+                authorsST = authorsST.substring(0, authorsST.length - 2);
                 //console.log(listAuthors[2].authors);
                 setAuthors(authorsST);
                 //console.log("authors -----------------------> :"+ authorsST);
@@ -72,34 +77,38 @@ const ArticleInfo = () => {
 
 
 
-
-
     return (
-            <div className="compoTitle">
-                <div className="ArticleTitle">
+            <div className="component">
+                <div className="">
                     <div>
-                    <p className="TitleText"> {title}
-                        <span className="date">{date}</span>
-                        <span className="type"> {type} </span>
-                        <span className="auteurs"> {authors}</span>
-                        <span className="nbPage">116 pages. </span>
-                        <span className="idArticle">ISBN 978-2869-778388-9</span>
-                    </p>
-                    </div>
-                    <div className="Divider"></div>
-
-                    <div className="pdfDowl">
-                        <a href={linkPdf}>
-                            <img src={pdfDow} alt="pdf"/>
-                        </a>
-
+                        <h1 className="">{title} </h1>
                         <p>
-                            <span className="subPdfDowl">Version publiée - <span className="nameVersion"> Français </span></span>
-                            <span className="subPdfDowl">Sous licence <span className="versionPDF">CC0 1.0</span></span>
-                            <span className="subPdfDowl"> Sans restriction de droits pour le monde entier.</span>
-                            <span className="subPdfDowl"> Livre OCEAN FORESCOM VFinale 2020.pdf</span>
+                            <span className="metadata font-weight-bold"> {authors}. </span>
+                            <span className="metadata">{date}. </span>
+                            <span className="metadata font-italic"> {pub}. </span>
+                            <span className="block"><a href={url}>{url}</a></span>
                         </p>
                     </div>
+                </div>
+
+                <div className="divider"></div>
+
+                <div className="">
+                    <tr>
+                        <td valign="middle" align="right">
+                            <a href={linkPdf}>
+                                <img className="doc_icon" src={fileIcon} alt="File icon"/>
+                            </a>
+                        </td>
+
+                        <td valign="top" align="left">
+                            <span className="block">Language: {lang}</span>
+                            <span className="block">Licence: {license}</span>
+                            <span className="block document_filename">{linkPdf}</span>
+                            <span className="block"><a href={linkPdf}>Download</a></span>
+                        </td>
+                    </tr>
+
                 </div>
             </div>
         );

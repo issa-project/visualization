@@ -54,7 +54,7 @@ const KeyWord = () => {
         }
 
         return <div>
-            <div className="compoKeyWord">
+            <div className="component">
                 <div className="Title"> Agritrop Descriptor : </div>
                 <div> {result} </div>
             </div>

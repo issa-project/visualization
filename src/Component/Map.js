@@ -152,7 +152,7 @@ const MapComponent = () => {
 
     return (
 
-            <div className="compoTexts">
+            <div className="component">
                 <span className="Title">Map :</span>
                 <MapContainer center={[18, 105]} zoom={5} scrollWheelZoom={true} style={{ height: '100vh' , width: '100wh'}}>
                     <TileLayer

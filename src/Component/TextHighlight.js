@@ -176,7 +176,7 @@ const TextHighlight = () => {
 
 
     return(
-        <div className="compoTexts"><span className="Title">Resume</span>:{isLoading ? result : resume}
+        <div className="component"><span className="Title">Abstract</span>: {isLoading ? result : resume}
             <LoadingButton/>
         </div>
 

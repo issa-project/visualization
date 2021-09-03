@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Button, Popover, PopoverHeader, PopoverBody } from 'reactstrap';
-import wikiLogo from './wiki.png';
+import wikiLogo from './images/wiki.png';
 //import geoLogo from 'Geo.png';
 
 import 'bootstrap/dist/css/bootstrap.min.css';

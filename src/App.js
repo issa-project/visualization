@@ -1,4 +1,3 @@
-
 import './App.css';
 
 import TextHighlight from './Component/TextHighlight';
@@ -11,26 +10,15 @@ import MapComponent from "./Component/Map";
 
 function App() {
     return (
-        <div>
+        <div className="container">
             <NavBar/>
             <ArticleInfo/>
             <TextHighlight/>
             <KeyWord/>
             <MapComponent/>
             <Footer/>
-
-
         </div>
-
-
     );
-
 }
 
 export default App;
-
-
-/*
-
- */
-
