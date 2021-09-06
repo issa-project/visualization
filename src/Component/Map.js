@@ -87,22 +87,19 @@ const MapComponent = () => {
         return marker !== undefined ? props.shapes[marker.Id_geonames] === undefined ? <Marker position={[marker.latitude, marker.longitude]}>
             <Popup>
                 <h3>{marker.name}</h3>
-                <ul>
-                    <li>Latitude : {marker.latitude}</li>
-                    <li>Longitude : {marker.longitude}</li>
-                    {marker.altitude !== undefined ? <li>Altitude : {marker.altitude}</li> : null}
-                    {marker.alternate_names !== undefined ? <li> Noms alternatifs : <ul> {marker.alternate_names.map(
-                        e => <li>{e}</li>
-                    )} </ul></li> : null}
-                    {marker.parent_country !== undefined ? <li>Pays : {marker.parent_country}</li> : null}
-                    {marker.parent_names !== undefined ? <li> Parents : <ul> {marker.parent_names.map(
-                        e => <li>{e}</li>
-                    )} </ul></li> : null}
-                    <li>Score : {marker.confidence_score}</li>
-                    <li><a href={"https://" + props.lang + ".wikipedia.org/wiki?curid=" + marker.wikipediaExternalRef}
-                           target="_blank" rel="noreferrer"> wikipedia</a></li>
-
-                </ul>
+                <div><span className="font-weight-bold">Latitude</span>: {marker.latitude}</div>
+                <div><span className="font-weight-bold">Longitude</span> : {marker.longitude}</div>
+                {marker.altitude !== undefined ? <div><span className="font-weight-bold">Altitude</span> : {marker.altitude}</div> : null}
+                {marker.alternate_names !== undefined ? <div><span className="font-weight-bold">Alternative names</span>: {marker.alternate_names.map(
+                    e => <span>{e}, </span>
+                )} </div> : null}
+                {marker.parent_country !== undefined ? <div><span className="font-weight-bold">Country</span>: {marker.parent_country}</div> : null}
+                {marker.parent_names !== undefined ? <div><span className="font-weight-bold">Parents</span>: {marker.parent_names.map(
+                        e => <span>{e}, </span>)
+                }</div> : null}
+                <div><span className="font-weight-bold">Score</span>: {marker.confidence_score}</div>
+                <div><a href={"https://" + props.lang + ".wikipedia.org/wiki?curid=" + marker.wikipediaExternalRef}
+                       target="_blank" rel="noreferrer">Wikipedia</a></div>
             </Popup>
         </Marker> :<GeoJSON data = {props.shapes[marker.Id_geonames]}>
             <Popup>
@@ -154,7 +151,7 @@ const MapComponent = () => {
 
             <div className="component">
                 <span className="content_header">Map :</span>
-                <MapContainer center={[18, 105]} zoom={5} scrollWheelZoom={true} style={{ height: '100vh' , width: '100wh'}}>
+                <MapContainer center={[18, 105]} zoom={5} scrollWheelZoom={true} style={{ height: '35vh' }}>
                     <TileLayer
                         attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
                         /*url="https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png"*/
