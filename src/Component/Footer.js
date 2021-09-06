@@ -1,8 +1,8 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './Footer.css';
-//import logo from '../logoPoly.png';
-import logo2 from '../inriaLogo.png'
+import logo from './images/logo_inria.png'
+import logo_uca from './images/logo_uca.png'
 
 
 export const Footer = () => (
@@ -10,57 +10,27 @@ export const Footer = () => (
 
         <div className="footer-wrap">
             <div className="widgetFooter">
-                <h4 className="uppercase">useful links</h4>
+                <h4 className="">Useful links</h4>
                 <ul id="footerUsefulLink">
-                    <li title="About US">
-                        <a href="www.google.fr">Github</a>
+                    <li>
+                        <a href="https://issa.cirad.fr/">Project website</a>
                     </li>
-                    <li title="Our Team">
-                        <a href="www.google.fr">Report</a>
+                    <li>
+                        <a href="https://github.com/issa-project">Github</a>
                     </li>
-                    <li title="Gallery">
-
-                        <a href="www.google.fr">Base de donnée</a>
-                    </li>
-                    <li title="Contact Us">
-
-                        <a href="www.google.fr">links</a>
+                    <li>
+                        <a href="mailto:anne.toulet@cirad.fr">Contact</a>
                     </li>
                 </ul>
             </div>
 
             <div className="widgetFooter">
-                <h4 className="uppercase">Social media links</h4>
-                <ul id="footerMediaLinks">
-                    <li className="media1" title="Facebook">
-                        <a className="fb" href="www.google.fr">facebook</a>
-                    </li>
-                    <li className="media2" title="Twitter">
+                <img src={logo} width={150} alt="Inria" />
 
-                        <a className="twit" href="www.google.fr">Twitter</a>
-                    </li>
-                    <li className="media3" title="Instagram">
-
-                        <a className="insta" href="www.google.fr">instagram</a>
-                    </li>
-                    <li className="media4" title="Github">
-
-                        <a className="git" href="www.google.fr">Github</a>
-                    </li>
-                </ul>
             </div>
 
-            <div className="footer-wrap">
-                <div className="widgetFooter">
-                    <h4 className="uppercase">Member of the project</h4>
-                    <ul id="footerMediaLinks">
-                        <li>Youssef Mekouar</li>
-                    </ul>
-                </div>
-            </div>
-
-            <div className="footer-wrap">
-                <img src={logo2} height={150} width={150} alt="Polytech" />
+            <div className="widgetFooter">
+                <img src={logo_uca} width={100} alt="Inria" />
             </div>
 
         </div>
