@@ -90,8 +90,8 @@ const TextHighlight = () => {
     function wrap(id, text, begin, e, result){
         let s1 = text.substring(begin, e.startPos);
         let w ="".substring(0);
-        console.log(e.nameEntity+" : "+ e.startPos +" : "+e.endPos);
-        console.log("text_s11 : "+ s1 + " begin : " +begin + " startPos : " + e.startPos);
+        //console.log(e.nameEntity+" : "+ e.startPos +" : "+e.endPos);
+        //console.log("text_s11 : "+ s1 + " begin : " +begin + " startPos : " + e.startPos);
         if (e.endPos === undefined){
             w = text.substring(e.startPos, e.startPos + (e.nameEntity).length);
             console.log("----> word"+ (e.nameEntity).length);
