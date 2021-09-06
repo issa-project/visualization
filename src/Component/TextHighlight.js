@@ -73,14 +73,14 @@ const TextHighlight = () => {
 
     function cleanArray(list) {
         let arrayClean = list ;
+        //let arrayWithoutDoble = Array.from(new Set(arrayClean));
         for (let i = 0; i < arrayClean.length - 1; i++) {
             if(arrayClean[i].nameEntity === list[i+1].nameEntity.toLowerCase()){
                 list.splice(i +1 ,1);
             }
-            if(arrayClean[i].nameEntity === arrayClean[i].nameEntity.toUpperCase()){
+            if(arrayClean[i].nameEntity === list[i].nameEntity.toUpperCase()){
                 list.splice(i,1);
             }
-
             if(i === 2) {
                 list.splice(i,1);
             }

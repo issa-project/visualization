@@ -1,5 +1,5 @@
 import React ,{useState , useEffect} from 'react';
-import DataInfoDescripteur from "./DataInfoDescripteur";
+import DataInfo from "./DataInfo";
 import "./KeyWord.css";
 import axios from "axios";
 
@@ -15,7 +15,7 @@ const KeyWord = () => {
 
 
     useEffect(() => {
-        axios("http://localhost:"+process.env.REACT_APP_PORT+"/getArticleDescriptors/"+process.env.REACT_APP_ARTICLE_ID)
+        axios(process.env.REACT_APP_BACKEND_URL+"/getArticleDescriptors/"+process.env.REACT_APP_ARTICLE_ID)
             .then(response => {
                 //console.log(response.data.result);
                 setListDescriptor(response.data.result);
@@ -37,7 +37,7 @@ const KeyWord = () => {
         let content = descriptor.nameDescriptor.substring(12,descriptor.nameDescriptor.length -1);
         let link = descriptor.linkDescriptor.substring(0);
             result.push (
-                <DataInfoDescripteur index={id} word={title} title={title} content={content} link={link}  />
+                <DataInfo index={id} word={title} title={title} content={content} link={link}  />
                 );
             result.push(<span>          </span>);
     }
