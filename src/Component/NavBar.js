@@ -24,7 +24,6 @@ class NavBar extends Component {
                     <Button variant="outline-light">Search</Button>
                 </Form>
             </Navbar>
-
         );
     }
 }

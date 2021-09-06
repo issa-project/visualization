@@ -31,7 +31,7 @@ const ArticleInfo = () => {
      * http://localhost:3000/getArticleMetadata/f74923b3ce82c984a7ae3e0c2754c9e33c60554f
      */
     useEffect(() => {
-        axios(process.env.REACT_APP_BACKEND_URL+"/getArticleMetadata/"+process.env.REACT_APP_ARTICLE_ID)
+        axios(process.env.REACT_APP_BACKEND_URL+"/getArticleMetadata/" + process.env.REACT_APP_ARTICLE_ID)
             .then(response => {
                 setTitle(response.data.result[0].title);
                 setDate(response.data.result[0].date.substring(0, 4));
@@ -41,8 +41,8 @@ const ArticleInfo = () => {
                 setLicense(response.data.result[0].license);
 
                 var lang = response.data.result[0].lang;
-                if (lang == "eng") lang = "English"
-                else if (lang == "fre") lang = "French";
+                if (lang === "eng") lang = "English"
+                else if (lang === "fre") lang = "French";
                 setLang(lang);
             })
     }, []);

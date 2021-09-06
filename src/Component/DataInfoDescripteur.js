@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
 import { Button, Popover, PopoverHeader, PopoverBody } from 'reactstrap';
 import wikiLogo from './images/wiki.png';
+import './DataInfo.css';
 //import geoLogo from 'Geo.png';
-
-import 'bootstrap/dist/css/bootstrap.min.css';
 
 /**
  * Ce Composant qui est un hook représente la pop-up affiché dans le composant textHilight :

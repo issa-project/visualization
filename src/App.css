@@ -1,3 +1,13 @@
+.navbar {
+  padding: 0;
+}
+#logo_agritrop {
+  height: 60px;
+}
+#logo_cirad {
+  height: 80px;
+}
+
 .component {
   padding: 20px;
   margin-top: 20px;
@@ -16,26 +26,27 @@ h1 {
   margin: 0 0 15px;
 }
 
-.divider{
+.content_header {
+  font-family: 'Yanone Kaffeesatz', sans-serif;
+  font-size: 18px;
+  font-weight: normal;
+  color: #e2007a;
+  line-height: 1;
+}
+
+.divider {
   padding-top: 5px;
   padding-bottom: 5px;
   border-top: 1px dotted #e2007a;
 }
 
+/* ------------------------------------------------------------------------------ */
+/* Utility styles */
+/* ------------------------------------------------------------------------------ */
+
 .block {
   display: block;
 }
-
 .inline {
   display: inline;
-}
-
-.navbar {
-  padding: 0;
-}
-#logo_agritrop {
-  height: 60px;
-}
-#logo_cirad {
-  height: 80px;
 }
