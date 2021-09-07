@@ -1,10 +1,10 @@
 import './App.css';
 
-import TextHighlight from './Component/TextHighlight';
+import Abstract from './Component/Abstract';
 import {Footer} from './Component/Footer';
-import KeyWord from './Component/KeyWord';
+import Descriptors from './Component/Descriptors';
 import NavBar from './Component/NavBar';
-import ArticleInfo from "./Component/ArticleInfo";
+import ArticleMetadata from "./Component/ArticleMetadata";
 import MapComponent from "./Component/Map";
 
 
@@ -13,9 +13,9 @@ function App() {
     return (
         <div className="container">
             <NavBar/>
-            <ArticleInfo/>
-            <TextHighlight/>
-            <KeyWord/>
+            <ArticleMetadata/>
+            <Abstract/>
+            <Descriptors/>
             <MapComponent/>
             <Footer/>
         </div>

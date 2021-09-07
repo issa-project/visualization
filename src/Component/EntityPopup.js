@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {Button, Popover, PopoverHeader, PopoverBody} from 'reactstrap';
 import wikiLogo from './images/wiki.png';
-import './DataInfo.css';
+import './EntityPopup.css';
 
 /**
  * Ce Composant qui est un hook représente la pop-up affiché dans le composant textHilight :
@@ -9,7 +9,7 @@ import './DataInfo.css';
  * @returns {*}
  * @constructor
  */
-const DataInfo = (props) => {
+const EntityPopup = (props) => {
     const [popoverOpen, setPopoverOpen] = useState(false);
 
     const toggle = () => setPopoverOpen(!popoverOpen);
@@ -33,4 +33,4 @@ const DataInfo = (props) => {
     );
 }
 
-export default DataInfo;
+export default EntityPopup;

@@ -1,13 +1,13 @@
 import React, {useState, useEffect} from 'react';
-import DataInfo from "./DataInfo";
+import EntityPopup from "./EntityPopup";
 import axios from "axios";
 
 /**
  * @Presentation
- * Ce composant nous affiche la liste des descripteurs en utilisant la fonction wrap
+ * Ce composant affiche la liste des descripteurs en utilisant la fonction wrap
  */
 
-const KeyWord = () => {
+const Descriptors = () => {
 
     const [listDescriptor, setListDescriptor] = useState('');
 
@@ -21,11 +21,11 @@ const KeyWord = () => {
 
     /**
      * @Presentation
-     * Cette fonction nous permet de highLighter les mots et de wraper le mot en question dans une pop-up grace au composant DataInfo
+     * Cette fonction nous permet de highLighter les mots et de wraper le mot en question dans une pop-up grace au composant EntityPopup
      *
      * @param id : c'est l'id de chaque pop-up
      * @param descriptor : C'est l'objet qui contient les données de chaque descripteur
-     * @param result : le composant DataInfo avec les bonnes avec les informations saisie
+     * @param result : le composant EntityPopup avec les bonnes avec les informations saisies
      */
 
     function wrap(id, descriptor, result) {
@@ -33,7 +33,7 @@ const KeyWord = () => {
         let content = descriptor.nameDescriptor.substring(12, descriptor.nameDescriptor.length - 1);
         let link = descriptor.linkDescriptor.substring(0);
         result.push(
-            <DataInfo index={id} word={title} title={title} content={content} link={link}/>
+            <EntityPopup index={id} word={title} title={title} content={content} link={link}/>
         );
         result.push(<span>          </span>);
     }
@@ -54,4 +54,4 @@ const KeyWord = () => {
         </div>
     </div>
 };
-export default KeyWord;
+export default Descriptors;

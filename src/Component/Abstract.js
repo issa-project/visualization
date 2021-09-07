@@ -1,17 +1,17 @@
 import React, {useEffect, useState} from 'react';
 import './TextHighlight.css';
-import DataInfo from "./DataInfo";
+import EntityPopup from "./EntityPopup";
 import Button from 'react-bootstrap/Button'
 import axios from 'axios';
 
 /**
  * @Presentation
- * Ce composant s'occupe de l'affichage des entités nommés highlighter dans le résumé de l'article
+ * Ce composant s'occupe de l'affichage des entités nommés highlighted dans le résumé de l'article
  *
  * @return
  * Ce composant retourne le deuxième composant afficher dans notre interface web
  */
-const TextHighlight = () => {
+const Abstract = () => {
 
     const [resume, setResume] = useState('');
     const [namedEntities, setEntities] = useState('');
@@ -93,8 +93,8 @@ const TextHighlight = () => {
         //console.log(e.nameEntity+" : "+ e.startPos +" : "+e.endPos);
         //console.log("text_s11 : "+ s1 + " begin : " +begin + " startPos : " + e.startPos);
         if (e.endPos === undefined) {
-            w = text.substring(e.startPos, e.startPos + (e.nameEntity).length);
-            console.log("----> word" + (e.nameEntity).length);
+            w = text.substring(e.startPos, e.startPos + e.nameEntity.length);
+            //console.log("----> word" + (e.nameEntity).length);
         } else {
             w = text.substring(e.startPos, e.endPos + 1);
             //console.log("----> word"+ w);
@@ -104,7 +104,7 @@ const TextHighlight = () => {
         let link = e.link.substring(0);
         result.push(<span> {s1}</span>);
         result.push(
-            <DataInfo index={id} word={w} title={title} content={content} link={link}/>
+            <EntityPopup index={id} word={w} title={title} content={content} link={link}/>
         )
     }
 
@@ -153,7 +153,7 @@ const TextHighlight = () => {
         begin = cleanList[i].startPos + cleanList[i].nameEntity.length + 1;
         //-->console.log(begin);
     }
-    console.log(begin);
+    //console.log(begin);
     let r = resume.substring(begin);
     //console.log(r);
     //console.log(result);
@@ -167,4 +167,4 @@ const TextHighlight = () => {
     );
 };
 
-export default TextHighlight;
+export default Abstract;
