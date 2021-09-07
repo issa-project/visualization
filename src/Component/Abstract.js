@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import './TextHighlight.css';
-import EntityPopup from "./EntityPopup";
+import EntityHighlight from "./EntityHighlight";
 import Button from 'react-bootstrap/Button'
 import axios from 'axios';
 
@@ -104,7 +103,7 @@ const Abstract = () => {
         let link = e.link.substring(0);
         result.push(<span> {s1}</span>);
         result.push(
-            <EntityPopup index={id} word={w} title={title} content={content} link={link}/>
+            <EntityHighlight index={id} word={w} title={title} content={content} link={link}/>
         )
     }
 
@@ -131,7 +130,7 @@ const Abstract = () => {
 
         return (
             <Button
-                className="buttonA"
+                className="annotate-button"
                 variant="secondary"
                 //disabled={isLoading}
                 onClick={isLoading ? clickAgain : handleClick}

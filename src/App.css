@@ -43,6 +43,26 @@ h1 {
     border-top: 1px dotted #e2007a;
 }
 
+.annotate-button {
+    display: block;
+    padding: 2px 20px;
+    border-radius: 3px;
+    cursor: pointer;
+    text-align: center;
+    -webkit-transition: all ease-in-out 300ms;
+    transition: all ease-in-out 300ms;
+    margin-top: 10px;
+    background-color: grey;
+    font-size: 1em;
+}
+
+.annotate-button:hover {
+    -webkit-transform: translate(0px, -0px) scale(1.1);
+    transform: translate(0px, -0px) scale(1.1);
+    background-color: grey;
+    color: whitesmoke;
+}
+
 /* ------------------------------------------------------------------------------ */
 /* Utility styles */
 /* ------------------------------------------------------------------------------ */

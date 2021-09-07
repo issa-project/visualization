@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import './ArticleMetadata.css';
+import './Metadata.css';
 import fileIcon from './images/file_icon.png';
 import axios from 'axios';
 
@@ -8,13 +8,13 @@ require('dotenv').config();
 
 /**
  * @Presentation
- * C'est le composant ArticleMetadata qui nous affiche les informations de présentation d'un article :
+ * C'est le composant Metadata qui nous affiche les informations de présentation d'un article :
  * titre,date, type de l'article , date de publication ...
  * @returns ce composant nous retourne le premier composant qui le composant de présentation de l'article
  *
  */
 
-const ArticleMetadata = () => {
+const Metadata = () => {
 
     const [title, setTitle] = useState('');
     const [date, setDate] = useState('');
@@ -113,4 +113,4 @@ const ArticleMetadata = () => {
     );
 };
 
-export default ArticleMetadata;
+export default Metadata;

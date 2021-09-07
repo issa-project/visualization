@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import EntityPopup from "./EntityPopup";
+import EntityHighlight from "./EntityHighlight";
 import axios from "axios";
 
 /**
@@ -21,11 +21,11 @@ const Descriptors = () => {
 
     /**
      * @Presentation
-     * Cette fonction nous permet de highLighter les mots et de wraper le mot en question dans une pop-up grace au composant EntityPopup
+     * Cette fonction nous permet de highLighter les mots et de wraper le mot en question dans une pop-up grace au composant EntityHighlight
      *
      * @param id : c'est l'id de chaque pop-up
      * @param descriptor : C'est l'objet qui contient les données de chaque descripteur
-     * @param result : le composant EntityPopup avec les bonnes avec les informations saisies
+     * @param result : le composant EntityHighlight avec les bonnes avec les informations saisies
      */
 
     function wrap(id, descriptor, result) {
@@ -33,7 +33,7 @@ const Descriptors = () => {
         let content = descriptor.nameDescriptor.substring(12, descriptor.nameDescriptor.length - 1);
         let link = descriptor.linkDescriptor.substring(0);
         result.push(
-            <EntityPopup index={id} word={title} title={title} content={content} link={link}/>
+            <EntityHighlight index={id} word={title} title={title} content={content} link={link}/>
         );
         result.push(<span>          </span>);
     }

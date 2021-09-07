@@ -1,0 +1,19 @@
+.linkContent {
+    background-color: white;
+    padding: 5px;
+}
+
+.entity {
+}
+
+.highlight-entity {
+    padding: 1px;
+    margin: px;
+    font-size: 1em;
+    border: 0px;
+    background-color: lightgrey;
+    color: black;
+    line-height: 1em;
+    border-radius: 3px;
+    vertical-align: inherit;
+}
