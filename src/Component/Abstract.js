@@ -27,12 +27,11 @@ const Abstract = () => {
      * ---> "An enhanced polymerase chain reaction (PCR) assay to detect the coronavirus associated with se ..."
      *
      * @Adresse: http://localhost:3000/getArticleMetadata/f74923b3ce82c984a7ae3e0c2754c9e33c60554f
-     *
      */
     useEffect(() => {
         axios(process.env.REACT_APP_BACKEND_URL + "/getArticleMetadata/" + process.env.REACT_APP_ARTICLE_ID)
             .then(response => {
-                let abstract =  response.data.result[0].abs.substr(9,);
+                let abstract = response.data.result[0].abs.substr(9,);
                 console.log("Retrieved abstract: " + abstract);
                 setArticleAbstract(abstract);
             })
@@ -50,7 +49,22 @@ const Abstract = () => {
     useEffect(() => {
         axios(process.env.REACT_APP_BACKEND_URL + "/getAbstractNamedEntities/" + process.env.REACT_APP_ARTICLE_ID)
             .then(response => {
-                let sortedList = response.data.result.sort(sortByStartPos);
+                // Keep only the NEs whithin the list of accepted domains
+                var domains = process.env.REACT_APP_ENTITY_DOMAINS.split("|");
+                var entities = [];
+                response.data.result.forEach(entity => {
+                    var inDomains = false;
+                    domains.forEach(domain => {
+                        if (entity.entityUri.includes(domain)) {
+                            inDomains = true;
+                        }
+                    })
+                    if (inDomains) {
+                        entities.push(entity);
+                    }
+                });
+
+                let sortedList = entities.sort(sortByStartPos);
                 console.log("Retrieved " + sortedList.length + " entities.");
                 console.log("Sorted list of entities: ");
                 for (let i = 0; i < sortedList.length - 1; i++) {
@@ -66,8 +80,7 @@ const Abstract = () => {
      * @param list
      */
     function cleanArray(list) {
-        let arrayClean = list;
-        //let arrayWithoutDoble = Array.from(new Set(arrayClean));
+        var arrayClean = list;
         for (let i = 0; i < arrayClean.length - 1; i++) {
             if (arrayClean[i].entityText === list[i + 1].entityText.toLowerCase()) {
                 list.splice(i + 1, 1);
@@ -79,7 +92,6 @@ const Abstract = () => {
                 list.splice(i, 1);
             }
         }
-
         //console.log("cleanList --->" + arrayClean);
         return arrayClean;
     }
@@ -104,12 +116,12 @@ const Abstract = () => {
             w = text.substring(e.startPos, e.endPos + 1);
             //console.log("----> word"+ w);
         }
-        let title = e.entityText.substring(0);
-        let content = e.entityText.substring(0);
-        let link = e.link.substring(0);
+        let title = e.entityText;
+        let content = e.entityLabel;
+        let entityUri = e.entityUri;
         result.push(<span> {s1}</span>);
         result.push(
-            <EntityHighlight index={id} word={w} title={title} content={content} link={link}/>
+            <EntityHighlight index={id} word={w} title={title} content={content} entityUri={entityUri}/>
         )
     }
 
@@ -146,8 +158,6 @@ const Abstract = () => {
         );
     }
 
-
-    //let result = [];
     let begin = 0;
     let cleanList = cleanArray(namedEntities);
     //console.log("List of entities: " + cleanList);
@@ -166,7 +176,8 @@ const Abstract = () => {
     result.push(<span>{r}</span>);
 
     return (
-        <div className="component"><span className="content_header">Abstract</span>: {isLoading ? result : articleAbstract}
+        <div className="component"><span
+            className="content_header">Abstract</span>: {isLoading ? result : articleAbstract}
             <LoadingButton/>
         </div>
     );

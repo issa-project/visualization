@@ -31,9 +31,9 @@ const Descriptors = () => {
     function wrap(id, descriptor, result) {
         let title = descriptor.nameDescriptor.substring(12, descriptor.nameDescriptor.length - 1);
         let content = descriptor.nameDescriptor.substring(12, descriptor.nameDescriptor.length - 1);
-        let link = descriptor.linkDescriptor.substring(0);
+        let entityUri = descriptor.linkDescriptor;
         result.push(
-            <EntityHighlight index={id} word={title} title={title} content={content} link={link}/>
+            <EntityHighlight index={id} word={title} title={title} content={content} entityUri={entityUri}/>
         );
         result.push(<span>          </span>);
     }
@@ -42,8 +42,8 @@ const Descriptors = () => {
 
     let result = [];
     for (let i = 0; i < descriptor.length; i++) {
-        console.log("taille ----------------_>" + descriptor.length);
-        console.log(descriptor[i]);
+        //console.log("taille ----------------_>" + descriptor.length);
+        //console.log(descriptor[i]);
         wrap("word-desc-" + i, descriptor[i], result);
     }
 
