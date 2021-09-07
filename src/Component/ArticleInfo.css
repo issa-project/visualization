@@ -1,67 +1,33 @@
 
-.compoTitle{
-    height: 100%;
-    width: 80%;
-    padding: 5%;
-    margin: 10%;
-    border-color:whitesmoke;
-    border-width:8px;
-    border-style: solid;
-    border-radius: 30px;
-    background-color: white;
-    font-family: "Times New Roman";
-    font-size: 20px;
-    font-weight: bold;
+.date {
+    display: inline;
 }
-
-.ArticleTitle{
-text-align: center;
-    border-bottom: #00CED1;
-    border-width: 10px;
-
+.type {
+    display: inline;
 }
-
-.Type{
-display: block;
-}
-
-.date{
-    display: block;
-}
-.type{
-    display: block;
-}
-
-.auteurs{
-    display: block;
-
+.authors {
+    display: inline;
 }
 
 
 /*
 Dans cette partie on définis tout les caractéristiques css du composant de téléchargement de PDF
  */
-.pdfDowl {
-    width: 50%;
-    text-align: center;
-    display: inline-block;
 
-}
-.Divider{
-    margin-left: 10%;
-   border-top: 1px solid grey;
-   position: absolute;
-    width: 50%;
-    text-align: center;
-
-
-}
-
-.subPdfDowl{
+.namePDF {
     display: block;
 }
 
-.namePDF{
+span.document_filename {
     display: block;
+    font-size: 80%;
+    line-height: 20px;
+}
 
+.doc_icon {
+    padding: 0 5px 0 0px;
+}
+
+.metadata {
+    font-size: 15px;
 }

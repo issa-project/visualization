@@ -1,15 +1,7 @@
-.entity{
-    width: 60px;
-    background-color: #61dafb;
-}
-
 .linkContent {
-    background-color: grey;
+    background-color: lightgrey;
 }
 
-.papa{
-    background-color: #ffc838;
-}
-.buttonEntity{
-    height:  30px;
+.dataInfo {
+    width: 60px;
 }

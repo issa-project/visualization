@@ -1,38 +1,52 @@
-.App {
-  text-align: center;
+.navbar {
+  padding: 0;
+}
+#logo_agritrop {
+  height: 60px;
+}
+#logo_cirad {
+  height: 80px;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.component {
+  padding: 20px;
+  margin-top: 20px;
+  border-color:whitesmoke;
+  border-width:4px;
+  border-style: solid;
+  border-radius: 10px;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+h1 {
+  text-align: left;
+  font-family: 'Yanone Kaffeesatz', 'sans-serif';
+  font-size: 28px;
+  font-weight: 400;
+  color: #e2007a;
+  margin: 0 0 15px;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.content_header {
+  font-family: 'Yanone Kaffeesatz', sans-serif;
+  font-size: 18px;
+  font-weight: normal;
+  color: #e2007a;
+  line-height: 1;
 }
 
-.App-link {
-  color: #61dafb;
+.divider {
+  padding-top: 5px;
+  padding-bottom: 5px;
+  border-top: 1px dotted #e2007a;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+/* ------------------------------------------------------------------------------ */
+/* Utility styles */
+/* ------------------------------------------------------------------------------ */
+
+.block {
+  display: block;
+}
+.inline {
+  display: inline;
 }

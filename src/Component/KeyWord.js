@@ -1,6 +1,5 @@
 import React ,{useState , useEffect} from 'react';
 import DataInfo from "./DataInfo";
-import "./KeyWord.css";
 import axios from "axios";
 
 
@@ -54,8 +53,8 @@ const KeyWord = () => {
         }
 
         return <div>
-            <div className="compoKeyWord">
-                <div className="Title"> Agritrop Descriptor : </div>
+            <div className="component">
+                <div className="content_header">Descriptors:</div>
                 <div> {result} </div>
             </div>
 
