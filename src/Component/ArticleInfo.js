@@ -1,7 +1,8 @@
-import React ,{ useEffect , useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import './ArticleInfo.css';
 import fileIcon from './images/file_icon.png';
 import axios from 'axios';
+
 require('dotenv').config();
 
 
@@ -31,7 +32,7 @@ const ArticleInfo = () => {
      * http://localhost:3000/getArticleMetadata/f74923b3ce82c984a7ae3e0c2754c9e33c60554f
      */
     useEffect(() => {
-        axios(process.env.REACT_APP_BACKEND_URL+"/getArticleMetadata/" + process.env.REACT_APP_ARTICLE_ID)
+        axios(process.env.REACT_APP_BACKEND_URL + "/getArticleMetadata/" + process.env.REACT_APP_ARTICLE_ID)
             .then(response => {
                 setTitle(response.data.result[0].title);
                 setDate(response.data.result[0].date.substring(0, 4));
@@ -59,59 +60,57 @@ const ArticleInfo = () => {
      *
      */
 
-    useEffect( () => {
-        axios(process.env.REACT_APP_BACKEND_URL+"/getArticleAuthors/"+process.env.REACT_APP_ARTICLE_ID)
+    useEffect(() => {
+        axios(process.env.REACT_APP_BACKEND_URL + "/getArticleAuthors/" + process.env.REACT_APP_ARTICLE_ID)
             .then(response => {
                 let authorsST = ''.substring(0);
                 let listAuthors = response.data.result;
                 listAuthors.forEach(element =>
-                    authorsST = authorsST + element.authors.replace(',' , '') + ", " );
+                    authorsST = authorsST + element.authors.replace(',', '') + ", ");
                 // Remove the last ", "
                 authorsST = authorsST.substring(0, authorsST.length - 2);
                 //console.log(listAuthors[2].authors);
                 setAuthors(authorsST);
                 //console.log("authors -----------------------> :"+ authorsST);
             })
-
     });
 
 
-
     return (
-            <div className="component">
-                <div className="">
-                    <div>
-                        <h1 className="">{title} </h1>
-                        <p>
-                            <span className="metadata font-weight-bold"> {authors}. </span>
-                            <span className="metadata">{date}. </span>
-                            <span className="metadata font-italic"> {pub}. </span>
-                            <span className="block"><a href={url}>{url}</a></span>
-                        </p>
-                    </div>
-                </div>
-
-                <div className="divider"></div>
-
-                <div className="">
-                    <tr>
-                        <td valign="middle" align="right">
-                            <a href={linkPdf}>
-                                <img className="doc_icon" src={fileIcon} alt="File icon"/>
-                            </a>
-                        </td>
-
-                        <td valign="top" align="left">
-                            <span className="block">Language: {lang}</span>
-                            <span className="block">Licence: {license}</span>
-                            <span className="block document_filename">{linkPdf}</span>
-                            <span className="block"><a href={linkPdf}>Download</a></span>
-                        </td>
-                    </tr>
-
+        <div className="component">
+            <div className="">
+                <div>
+                    <h1 className="">{title} </h1>
+                    <p>
+                        <span className="metadata font-weight-bold"> {authors}. </span>
+                        <span className="metadata">{date}. </span>
+                        <span className="metadata font-italic"> {pub}. </span>
+                        <span className="block"><a href={url}>{url}</a></span>
+                    </p>
                 </div>
             </div>
-        );
+
+            <div className="divider"></div>
+
+            <div className="">
+                <tr>
+                    <td valign="middle" align="right">
+                        <a href={linkPdf}>
+                            <img className="doc_icon" src={fileIcon} alt="File icon"/>
+                        </a>
+                    </td>
+
+                    <td valign="top" align="left">
+                        <span className="block">Language: {lang}</span>
+                        <span className="block">Licence: {license}</span>
+                        <span className="block document_filename">{linkPdf}</span>
+                        <span className="block"><a href={linkPdf}>Download</a></span>
+                    </td>
+                </tr>
+
+            </div>
+        </div>
+    );
 };
 
 export default ArticleInfo;

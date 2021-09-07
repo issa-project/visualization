@@ -1,8 +1,7 @@
-import React, { useState } from 'react';
-import { Button, Popover, PopoverHeader, PopoverBody } from 'reactstrap';
+import React, {useState} from 'react';
+import {Button, Popover, PopoverHeader, PopoverBody} from 'reactstrap';
 import wikiLogo from './images/wiki.png';
 import './DataInfo.css';
-//import geoLogo from 'Geo.png';
 
 /**
  * Ce Composant qui est un hook représente la pop-up affiché dans le composant textHilight :
@@ -23,8 +22,8 @@ const DataInfo = (props) => {
             <Popover placement="top" isOpen={popoverOpen} target={props.index} toggle={toggle}>
                 <PopoverHeader> {props.title} </PopoverHeader>
                 <PopoverBody> {props.content} </PopoverBody>
-                <div className= "linkContent">
-                    <a href={props.link}>
+                <div className="linkContent">
+                    <a href={props.link} target="_external_entity">
                         <span className="imgLink"><img src={wikiLogo} alt="Wikidata logo"/> </span>
                         <span>{props.title}</span>
                     </a>

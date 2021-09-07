@@ -31,7 +31,7 @@ const TextHighlight = () => {
      *
      */
     useEffect(() => {
-        axios(process.env.REACT_APP_BACKEND_URL+"/getArticleMetadata/" + process.env.REACT_APP_ARTICLE_ID)
+        axios(process.env.REACT_APP_BACKEND_URL + "/getArticleMetadata/" + process.env.REACT_APP_ARTICLE_ID)
             .then(response => {
                 //console.log((response.data.result[0].abs).substr(9,));
                 setResume((response.data.result[0].abs).substr(9,));
@@ -49,7 +49,7 @@ const TextHighlight = () => {
      *
      */
     useEffect(() => {
-        axios(process.env.REACT_APP_BACKEND_URL+"/getArticleNamedEntities/" + process.env.REACT_APP_ARTICLE_ID)
+        axios(process.env.REACT_APP_BACKEND_URL + "/getArticleNamedEntities/" + process.env.REACT_APP_ARTICLE_ID)
             .then(response => {
                 setEntities(response.data.result.sort(compare));
             })
@@ -61,21 +61,21 @@ const TextHighlight = () => {
      * @param list
      */
     function cleanArray(list) {
-        let arrayClean = list ;
+        let arrayClean = list;
         //let arrayWithoutDoble = Array.from(new Set(arrayClean));
         for (let i = 0; i < arrayClean.length - 1; i++) {
-            if(arrayClean[i].nameEntity === list[i+1].nameEntity.toLowerCase()){
-                list.splice(i +1 ,1);
+            if (arrayClean[i].nameEntity === list[i + 1].nameEntity.toLowerCase()) {
+                list.splice(i + 1, 1);
             }
-            if(arrayClean[i].nameEntity === list[i].nameEntity.toUpperCase()){
-                list.splice(i,1);
+            if (arrayClean[i].nameEntity === list[i].nameEntity.toUpperCase()) {
+                list.splice(i, 1);
             }
-            if(i === 2) {
-                list.splice(i,1);
+            if (i === 2) {
+                list.splice(i, 1);
             }
         }
 
-        console.log("cleanList --->"+arrayClean);
+        console.log("cleanList --->" + arrayClean);
         return arrayClean;
     }
 
@@ -87,16 +87,15 @@ const TextHighlight = () => {
      * @param e
      * @param result
      */
-    function wrap(id, text, begin, e, result){
+    function wrap(id, text, begin, e, result) {
         let s1 = text.substring(begin, e.startPos);
-        let w ="".substring(0);
+        let w = "".substring(0);
         //console.log(e.nameEntity+" : "+ e.startPos +" : "+e.endPos);
         //console.log("text_s11 : "+ s1 + " begin : " +begin + " startPos : " + e.startPos);
-        if (e.endPos === undefined){
+        if (e.endPos === undefined) {
             w = text.substring(e.startPos, e.startPos + (e.nameEntity).length);
-            console.log("----> word"+ (e.nameEntity).length);
-        }
-        else {
+            console.log("----> word" + (e.nameEntity).length);
+        } else {
             w = text.substring(e.startPos, e.endPos + 1);
             //console.log("----> word"+ w);
         }
@@ -104,7 +103,7 @@ const TextHighlight = () => {
         let content = e.nameEntity.substring(0);
         let link = e.link.substring(0);
         result.push(<span> {s1}</span>);
-        result.push (
+        result.push(
             <DataInfo index={id} word={w} title={title} content={content} link={link}/>
         )
     }
@@ -116,26 +115,26 @@ const TextHighlight = () => {
      * @param b
      * @returns {number}
      */
-    function compare( a, b ) {
-        if ( a.startPos < b.startPos ){
-        return -1;
-    }
-    if ( a.startPos > b.startPos ){
-        return 1;
-    }
-    return 0;
+    function compare(a, b) {
+        if (a.startPos < b.startPos) {
+            return -1;
+        }
+        if (a.startPos > b.startPos) {
+            return 1;
+        }
+        return 0;
     }
 
     function LoadingButton() {
         const handleClick = () => setLoading(true);
-        const clickAgain =() => setLoading(false);
+        const clickAgain = () => setLoading(false);
 
         return (
             <Button
                 className="buttonA"
                 variant="secondary"
                 //disabled={isLoading}
-                onClick={isLoading ? clickAgain : handleClick }
+                onClick={isLoading ? clickAgain : handleClick}
             >
                 {isLoading ? 'Resume' : 'Annotate'}
             </Button>
@@ -159,10 +158,9 @@ const TextHighlight = () => {
     //console.log(r);
     //console.log(result);
 
-
     result.push(<span>{r}</span>);
 
-    return(
+    return (
         <div className="component"><span className="content_header">Abstract</span>: {isLoading ? result : resume}
             <LoadingButton/>
         </div>

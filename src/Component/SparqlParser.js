@@ -1,6 +1,5 @@
 import {execLibRequest} from 'UseSparqlLib'
 
-
 /**
  *
  * @type {string}
@@ -18,11 +17,11 @@ where {
 }LIMIT 10`;
 
 export const execRequest = (querry) => {
-   return execLibRequest(endpoint, querry)
+    return execLibRequest(endpoint, querry)
 };
 
 export const requestTitle = () => {
-   return execRequest(querryTitle)
+    return execRequest(querryTitle)
 };
 
 

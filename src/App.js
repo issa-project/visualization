@@ -1,7 +1,7 @@
 import './App.css';
 
 import TextHighlight from './Component/TextHighlight';
-import { Footer }  from './Component/Footer';
+import {Footer} from './Component/Footer';
 import KeyWord from './Component/KeyWord';
 import NavBar from './Component/NavBar';
 import ArticleInfo from "./Component/ArticleInfo";

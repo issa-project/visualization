@@ -1,4 +1,3 @@
-
 import * as d3 from 'd3-sparql';
 
 export const execLibRequest = async (url, query) => {
