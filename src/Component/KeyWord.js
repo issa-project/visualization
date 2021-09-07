@@ -57,12 +57,6 @@ const KeyWord = () => {
                 <div className="content_header">Descriptors:</div>
                 <div> {result} </div>
             </div>
-
-
-
         </div>
-
-
-
 };
 export default KeyWord;
