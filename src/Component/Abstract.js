@@ -5,14 +5,14 @@ import axios from 'axios';
 
 /**
  * @Presentation
- * Ce composant s'occupe de l'affichage des entités nommés highlighted dans le résumé de l'article
+ * Display abstract with annotated named entities
  *
  * @return
- * Ce composant retourne le deuxième composant afficher dans notre interface web
+ * component to be printed out
  */
 const Abstract = () => {
 
-    const [resume, setResume] = useState('');
+    const [articleAbstract, setArticleAbstract] = useState('');
     const [namedEntities, setEntities] = useState('');
     const [isLoading, setLoading] = useState(false);
     let result = [];
@@ -32,8 +32,9 @@ const Abstract = () => {
     useEffect(() => {
         axios(process.env.REACT_APP_BACKEND_URL + "/getArticleMetadata/" + process.env.REACT_APP_ARTICLE_ID)
             .then(response => {
-                //console.log((response.data.result[0].abs).substr(9,));
-                setResume((response.data.result[0].abs).substr(9,));
+                let abstract =  response.data.result[0].abs.substr(9,);
+                console.log("Retrieved abstract: " + abstract);
+                setArticleAbstract(abstract);
             })
     }, []);
 
@@ -42,31 +43,36 @@ const Abstract = () => {
      * @Presentation :
      * On récupère du back-end la liste des entités nommées et on la trie
      *
-     * @Exemple : "result": {"nameEntity": "AMPLIFICATION","startPos": 187,"endPos": 199} ,{"nameEntity": "CONFIRMED BY","startPos": 723,"endPos": 734} ... }
+     * @Exemple : "result": {"entityText": "AMPLIFICATION","startPos": 187,"endPos": 199} ,{"entityText": "CONFIRMED BY","startPos": 723,"endPos": 734} ... }
      *
      * @Adresse : http://localhost:3000/getArticleNamedEntities/f74923b3ce82c984a7ae3e0c2754c9e33c60554f
-     *
      */
     useEffect(() => {
-        axios(process.env.REACT_APP_BACKEND_URL + "/getArticleNamedEntities/" + process.env.REACT_APP_ARTICLE_ID)
+        axios(process.env.REACT_APP_BACKEND_URL + "/getAbstractNamedEntities/" + process.env.REACT_APP_ARTICLE_ID)
             .then(response => {
-                setEntities(response.data.result.sort(compare));
+                let sortedList = response.data.result.sort(sortByStartPos);
+                console.log("Retrieved " + sortedList.length + " entities.");
+                console.log("Sorted list of entities: ");
+                for (let i = 0; i < sortedList.length - 1; i++) {
+                    console.log(sortedList[i]);
+                }
+                setEntities(sortedList);
             })
     }, []);
 
 
     /**
-     * C
+     *
      * @param list
      */
     function cleanArray(list) {
         let arrayClean = list;
         //let arrayWithoutDoble = Array.from(new Set(arrayClean));
         for (let i = 0; i < arrayClean.length - 1; i++) {
-            if (arrayClean[i].nameEntity === list[i + 1].nameEntity.toLowerCase()) {
+            if (arrayClean[i].entityText === list[i + 1].entityText.toLowerCase()) {
                 list.splice(i + 1, 1);
             }
-            if (arrayClean[i].nameEntity === list[i].nameEntity.toUpperCase()) {
+            if (arrayClean[i].entityText === list[i].entityText.toUpperCase()) {
                 list.splice(i, 1);
             }
             if (i === 2) {
@@ -74,7 +80,7 @@ const Abstract = () => {
             }
         }
 
-        console.log("cleanList --->" + arrayClean);
+        //console.log("cleanList --->" + arrayClean);
         return arrayClean;
     }
 
@@ -89,17 +95,17 @@ const Abstract = () => {
     function wrap(id, text, begin, e, result) {
         let s1 = text.substring(begin, e.startPos);
         let w = "".substring(0);
-        //console.log(e.nameEntity+" : "+ e.startPos +" : "+e.endPos);
+        //console.log(e.entityText+" : "+ e.startPos +" : "+e.endPos);
         //console.log("text_s11 : "+ s1 + " begin : " +begin + " startPos : " + e.startPos);
         if (e.endPos === undefined) {
-            w = text.substring(e.startPos, e.startPos + e.nameEntity.length);
-            //console.log("----> word" + (e.nameEntity).length);
+            w = text.substring(e.startPos, e.startPos + e.entityText.length);
+            //console.log("----> word" + (e.entityText).length);
         } else {
             w = text.substring(e.startPos, e.endPos + 1);
             //console.log("----> word"+ w);
         }
-        let title = e.nameEntity.substring(0);
-        let content = e.nameEntity.substring(0);
+        let title = e.entityText.substring(0);
+        let content = e.entityText.substring(0);
         let link = e.link.substring(0);
         result.push(<span> {s1}</span>);
         result.push(
@@ -114,7 +120,7 @@ const Abstract = () => {
      * @param b
      * @returns {number}
      */
-    function compare(a, b) {
+    function sortByStartPos(a, b) {
         if (a.startPos < b.startPos) {
             return -1;
         }
@@ -144,23 +150,23 @@ const Abstract = () => {
     //let result = [];
     let begin = 0;
     let cleanList = cleanArray(namedEntities);
-    console.log(cleanList);
+    //console.log("List of entities: " + cleanList);
 
     for (let i = 0; i < cleanList.length; i++) {
-        wrap("word-" + i, resume, begin, cleanList[i], result);
-        //-->console.log("begin : " + begin +"= cleanList[i].startPos : " +cleanList[i].startPos +" + cleanList[i].nameEntity.length + 1 : "+cleanList[i].nameEntity.length);
-        begin = cleanList[i].startPos + cleanList[i].nameEntity.length + 1;
-        //-->console.log(begin);
+        wrap("word-" + i, articleAbstract, begin, cleanList[i], result);
+        //console.log("begin : " + begin +"= cleanList[i].startPos : " +cleanList[i].startPos +" + cleanList[i].entityText.length + 1 : "+cleanList[i].entityText.length);
+        begin = cleanList[i].startPos + cleanList[i].entityText.length + 1;
+        //console.log(begin);
     }
     //console.log(begin);
-    let r = resume.substring(begin);
+    let r = articleAbstract.substring(begin);
     //console.log(r);
     //console.log(result);
 
     result.push(<span>{r}</span>);
 
     return (
-        <div className="component"><span className="content_header">Abstract</span>: {isLoading ? result : resume}
+        <div className="component"><span className="content_header">Abstract</span>: {isLoading ? result : articleAbstract}
             <LoadingButton/>
         </div>
     );
