@@ -24,8 +24,8 @@ const DataInfo = (props) => {
                 <PopoverHeader> {props.title} </PopoverHeader>
                 <PopoverBody> {props.content} </PopoverBody>
                 <div className= "linkContent">
-                    <a href= "https://www.wikidata.org/wiki/Q89469904">
-                        <span className="imgLink"><img src={wikiLogo} alt="wikidata logo"/> </span>
+                    <a href={props.link}>
+                        <span className="imgLink"><img src={wikiLogo} alt="Wikidata logo"/> </span>
                         <span>{props.title}</span>
                     </a>
                 </div>

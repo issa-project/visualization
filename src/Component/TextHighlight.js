@@ -102,9 +102,10 @@ const TextHighlight = () => {
         }
         let title = e.nameEntity.substring(0);
         let content = e.nameEntity.substring(0);
+        let link = e.link.substring(0);
         result.push(<span> {s1}</span>);
         result.push (
-            <DataInfo index={id} word={w} title={title} content={content}/>
+            <DataInfo index={id} word={w} title={title} content={content} link={link}/>
         )
     }
 
