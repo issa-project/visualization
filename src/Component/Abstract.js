@@ -4,11 +4,7 @@ import Button from 'react-bootstrap/Button'
 import axios from 'axios';
 
 /**
- * @Presentation
- * Display abstract with annotated named entities
- *
- * @return
- * component to be printed out
+ * Formats the article abstract with annotated named entities
  */
 const Abstract = () => {
 
@@ -17,121 +13,144 @@ const Abstract = () => {
     const [isLoading, setLoading] = useState(false);
     let result = [];
 
-
     /**
-     * @Presentation
-     * On récupère du back-end le résumé de l'article en question.
-     * Après avoir récupéré le résumé on enlève les 9 premiers Char.
+     * Retrieve the text of the article abstract from the backend
      *
-     * @Example : "Abstract An enhanced polymerase chain reaction (PCR) assay to detect the coronavirus associated with se ..."
-     * ---> "An enhanced polymerase chain reaction (PCR) assay to detect the coronavirus associated with se ..."
-     *
-     * @Adresse: http://localhost:3000/getArticleMetadata/f74923b3ce82c984a7ae3e0c2754c9e33c60554f
+     * @example: http://localhost:3000/getArticleMetadata/f74923b3ce82c984a7ae3e0c2754c9e33c60554f
      */
     useEffect(() => {
         axios(process.env.REACT_APP_BACKEND_URL + "/getArticleMetadata/" + process.env.REACT_APP_ARTICLE_ID)
             .then(response => {
-                let abstract = response.data.result[0].abs.substr(9,);
-                console.log("Retrieved abstract: " + abstract);
+                var abstract = response.data.result[0].abs;
+                if (abstract.substring(0, 9).toLowerCase() === "abstract ") {
+                    abstract = abstract.substr(9);
+                }
+                if (process.env.REACT_APP_LOG === "on") {
+                    console.log("Retrieved abstract: " + abstract);
+                }
                 setArticleAbstract(abstract);
             })
     }, []);
 
 
     /**
-     * @Presentation :
-     * On récupère du back-end la liste des entités nommées et on la trie
+     * Retrieve the list of named entities from the backend
      *
-     * @Exemple : "result": {"entityText": "AMPLIFICATION","startPos": 187,"endPos": 199} ,{"entityText": "CONFIRMED BY","startPos": 723,"endPos": 734} ... }
-     *
-     * @Adresse : http://localhost:3000/getArticleNamedEntities/f74923b3ce82c984a7ae3e0c2754c9e33c60554f
+     * @example: http://localhost:3000/getArticleNamedEntities/f74923b3ce82c984a7ae3e0c2754c9e33c60554f
      */
     useEffect(() => {
         axios(process.env.REACT_APP_BACKEND_URL + "/getAbstractNamedEntities/" + process.env.REACT_APP_ARTICLE_ID)
             .then(response => {
-                // Keep only the NEs whithin the list of accepted domains
+                // Keep only the NEs within the list of accepted domains
                 var domains = process.env.REACT_APP_ENTITY_DOMAINS.split("|");
                 var entities = [];
                 response.data.result.forEach(entity => {
-                    var inDomains = false;
-                    domains.forEach(domain => {
-                        if (entity.entityUri.includes(domain)) {
-                            inDomains = true;
-                        }
-                    })
+                    // Check whether the URI is in one of the accepted domains
+                    var inDomains = domains.some(domain => entity.entityUri.includes(domain))
                     if (inDomains) {
                         entities.push(entity);
                     }
                 });
 
-                let sortedList = entities.sort(sortByStartPos);
-                console.log("Retrieved " + sortedList.length + " entities.");
-                console.log("Sorted list of entities: ");
-                for (let i = 0; i < sortedList.length - 1; i++) {
-                    console.log(sortedList[i]);
+                if (process.env.REACT_APP_LOG === "on") {
+                    console.log("Retrieved " + entities.length + " entities.");
+                    entities.forEach(e => console.log(e));
                 }
-                setEntities(sortedList);
+
+                let processedEntities = processEntities(entities).sort(sortByStartPos);
+
+                if (process.env.REACT_APP_LOG === "on") {
+                    console.log("------------------------- Grouped " + processedEntities.length + " entities.");
+                    processedEntities.forEach(e => console.log(e));
+                }
+
+                setEntities(processedEntities);
             })
     }, []);
 
 
     /**
+     * Reformat the list of entities where the URIs/labels of the entities with the same text and startPos
+     * are grouped in new fields entityUris and entityLabels.
+     * Recompute the endPos.
      *
-     * @param list
+     * @example
+     * The 2 entities:
+     * { entityText: "SARS-CoV", startPos: 529, endPos: 537,
+     *   entityUri: "http://www.wikidata.org/entity/Q85438966",
+     *   entityLabel: "severe acute respiratory syndrome coronavirus" }
+     * { entityText: "SARS-CoV", startPos: 529,
+     *   entityUri: "http://dbpedia.org/resource/Severe_acute_respiratory_syndrome-related_coronavirus" }
+     * will be grouped into:
+     * { entityText: "SARS-CoV", startPos: 529, endPos: 537,
+     *   entityUris: [ "http://www.wikidata.org/entity/Q85438966", "http://dbpedia.org/resource/Severe_acute_respiratory_syndrome-related_coronavirus" ],
+     *   entityLabels: [ "severe acute respiratory syndrome coronavirus", "" ] }
+     *
+     * @param entities[]
+     * @returns {entities[]}
      */
-    function cleanArray(list) {
-        var arrayClean = list;
-        for (let i = 0; i < arrayClean.length - 1; i++) {
-            if (arrayClean[i].entityText === list[i + 1].entityText.toLowerCase()) {
-                list.splice(i + 1, 1);
+    function processEntities(entities) {
+
+        // Turn each element entityUri into an array entityUris
+        // and each element entityLabel into an array entityLabels
+        entities.forEach(e => {
+            var uri = e.entityUri;
+            e.entityUris = [uri];
+            delete e.entityUri;
+
+            e.entityLabels = [];
+            if (e.entityLabel === undefined) {
+                e.entityLabels.push("");
+            } else {
+                e.entityLabels.push(e.entityLabel);
             }
-            if (arrayClean[i].entityText === list[i].entityText.toUpperCase()) {
-                list.splice(i, 1);
+            delete e.entityLabel;
+
+            // Compute or recompute endPos so that it always means the same thing: index of last character
+            e.endPos = e.startPos + e.entityText.length - 1;
+        });
+
+        var entities2 = [];
+        entities.forEach(e => {
+            // Check if e already exists in entities2
+            var index = entities2.findIndex(f =>
+                f.entityText.toLowerCase() === e.entityText.toLowerCase() &&
+                f.startPos === e.startPos);
+            if (index === -1) {
+                // First time: simply add it to entities2
+                entities2.push(e);
+            } else {
+                // It already exists: merge the two lists of URIs and labels
+                entities2[index].entityUris = e.entityUris.concat(entities2[index].entityUris);
+                entities2[index].entityLabels = e.entityLabels.concat(entities2[index].entityLabels);
             }
-            if (i === 2) {
-                list.splice(i, 1);
-            }
-        }
-        //console.log("cleanList --->" + arrayClean);
-        return arrayClean;
+        });
+
+        return entities2;
     }
 
+
     /**
+     * Turn the string "before word" into a string where "word" is an highlighted entity
      *
-     * @param id
-     * @param text
-     * @param begin
-     * @param e
+     * @param id span identifier
+     * @param text full abstract text
+     * @param begin start position of the "before" text
+     * @param e the entity
      * @param result
      */
     function wrap(id, text, begin, e, result) {
-        let s1 = text.substring(begin, e.startPos);
-        let w = "".substring(0);
-        //console.log(e.entityText+" : "+ e.startPos +" : "+e.endPos);
-        //console.log("text_s11 : "+ s1 + " begin : " +begin + " startPos : " + e.startPos);
-        if (e.endPos === undefined) {
-            w = text.substring(e.startPos, e.startPos + e.entityText.length);
-            //console.log("----> word" + (e.entityText).length);
-        } else {
-            w = text.substring(e.startPos, e.endPos + 1);
-            //console.log("----> word"+ w);
-        }
+        let before = text.substring(begin, e.startPos);
+        let entity = text.substring(e.startPos, e.startPos + e.entityText.length);
         let title = e.entityText;
-        let content = e.entityLabel;
-        let entityUri = e.entityUri;
-        result.push(<span> {s1}</span>);
+        let content = e.entityLabels[0];
+        let entityUri = e.entityUris[0];
+        result.push(<span>{before}</span>);
         result.push(
-            <EntityHighlight index={id} word={w} title={title} content={content} entityUri={entityUri}/>
+            <EntityHighlight index={id} word={entity} title={title} content={content} entityUri={entityUri}/>
         )
     }
 
-
-    /**
-     *
-     * @param a
-     * @param b
-     * @returns {number}
-     */
     function sortByStartPos(a, b) {
         if (a.startPos < b.startPos) {
             return -1;
@@ -145,34 +164,21 @@ const Abstract = () => {
     function LoadingButton() {
         const handleClick = () => setLoading(true);
         const clickAgain = () => setLoading(false);
-
         return (
-            <Button
-                className="annotate-button"
-                variant="secondary"
-                //disabled={isLoading}
-                onClick={isLoading ? clickAgain : handleClick}
-            >
-                {isLoading ? 'Resume' : 'Annotate'}
+            <Button className="annotate-button" variant="secondary" onClick={isLoading ? clickAgain : handleClick}>
+                {isLoading ? 'Hide annotations' : 'Show annotations'}
             </Button>
         );
     }
 
+    // ------------------------------------------------------------------------
+
     let begin = 0;
-    let cleanList = cleanArray(namedEntities);
-    //console.log("List of entities: " + cleanList);
-
-    for (let i = 0; i < cleanList.length; i++) {
-        wrap("word-" + i, articleAbstract, begin, cleanList[i], result);
-        //console.log("begin : " + begin +"= cleanList[i].startPos : " +cleanList[i].startPos +" + cleanList[i].entityText.length + 1 : "+cleanList[i].entityText.length);
-        begin = cleanList[i].startPos + cleanList[i].entityText.length + 1;
-        //console.log(begin);
+    for (let i = 0; i < namedEntities.length; i++) {
+        wrap("word-" + i, articleAbstract, begin, namedEntities[i], result);
+        begin = namedEntities[i].endPos + 1;
     }
-    //console.log(begin);
     let r = articleAbstract.substring(begin);
-    //console.log(r);
-    //console.log(result);
-
     result.push(<span>{r}</span>);
 
     return (
