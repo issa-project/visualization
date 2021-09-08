@@ -1,6 +1,8 @@
-.linkContent {
+.popoverContent {
     background-color: white;
     padding: 5px;
+    border-radius: 5px;
+    width: max-content;
 }
 
 .entity {
@@ -8,12 +10,17 @@
 
 .highlight-entity {
     padding: 1px;
-    margin: px;
+    margin: 0px;
     font-size: 1em;
     border: 0px;
     background-color: lightgrey;
     color: black;
     line-height: 1em;
-    border-radius: 3px;
+    border-radius: 5px;
     vertical-align: inherit;
+}
+
+.popover-inner {
+    border: solid 1px;
+    border-color: grey;
 }

@@ -22,10 +22,10 @@ const EntityHighlight = (props) => {
             <Popover placement="auto" isOpen={popoverOpen} target={props.id} toggle={toggle}>
                 {/* <PopoverHeader> {props.title} </PopoverHeader>
                 <PopoverBody> {props.content} </PopoverBody>*/}
-                <div className="linkContent">
+                <div className="popoverContent">
                     <a href={props.entityUri} target="_external_entity">
-                        <span className="imgLink"><img src={wikiLogo} alt="Wikidata logo"/> </span>
-                        <span>{props.entityLabel}</span>
+                        <span>{props.entityLabel}&nbsp;</span>
+                        <span className="badge badge-pill badge-info">Wikidata</span>
                     </a>
                 </div>
             </Popover>
