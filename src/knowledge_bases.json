@@ -1,0 +1,17 @@
+[
+  {
+    "name": "DBpedia",
+    "namespace": "dbpedia.org",
+    "endpoint": "http://dbpedia.org/sparql"
+  },
+  {
+    "name": "Wikidata",
+    "namespace": "wikidata.org",
+    "endpoint": "https://query.wikidata.org/sparql"
+  },
+  {
+    "name": "Agrovoc",
+    "namespace": "aims.fao.org/aos/agrovoc",
+    "endpoint": "https://agrovoc.uniroma2.it/sparql"
+  }
+]

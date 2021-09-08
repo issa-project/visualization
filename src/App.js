@@ -9,7 +9,6 @@ import MapComponent from "./Component/Map";
 
 
 function App() {
-
     return (
         <div className="container">
             <NavBar/>

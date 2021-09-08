@@ -3,6 +3,9 @@ import EntityHighlight from "./EntityHighlight";
 import Button from 'react-bootstrap/Button'
 import axios from 'axios';
 
+// Get the list of KBs that we consider in the named entities and descriptors
+import KB from "../knowledge_bases.json";
+
 /**
  * Formats the article abstract with annotated named entities
  */
@@ -41,12 +44,10 @@ const Abstract = () => {
     useEffect(() => {
         axios(process.env.REACT_APP_BACKEND_URL + "/getAbstractNamedEntities/" + process.env.REACT_APP_ARTICLE_ID)
             .then(response => {
-                // Keep only the NEs within the list of accepted domains
-                let domains = process.env.REACT_APP_ENTITY_DOMAINS.split("|");
                 let entities = [];
                 response.data.result.forEach(entity => {
-                    // Check whether the URI is in one of the accepted domains
-                    let inDomains = domains.some(domain => entity.entityUri.includes(domain))
+                    // Check whether the URI is in one of the accepted knowledge bases
+                    let inDomains = KB.some(kb => entity.entityUri.includes(kb.namespace))
                     if (inDomains) {
                         entities.push(entity);
                     }
@@ -186,13 +187,35 @@ const Abstract = () => {
         let actualTextAtPos = text.substring(e.startPos, e.endPos + 1);
         let entityLabel = e.entityLabels[0];
         let entityUri = e.entityUris[0];
+
+        let content = [];
+        for (let i = 0; i < e.entityUris.length; i++) {
+
+            // Find the knowledge base that the URI comes from to use its name as a badge
+            let badge = "";
+            KB.forEach(kb => {
+                if (e.entityUris[i].includes(kb.namespace)) {
+                    badge = kb.name;
+                }
+            });
+
+            // Format the link, label and badge
+            content.push(
+                <div><a href={e.entityUris[i]} target="_external_entity">
+                    <span className="badge-kb">{badge}&nbsp;</span>
+                    <span className="entity-label">{e.entityLabels[i]}</span>
+                </a></div>
+            );
+        }
+
         result.push(<span>{before}</span>);
         result.push(
             <EntityHighlight
                 id={id}
                 word={actualTextAtPos}
                 title={e.entityText}
-                entityLabel={entityLabel} entityUri={entityUri}/>
+                content={content}
+            />
         )
     }
 
