@@ -21,7 +21,7 @@ const Abstract = () => {
     useEffect(() => {
         axios(process.env.REACT_APP_BACKEND_URL + "/getArticleMetadata/" + process.env.REACT_APP_ARTICLE_ID)
             .then(response => {
-                var abstract = response.data.result[0].abs;
+                let abstract = response.data.result[0].abs;
                 if (abstract.substring(0, 9).toLowerCase() === "abstract ") {
                     abstract = abstract.substr(9);
                 }
@@ -42,29 +42,34 @@ const Abstract = () => {
         axios(process.env.REACT_APP_BACKEND_URL + "/getAbstractNamedEntities/" + process.env.REACT_APP_ARTICLE_ID)
             .then(response => {
                 // Keep only the NEs within the list of accepted domains
-                var domains = process.env.REACT_APP_ENTITY_DOMAINS.split("|");
-                var entities = [];
+                let domains = process.env.REACT_APP_ENTITY_DOMAINS.split("|");
+                let entities = [];
                 response.data.result.forEach(entity => {
                     // Check whether the URI is in one of the accepted domains
-                    var inDomains = domains.some(domain => entity.entityUri.includes(domain))
+                    let inDomains = domains.some(domain => entity.entityUri.includes(domain))
                     if (inDomains) {
                         entities.push(entity);
                     }
                 });
 
                 if (process.env.REACT_APP_LOG === "on") {
-                    console.log("Retrieved " + entities.length + " entities.");
-                    entities.forEach(e => console.log(e));
+                    console.log("------------------------- Retrieved " + entities.length + " entities.");
+                    entities.sort(sortByStartPos).forEach(e => console.log(e));
                 }
 
                 let processedEntities = processEntities(entities).sort(sortByStartPos);
-
                 if (process.env.REACT_APP_LOG === "on") {
-                    console.log("------------------------- Grouped " + processedEntities.length + " entities.");
+                    console.log("------------------------- Grouped same entities. Keeping " + processedEntities.length + " entities.");
                     processedEntities.forEach(e => console.log(e));
                 }
 
-                setEntities(processedEntities);
+                let noOverlap = removeOverlaps(removeOverlaps(removeOverlaps(processedEntities)));
+                if (process.env.REACT_APP_LOG === "on") {
+                    console.log("------------------------- Removed overlapping entities. Keeping " + noOverlap.length + " entities.");
+                    noOverlap.forEach(e => console.log(e));
+                }
+
+                setEntities(noOverlap);
             })
     }, []);
 
@@ -91,10 +96,9 @@ const Abstract = () => {
      */
     function processEntities(entities) {
 
-        // Turn each element entityUri into an array entityUris
-        // and each element entityLabel into an array entityLabels
+        //--- Turn entityUri into an array entityUris and entityLabel into an array entityLabels
         entities.forEach(e => {
-            var uri = e.entityUri;
+            let uri = e.entityUri;
             e.entityUris = [uri];
             delete e.entityUri;
 
@@ -110,10 +114,11 @@ const Abstract = () => {
             e.endPos = e.startPos + e.entityText.length - 1;
         });
 
-        var entities2 = [];
+        //--- Merge the URIs and labels for same entities (same position and same text)
+        let entities2 = [];
         entities.forEach(e => {
             // Check if e already exists in entities2
-            var index = entities2.findIndex(f =>
+            let index = entities2.findIndex(f =>
                 f.entityText.toLowerCase() === e.entityText.toLowerCase() &&
                 f.startPos === e.startPos);
             if (index === -1) {
@@ -130,6 +135,43 @@ const Abstract = () => {
     }
 
 
+    function removeOverlaps(entities) {
+        /**
+         * Check whether 2 subsequent entities overlap with each other.
+         * If so, keep only the longest one.
+         *
+         * This method fails to detect cases when more than 2 subsequent entities do overlap.
+         * But invoking it several times is sufficient to get rid of these cases.
+         *
+         * @param entities[]
+         * @returns {entities[]}
+         */
+        let entities2 = [];
+
+        let idx = 0;
+        while (idx < entities.length - 1) {
+            let first = entities[idx];
+            let second = entities[idx + 1];
+            if (second.startPos > first.endPos) {
+                // No overlap: keep the first and move on to the next one
+                entities2.push(first);
+                idx++;
+            } else {
+                // There is an overlap: keep only the longest one
+                if (first.entityText.length > second.entityText.length) {
+                    entities2.push(first);
+                } else {
+                    entities2.push(second);
+                }
+                // Pass 1 and skip one
+                idx = idx + 2;
+            }
+        }
+
+        return entities2;
+    }
+
+
     /**
      * Turn the string "before word" into a string where "word" is an highlighted entity
      *
@@ -141,13 +183,16 @@ const Abstract = () => {
      */
     function wrap(id, text, begin, e, result) {
         let before = text.substring(begin, e.startPos);
-        let entity = text.substring(e.startPos, e.startPos + e.entityText.length);
-        let title = e.entityText;
-        let content = e.entityLabels[0];
+        let actualTextAtPos = text.substring(e.startPos, e.endPos + 1);
+        let entityLabel = e.entityLabels[0];
         let entityUri = e.entityUris[0];
         result.push(<span>{before}</span>);
         result.push(
-            <EntityHighlight index={id} word={entity} title={title} content={content} entityUri={entityUri}/>
+            <EntityHighlight
+                id={id}
+                word={actualTextAtPos}
+                title={e.entityText}
+                entityLabel={entityLabel} entityUri={entityUri}/>
         )
     }
 

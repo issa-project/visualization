@@ -4,8 +4,8 @@ import wikiLogo from './images/wiki.png';
 import './EntityHighlight.css';
 
 /**
- * Ce Composant qui est un hook représente la pop-up affiché dans le composant textHilight :
- * @param  index : identifiant de chaque pop-up , title : le titre de la pop-up , content : le contenue de la pop-up
+ * Highlighted text span with pop-over
+ * @param  id: pop-over identifier, title, entityLabel, entityUri
  * @returns {*}
  * @constructor
  */
@@ -16,16 +16,16 @@ const EntityHighlight = (props) => {
 
     return (
         <span className="entity">
-            <Button id={props.index} type="button" className="btn  highlight-entity">
+            <Button id={props.id} type="button" className="btn highlight-entity">
                 {props.word}
             </Button>
-            <Popover placement="auto" isOpen={popoverOpen} target={props.index} toggle={toggle}>
-                { /* <PopoverHeader> {props.title} </PopoverHeader> */ }
-                <PopoverBody> {props.content} </PopoverBody>
+            <Popover placement="auto" isOpen={popoverOpen} target={props.id} toggle={toggle}>
+                {/* <PopoverHeader> {props.title} </PopoverHeader>
+                <PopoverBody> {props.content} </PopoverBody>*/}
                 <div className="linkContent">
                     <a href={props.entityUri} target="_external_entity">
                         <span className="imgLink"><img src={wikiLogo} alt="Wikidata logo"/> </span>
-                        <span>{props.title}</span>
+                        <span>{props.entityLabel}</span>
                     </a>
                 </div>
             </Popover>

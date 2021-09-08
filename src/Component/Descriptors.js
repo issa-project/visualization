@@ -14,28 +14,33 @@ const Descriptors = () => {
     useEffect(() => {
         axios(process.env.REACT_APP_BACKEND_URL + "/getArticleDescriptors/" + process.env.REACT_APP_ARTICLE_ID)
             .then(response => {
-                //console.log(response.data.result);
+                if (process.env.REACT_APP_LOG === "on") {
+                    console.log("Retrieved descriptors: " + response.data.result);
+                }
                 setListDescriptor(response.data.result);
             })
     }, []);
 
     /**
-     * @Presentation
-     * Cette fonction nous permet de highLighter les mots et de wraper le mot en question dans une pop-up grace au composant EntityHighlight
+     * Present a descriptor ofthe article as a highlighted text span with pop-over
      *
-     * @param id : c'est l'id de chaque pop-up
-     * @param descriptor : C'est l'objet qui contient les données de chaque descripteur
-     * @param result : le composant EntityHighlight avec les bonnes avec les informations saisies
+     * @param id : pop-over identifier
+     * @param descriptor : descriptor content
+     * @param result
      */
 
     function wrap(id, descriptor, result) {
-        let title = descriptor.nameDescriptor.substring(12, descriptor.nameDescriptor.length - 1);
-        let content = descriptor.nameDescriptor.substring(12, descriptor.nameDescriptor.length - 1);
-        let entityUri = descriptor.linkDescriptor;
+        let title = descriptor.descriptorLabel.substring(12, descriptor.descriptorLabel.length - 1);
         result.push(
-            <EntityHighlight index={id} word={title} title={title} content={content} entityUri={entityUri}/>
+            <EntityHighlight
+                id={id}
+                word={title}
+                title={title}
+                entityLabel={descriptor.entityLabel}
+                entityUri={descriptor.entityUri}
+            />
         );
-        result.push(<span>          </span>);
+        result.push(<span>&nbsp;</span>);
     }
 
     let descriptor = listDescriptor;
