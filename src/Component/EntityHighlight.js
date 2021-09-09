@@ -1,13 +1,16 @@
 import React, {useState} from 'react';
 import {Button, Popover, PopoverHeader, PopoverBody} from 'reactstrap';
-import wikiLogo from './images/wiki.png';
 import './EntityHighlight.css';
 
 /**
- * Highlighted text span with pop-over
+ * Highlighted text span with a pop-over.
+ * Used to highlight both articles' named entities or global descriptors.
+ *
  * @param  id: pop-over identifier, title, entityLabel, entityUri
+ * @param word exact text of the entity
+ * @param title popover title
+ * @param content popover content
  * @returns {*}
- * @constructor
  */
 const EntityHighlight = (props) => {
     const [popoverOpen, setPopoverOpen] = useState(false);

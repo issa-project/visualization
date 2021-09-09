@@ -44,15 +44,15 @@ const Abstract = () => {
     useEffect(() => {
         axios(process.env.REACT_APP_BACKEND_URL + "/getAbstractNamedEntities/" + process.env.REACT_APP_ARTICLE_ID)
             .then(response => {
+
+                // Filter out the URIs that are not in one of the accepted knowledge bases
                 let entities = [];
                 response.data.result.forEach(entity => {
-                    // Check whether the URI is in one of the accepted knowledge bases
                     let inDomains = KB.some(kb => entity.entityUri.includes(kb.namespace))
                     if (inDomains) {
                         entities.push(entity);
                     }
                 });
-
                 if (process.env.REACT_APP_LOG === "on") {
                     console.log("------------------------- Retrieved " + entities.length + " entities.");
                     entities.sort(sortByStartPos).forEach(e => console.log(e));
@@ -179,14 +179,12 @@ const Abstract = () => {
      * @param id span identifier
      * @param text full abstract text
      * @param begin start position of the "before" text
-     * @param e the entity
+     * @param e the data about the named entity (uri, label associated with the uri, start and end positions)
      * @param result
      */
     function wrap(id, text, begin, e, result) {
         let before = text.substring(begin, e.startPos);
         let actualTextAtPos = text.substring(e.startPos, e.endPos + 1);
-        let entityLabel = e.entityLabels[0];
-        let entityUri = e.entityUris[0];
 
         let content = [];
         for (let i = 0; i < e.entityUris.length; i++) {
@@ -199,11 +197,17 @@ const Abstract = () => {
                 }
             });
 
+            // Display the label from the KB if we have it, otherwise simply the text of the named entity
+            let entityLabel = e.entityLabels[i];
+            if (entityLabel === "") {
+                entityLabel = e.entityText;
+            }
+
             // Format the link, label and badge
             content.push(
                 <div><a href={e.entityUris[i]} target="_external_entity">
                     <span className="badge-kb">{badge}&nbsp;</span>
-                    <span className="entity-label">{e.entityLabels[i]}</span>
+                    <span className="entity-label">{entityLabel}</span>
                 </a></div>
             );
         }

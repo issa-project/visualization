@@ -13,5 +13,20 @@
     "name": "Agrovoc",
     "namespace": "aims.fao.org/aos/agrovoc",
     "endpoint": "https://agrovoc.uniroma2.it/sparql"
+  },
+  {
+    "name": "MESH",
+    "namespace": "http://purl.bioontology.org/ontology/MESH",
+    "endpoint": "http://sparql.bioontology.org/"
+  },
+  {
+    "name": "NCBITaxon",
+    "namespace": "http://purl.bioontology.org/ontology/NCBITAXON",
+    "endpoint": "http://sparql.bioontology.org/"
+  },
+  {
+    "name": "Schema.org",
+    "namespace": "http://schema.org/",
+    "endpoint": ""
   }
 ]
