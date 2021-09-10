@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import EntityHighlight from "./EntityHighlight";
 import axios from "axios";
+import {isEmptyResponse} from '../Utils';
 
 // Get the list of KBs that we consider in the named entities and descriptors
 import KB from "../knowledge_bases.json";
@@ -13,31 +14,34 @@ const Descriptors = () => {
     const [listDescriptor, setListDescriptor] = useState('');
 
     useEffect(() => {
-        axios(process.env.REACT_APP_BACKEND_URL + "/getArticleDescriptors/" + process.env.REACT_APP_ARTICLE_ID)
+        let articleUri = new URLSearchParams(window.location.search).get("articleUri");
+        let query = process.env.REACT_APP_BACKEND_URL + "/getArticleDescriptors/" + articleUri;
+        axios(query)
             .then(response => {
+                if (! isEmptyResponse(query, response)) {
+                    let descriptors = [];
 
-                let descriptors = [];
-
-                // Filter out the URIs that are not in one of the accepted knowledge bases
-                response.data.result.forEach(entity => {
-                    let inDomains = KB.some(kb => entity.entityUri.includes(kb.namespace))
-                    if (inDomains) {
-                        descriptors.push(entity);
+                    // Filter out the URIs that are not in one of the accepted knowledge bases
+                    response.data.result.forEach(entity => {
+                        let inDomains = KB.some(kb => entity.entityUri.includes(kb.namespace))
+                        if (inDomains) {
+                            descriptors.push(entity);
+                        }
+                    });
+                    if (process.env.REACT_APP_LOG === "on") {
+                        console.log("------------------------- Retrieved " + descriptors.length + " descriptors.");
+                        descriptors.forEach(e => console.log(e));
                     }
-                });
-                if (process.env.REACT_APP_LOG === "on") {
-                    console.log("------------------------- Retrieved " + descriptors.length + " descriptors.");
-                    descriptors.forEach(e => console.log(e));
-                }
 
-                // Group URIs/labels by descriptor
-                let processedDesc = processDescriptors(descriptors);
-                if (process.env.REACT_APP_LOG === "on") {
-                    console.log("------------------------- Grouped same descriptors. Keeping " + processedDesc.length + " entities.");
-                    processedDesc.forEach(e => console.log(e));
-                }
+                    // Group URIs/labels by descriptor
+                    let processedDesc = processDescriptors(descriptors);
+                    if (process.env.REACT_APP_LOG === "on") {
+                        console.log("------------------------- Grouped same descriptors. Keeping " + processedDesc.length + " entities.");
+                        processedDesc.forEach(e => console.log(e));
+                    }
 
-                setListDescriptor(processedDesc);
+                    setListDescriptor(processedDesc);
+                }
             })
     }, []);
 

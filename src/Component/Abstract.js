@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 import EntityHighlight from "./EntityHighlight";
 import Button from 'react-bootstrap/Button'
 import axios from 'axios';
+import {isEmptyResponse} from '../Utils';
 
 // Get the list of KBs that we consider in the named entities and descriptors
 import KB from "../knowledge_bases.json";
@@ -22,16 +23,21 @@ const Abstract = () => {
      * @example: http://localhost:3000/getArticleMetadata/f74923b3ce82c984a7ae3e0c2754c9e33c60554f
      */
     useEffect(() => {
-        axios(process.env.REACT_APP_BACKEND_URL + "/getArticleMetadata/" + process.env.REACT_APP_ARTICLE_ID)
+        let articleUri = new URLSearchParams(window.location.search).get("articleUri");
+        let query = process.env.REACT_APP_BACKEND_URL + "/getArticleMetadata/" + articleUri;
+        axios(query)
             .then(response => {
-                let abstract = response.data.result[0].abs;
-                if (abstract.substring(0, 9).toLowerCase() === "abstract ") {
-                    abstract = abstract.substr(9);
+                if (!isEmptyResponse(query, response)) {
+
+                    let abstract = response.data.result[0].abs;
+                    if (abstract.substring(0, 9).toLowerCase() === "abstract ") {
+                        abstract = abstract.substr(9);
+                    }
+                    if (process.env.REACT_APP_LOG === "on") {
+                        console.log("Retrieved abstract: " + abstract);
+                    }
+                    setArticleAbstract(abstract);
                 }
-                if (process.env.REACT_APP_LOG === "on") {
-                    console.log("Retrieved abstract: " + abstract);
-                }
-                setArticleAbstract(abstract);
             })
     }, []);
 
@@ -42,35 +48,39 @@ const Abstract = () => {
      * @example: http://localhost:3000/getArticleNamedEntities/f74923b3ce82c984a7ae3e0c2754c9e33c60554f
      */
     useEffect(() => {
-        axios(process.env.REACT_APP_BACKEND_URL + "/getAbstractNamedEntities/" + process.env.REACT_APP_ARTICLE_ID)
+        let articleUri = new URLSearchParams(window.location.search).get("articleUri");
+        let query = process.env.REACT_APP_BACKEND_URL + "/getAbstractNamedEntities/" + articleUri;
+        axios(query)
             .then(response => {
+                if (!isEmptyResponse(query, response)) {
 
-                // Filter out the URIs that are not in one of the accepted knowledge bases
-                let entities = [];
-                response.data.result.forEach(entity => {
-                    let inDomains = KB.some(kb => entity.entityUri.includes(kb.namespace))
-                    if (inDomains) {
-                        entities.push(entity);
+                    // Filter out the URIs that are not in one of the accepted knowledge bases
+                    let entities = [];
+                    response.data.result.forEach(entity => {
+                        let inDomains = KB.some(kb => entity.entityUri.includes(kb.namespace))
+                        if (inDomains) {
+                            entities.push(entity);
+                        }
+                    });
+                    if (process.env.REACT_APP_LOG === "on") {
+                        console.log("------------------------- Retrieved " + entities.length + " entities.");
+                        entities.sort(sortByStartPos).forEach(e => console.log(e));
                     }
-                });
-                if (process.env.REACT_APP_LOG === "on") {
-                    console.log("------------------------- Retrieved " + entities.length + " entities.");
-                    entities.sort(sortByStartPos).forEach(e => console.log(e));
-                }
 
-                let processedEntities = processEntities(entities).sort(sortByStartPos);
-                if (process.env.REACT_APP_LOG === "on") {
-                    console.log("------------------------- Grouped same entities. Keeping " + processedEntities.length + " entities.");
-                    processedEntities.forEach(e => console.log(e));
-                }
+                    let processedEntities = processEntities(entities).sort(sortByStartPos);
+                    if (process.env.REACT_APP_LOG === "on") {
+                        console.log("------------------------- Grouped same entities. Keeping " + processedEntities.length + " entities.");
+                        processedEntities.forEach(e => console.log(e));
+                    }
 
-                let noOverlap = removeOverlaps(removeOverlaps(removeOverlaps(processedEntities)));
-                if (process.env.REACT_APP_LOG === "on") {
-                    console.log("------------------------- Removed overlapping entities. Keeping " + noOverlap.length + " entities.");
-                    noOverlap.forEach(e => console.log(e));
-                }
+                    let noOverlap = removeOverlaps(removeOverlaps(removeOverlaps(processedEntities)));
+                    if (process.env.REACT_APP_LOG === "on") {
+                        console.log("------------------------- Removed overlapping entities. Keeping " + noOverlap.length + " entities.");
+                        noOverlap.forEach(e => console.log(e));
+                    }
 
-                setEntities(noOverlap);
+                    setEntities(noOverlap);
+                }
             })
     }, []);
 

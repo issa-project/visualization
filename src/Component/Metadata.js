@@ -2,18 +2,12 @@ import React, {useEffect, useState} from 'react';
 import './Metadata.css';
 import fileIcon from './images/file_icon.png';
 import axios from 'axios';
-
-require('dotenv').config();
+import {isEmptyResponse} from '../Utils';
 
 
 /**
- * @Presentation
- * C'est le composant Metadata qui nous affiche les informations de présentation d'un article :
- * titre,date, type de l'article , date de publication ...
- * @returns ce composant nous retourne le premier composant qui le composant de présentation de l'article
- *
+ * Component to display article metadata: title, authors, date, license, etc.
  */
-
 const Metadata = () => {
 
     const [title, setTitle] = useState('');
@@ -32,19 +26,25 @@ const Metadata = () => {
      * http://localhost:3000/getArticleMetadata/f74923b3ce82c984a7ae3e0c2754c9e33c60554f
      */
     useEffect(() => {
-        axios(process.env.REACT_APP_BACKEND_URL + "/getArticleMetadata/" + process.env.REACT_APP_ARTICLE_ID)
+        let articleUri = new URLSearchParams(window.location.search).get("articleUri");
+        console.log(("articleUri: " + articleUri));
+        let query = process.env.REACT_APP_BACKEND_URL + "/getArticleMetadata/" + articleUri;
+        axios(query)
             .then(response => {
-                setTitle(response.data.result[0].title);
-                setDate(response.data.result[0].date.substring(0, 4));
-                setPub(response.data.result[0].pub);
-                setLinkPDF(response.data.result[0].linkPDF);
-                setUrl(response.data.result[0].url);
-                setLicense(response.data.result[0].license);
+                if (! isEmptyResponse(query, response)) {
 
-                var lang = response.data.result[0].lang;
-                if (lang === "eng") lang = "English"
-                else if (lang === "fre") lang = "French";
-                setLang(lang);
+                    setTitle(response.data.result[0].title);
+                    setDate(response.data.result[0].date.substring(0, 4));
+                    setPub(response.data.result[0].pub);
+                    setLinkPDF(response.data.result[0].linkPDF);
+                    setUrl(response.data.result[0].url);
+                    setLicense(response.data.result[0].license);
+
+                    var lang = response.data.result[0].lang;
+                    if (lang === "eng") lang = "English"
+                    else if (lang === "fre") lang = "French";
+                    setLang(lang);
+                }
             })
     }, []);
 
@@ -57,21 +57,23 @@ const Metadata = () => {
      * @Exemple : {"result": [ {"authors": "Li, Hui"},{"authors": "Wang, Chen"}, ... ] } --------------> [ "Li Hui" , "Wang, Chen" ]
      * @Adresse:
      * http://localhost:3000/getArticleAuthors/f74923b3ce82c984a7ae3e0c2754c9e33c60554f
-     *
      */
 
     useEffect(() => {
-        axios(process.env.REACT_APP_BACKEND_URL + "/getArticleAuthors/" + process.env.REACT_APP_ARTICLE_ID)
+        let articleUri = new URLSearchParams(window.location.search).get("articleUri");
+        let query = process.env.REACT_APP_BACKEND_URL + "/getArticleAuthors/" + articleUri;
+        axios(query)
             .then(response => {
-                let authorsST = ''.substring(0);
-                let listAuthors = response.data.result;
-                listAuthors.forEach(element =>
-                    authorsST = authorsST + element.authors.replace(',', '') + ", ");
-                // Remove the last ", "
-                authorsST = authorsST.substring(0, authorsST.length - 2);
-                //console.log(listAuthors[2].authors);
-                setAuthors(authorsST);
-                //console.log("authors -----------------------> :"+ authorsST);
+                if (! isEmptyResponse(query, response)) {
+
+                    let authorsST = ''.substring(0);
+                    let listAuthors = response.data.result;
+                    listAuthors.forEach(element =>
+                        authorsST = authorsST + element.authors.replace(',', '') + ", ");
+                    // Remove the last ", "
+                    authorsST = authorsST.substring(0, authorsST.length - 2);
+                    setAuthors(authorsST);
+                }
             })
     });
 
@@ -84,8 +86,9 @@ const Metadata = () => {
                     <p>
                         <span className="metadata font-weight-bold"> {authors}. </span>
                         <span className="metadata">{date}. </span>
+                        <span className="metadata">{title}. </span>
                         <span className="metadata font-italic"> {pub}. </span>
-                        <span className="block"><a href={url}>{url}</a></span>
+                        <span className="block"><a href={url} target="_article_page">{url}</a></span>
                     </p>
                 </div>
             </div>
