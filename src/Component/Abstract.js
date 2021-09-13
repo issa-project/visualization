@@ -17,71 +17,67 @@ const Abstract = () => {
     const [isLoading, setLoading] = useState(false);
     let result = [];
 
+
     /**
      * Retrieve the text of the article abstract from the backend
-     *
-     * @example: http://localhost:3000/getArticleMetadata/f74923b3ce82c984a7ae3e0c2754c9e33c60554f
      */
     useEffect(() => {
         let articleUri = new URLSearchParams(window.location.search).get("articleUri");
-        let query = process.env.REACT_APP_BACKEND_URL + "/getArticleMetadata/" + articleUri;
-        axios(query)
-            .then(response => {
-                if (!isEmptyResponse(query, response)) {
+        let query = process.env.REACT_APP_BACKEND_URL + "/getArticleMetadata/?uri=" + articleUri;
+        axios(query).then(response => {
+            if (!isEmptyResponse(query, response)) {
+                let abstract = response.data.result[0].abs;
 
-                    let abstract = response.data.result[0].abs;
-                    if (abstract.substring(0, 9).toLowerCase() === "abstract ") {
-                        abstract = abstract.substr(9);
-                    }
-                    if (process.env.REACT_APP_LOG === "on") {
-                        console.log("Retrieved abstract: " + abstract);
-                    }
-                    setArticleAbstract(abstract);
+                // Seems that some abstracts start with the term "Abstract" and that the named entities offset
+                // does not take it into account. This is a nasty workaround.
+                if (abstract.substring(0, 9).toLowerCase() === "abstract ") {
+                    abstract = abstract.substr(9);
                 }
-            })
+                if (process.env.REACT_APP_LOG === "on") {
+                    console.log("Retrieved abstract: " + abstract);
+                }
+                setArticleAbstract(abstract);
+            }
+        })
     }, []);
 
 
     /**
      * Retrieve the list of named entities from the backend
-     *
-     * @example: http://localhost:3000/getArticleNamedEntities/f74923b3ce82c984a7ae3e0c2754c9e33c60554f
      */
     useEffect(() => {
         let articleUri = new URLSearchParams(window.location.search).get("articleUri");
-        let query = process.env.REACT_APP_BACKEND_URL + "/getAbstractNamedEntities/" + articleUri;
-        axios(query)
-            .then(response => {
-                if (!isEmptyResponse(query, response)) {
-
-                    // Filter out the URIs that are not in one of the accepted knowledge bases
-                    let entities = [];
-                    response.data.result.forEach(entity => {
-                        let inDomains = KB.some(kb => entity.entityUri.includes(kb.namespace))
-                        if (inDomains) {
-                            entities.push(entity);
-                        }
-                    });
-                    if (process.env.REACT_APP_LOG === "on") {
-                        console.log("------------------------- Retrieved " + entities.length + " entities.");
-                        entities.sort(sortByStartPos).forEach(e => console.log(e));
+        let query = process.env.REACT_APP_BACKEND_URL + "/getAbstractNamedEntities/?uri=" + articleUri;
+        axios(query).then(response => {
+            if (!isEmptyResponse(query, response)) {
+                // Filter out the URIs that are not in one of the accepted knowledge bases
+                let entities = [];
+                response.data.result.forEach(entity => {
+                    let inDomains = KB.some(kb => entity.entityUri.includes(kb.namespace))
+                    if (inDomains) {
+                        entities.push(entity);
                     }
-
-                    let processedEntities = processEntities(entities).sort(sortByStartPos);
-                    if (process.env.REACT_APP_LOG === "on") {
-                        console.log("------------------------- Grouped same entities. Keeping " + processedEntities.length + " entities.");
-                        processedEntities.forEach(e => console.log(e));
-                    }
-
-                    let noOverlap = removeOverlaps(removeOverlaps(removeOverlaps(processedEntities)));
-                    if (process.env.REACT_APP_LOG === "on") {
-                        console.log("------------------------- Removed overlapping entities. Keeping " + noOverlap.length + " entities.");
-                        noOverlap.forEach(e => console.log(e));
-                    }
-
-                    setEntities(noOverlap);
+                });
+                if (process.env.REACT_APP_LOG === "on") {
+                    console.log("------------------------- Retrieved " + entities.length + " entities.");
+                    entities.sort(sortByStartPos).forEach(e => console.log(e));
                 }
-            })
+
+                let processedEntities = processEntities(entities).sort(sortByStartPos);
+                if (process.env.REACT_APP_LOG === "on") {
+                    console.log("------------------------- Grouped same entities. Keeping " + processedEntities.length + " entities.");
+                    processedEntities.forEach(e => console.log(e));
+                }
+
+                let noOverlap = removeOverlaps(removeOverlaps(removeOverlaps(processedEntities)));
+                if (process.env.REACT_APP_LOG === "on") {
+                    console.log("------------------------- Removed overlapping entities. Keeping " + noOverlap.length + " entities.");
+                    noOverlap.forEach(e => console.log(e));
+                }
+
+                setEntities(noOverlap);
+            }
+        })
     }, []);
 
 
@@ -146,17 +142,18 @@ const Abstract = () => {
     }
 
 
+    /**
+     * Check whether 2 subsequent entities overlap with each other.
+     * If so, keep only the longest one.
+     *
+     * This method fails to detect cases where more than 2 subsequent entities do overlap.
+     * Invoking it twice is sufficient to get rid of 3 subsequent overlapping entities, etc.
+     * A bit brutal but effective unless we have higher number of subsequent overlapping entities.
+     *
+     * @param entities[]
+     * @returns {entities[]}
+     */
     function removeOverlaps(entities) {
-        /**
-         * Check whether 2 subsequent entities overlap with each other.
-         * If so, keep only the longest one.
-         *
-         * This method fails to detect cases when more than 2 subsequent entities do overlap.
-         * But invoking it several times is sufficient to get rid of these cases.
-         *
-         * @param entities[]
-         * @returns {entities[]}
-         */
         let entities2 = [];
 
         let idx = 0;

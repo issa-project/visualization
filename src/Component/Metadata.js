@@ -21,60 +21,46 @@ const Metadata = () => {
 
 
     /**
-     * @Présentation :
-     * @Adresse :
-     * http://localhost:3000/getArticleMetadata/f74923b3ce82c984a7ae3e0c2754c9e33c60554f
+     * Get the article's metadata
      */
     useEffect(() => {
         let articleUri = new URLSearchParams(window.location.search).get("articleUri");
         console.log(("articleUri: " + articleUri));
-        let query = process.env.REACT_APP_BACKEND_URL + "/getArticleMetadata/" + articleUri;
-        axios(query)
-            .then(response => {
-                if (! isEmptyResponse(query, response)) {
+        let query = process.env.REACT_APP_BACKEND_URL + "/getArticleMetadata/?uri=" + articleUri;
+        axios(query).then(response => {
+            if (!isEmptyResponse(query, response)) {
+                setTitle(response.data.result[0].title);
+                setDate(response.data.result[0].date.substring(0, 4));
+                setPub(response.data.result[0].pub);
+                setLinkPDF(response.data.result[0].linkPDF);
+                setUrl(response.data.result[0].url);
+                setLicense(response.data.result[0].license);
 
-                    setTitle(response.data.result[0].title);
-                    setDate(response.data.result[0].date.substring(0, 4));
-                    setPub(response.data.result[0].pub);
-                    setLinkPDF(response.data.result[0].linkPDF);
-                    setUrl(response.data.result[0].url);
-                    setLicense(response.data.result[0].license);
-
-                    var lang = response.data.result[0].lang;
-                    if (lang === "eng") lang = "English"
-                    else if (lang === "fre") lang = "French";
-                    setLang(lang);
-                }
-            })
+                var lang = response.data.result[0].lang;
+                if (lang === "eng") lang = "English"
+                else if (lang === "fre") lang = "French";
+                setLang(lang);
+            }
+        })
     }, []);
 
     /**
-     * @Présentation :
-     * On récupère de notre backend les informations suivantes :
-     *  - Liste des autheurs
-     *
-     * Ainsi le foreach nous permet de lister tout les auteurs dans une list
-     * @Exemple : {"result": [ {"authors": "Li, Hui"},{"authors": "Wang, Chen"}, ... ] } --------------> [ "Li Hui" , "Wang, Chen" ]
-     * @Adresse:
-     * http://localhost:3000/getArticleAuthors/f74923b3ce82c984a7ae3e0c2754c9e33c60554f
+     * Get the article's authors
      */
-
     useEffect(() => {
         let articleUri = new URLSearchParams(window.location.search).get("articleUri");
-        let query = process.env.REACT_APP_BACKEND_URL + "/getArticleAuthors/" + articleUri;
-        axios(query)
-            .then(response => {
-                if (! isEmptyResponse(query, response)) {
-
-                    let authorsST = ''.substring(0);
-                    let listAuthors = response.data.result;
-                    listAuthors.forEach(element =>
-                        authorsST = authorsST + element.authors.replace(',', '') + ", ");
-                    // Remove the last ", "
-                    authorsST = authorsST.substring(0, authorsST.length - 2);
-                    setAuthors(authorsST);
-                }
-            })
+        let query = process.env.REACT_APP_BACKEND_URL + "/getArticleAuthors/?uri=" + articleUri;
+        axios(query).then(response => {
+            if (!isEmptyResponse(query, response)) {
+                let authorsST = ''.substring(0);
+                let listAuthors = response.data.result;
+                listAuthors.forEach(element =>
+                    authorsST = authorsST + element.authors.replace(',', '') + ", ");
+                // Remove the last ", "
+                authorsST = authorsST.substring(0, authorsST.length - 2);
+                setAuthors(authorsST);
+            }
+        })
     });
 
 
