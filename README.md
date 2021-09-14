@@ -1,40 +1,42 @@
+# ISSA Visualization Web Application
 
-## Available Scripts
+The [ISSA project](https://issa.cirad.fr/) focuses on the semantic indexing of scientific publications in an open archive.
 
-In the project directory, you can run:
+This repository is a React-based web application meant to demonstrate the interest and use of such a semantic index for researchers and librarians.
+It uses the web services offered by the [backend server](https://github.com/issa-project/backend-services/).
 
-### `yarn start`
+
+## Installation
+
+
+Pre-requisite: yarn
+
+Install the dependencies with:
+```bash
+yarn build
+```
+
+
+## Run
+
+Run the application with:
+```bash
+yarn start
+```
 
 Note for Windows users: you may need to authorize the execution of scripts on Powershell (as admin): `set-executionpolicy unrestricted`
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+By default the application listens on port 3001. This can be changed in file [.env](.env).
+Make sure the application is properly started by pointing your browser to:
+```
+http://localhost:3001/?uri=http://ns.inria.fr/issa/f74923b3ce82c984a7ae3e0c2754c9e33c60554f
+```
+(this is an example article URI that may no longer be valid at some point).
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
 
-### `yarn test`
+### Logging
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `yarn build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `yarn eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
+Log traces are printed out on the browser's console. It can be deactivated in file [.env](.env) by setting property:
+```
+REACT_APP_LOG = off
+```
