@@ -22,7 +22,7 @@ const Abstract = () => {
      * Retrieve the text of the article abstract from the backend
      */
     useEffect(() => {
-        let articleUri = new URLSearchParams(window.location.search).get("articleUri");
+        let articleUri = new URLSearchParams(window.location.search).get("uri");
         let query = process.env.REACT_APP_BACKEND_URL + "/getArticleMetadata/?uri=" + articleUri;
         axios(query).then(response => {
             if (!isEmptyResponse(query, response)) {
@@ -46,7 +46,7 @@ const Abstract = () => {
      * Retrieve the list of named entities from the backend
      */
     useEffect(() => {
-        let articleUri = new URLSearchParams(window.location.search).get("articleUri");
+        let articleUri = new URLSearchParams(window.location.search).get("uri");
         let query = process.env.REACT_APP_BACKEND_URL + "/getAbstractNamedEntities/?uri=" + articleUri;
         axios(query).then(response => {
             if (!isEmptyResponse(query, response)) {

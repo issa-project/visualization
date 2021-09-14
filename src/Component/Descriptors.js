@@ -14,7 +14,7 @@ const Descriptors = () => {
     const [listDescriptor, setListDescriptor] = useState('');
 
     useEffect(() => {
-        let articleUri = new URLSearchParams(window.location.search).get("articleUri");
+        let articleUri = new URLSearchParams(window.location.search).get("uri");
         let query = process.env.REACT_APP_BACKEND_URL + "/getArticleDescriptors/?uri=" + articleUri;
         axios(query).then(response => {
             if (!isEmptyResponse(query, response)) {

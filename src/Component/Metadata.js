@@ -24,7 +24,7 @@ const Metadata = () => {
      * Get the article's metadata
      */
     useEffect(() => {
-        let articleUri = new URLSearchParams(window.location.search).get("articleUri");
+        let articleUri = new URLSearchParams(window.location.search).get("uri");
         console.log(("articleUri: " + articleUri));
         let query = process.env.REACT_APP_BACKEND_URL + "/getArticleMetadata/?uri=" + articleUri;
         axios(query).then(response => {
@@ -48,7 +48,7 @@ const Metadata = () => {
      * Get the article's authors
      */
     useEffect(() => {
-        let articleUri = new URLSearchParams(window.location.search).get("articleUri");
+        let articleUri = new URLSearchParams(window.location.search).get("uri");
         let query = process.env.REACT_APP_BACKEND_URL + "/getArticleAuthors/?uri=" + articleUri;
         axios(query).then(response => {
             if (!isEmptyResponse(query, response)) {
