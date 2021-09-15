@@ -22,7 +22,10 @@ const Descriptors = () => {
 
                 // Filter out the URIs that are not in one of the accepted knowledge bases
                 response.data.result.forEach(entity => {
-                    let inDomains = KB.some(kb => entity.entityUri.includes(kb.namespace))
+                    let inDomains = KB.some(kb =>
+                        kb.used_for.find(e => e === "descriptor") != undefined &&
+                        entity.entityUri.includes(kb.namespace)
+                    )
                     if (inDomains) {
                         descriptors.push(entity);
                     }

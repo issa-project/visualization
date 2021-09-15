@@ -53,7 +53,10 @@ const Abstract = () => {
                 // Filter out the URIs that are not in one of the accepted knowledge bases
                 let entities = [];
                 response.data.result.forEach(entity => {
-                    let inDomains = KB.some(kb => entity.entityUri.includes(kb.namespace))
+                    let inDomains = KB.some(kb =>
+                        kb.used_for.find(e => e === "named_entity") != undefined &&
+                        entity.entityUri.includes(kb.namespace)
+                    )
                     if (inDomains) {
                         entities.push(entity);
                     }

@@ -2,31 +2,43 @@
   {
     "name": "DBpedia",
     "namespace": "dbpedia.org",
-    "endpoint": "http://dbpedia.org/sparql"
+    "endpoint": "http://dbpedia.org/sparql",
+    "used_for": [ "named_entity", "descriptor" ]
   },
   {
     "name": "Wikidata",
     "namespace": "wikidata.org",
-    "endpoint": "https://query.wikidata.org/sparql"
+    "endpoint": "https://query.wikidata.org/sparql",
+    "used_for": [ "named_entity", "descriptor" ]
   },
   {
     "name": "Agrovoc",
     "namespace": "aims.fao.org/aos/agrovoc",
-    "endpoint": "https://agrovoc.uniroma2.it/sparql"
+    "endpoint": "https://agrovoc.uniroma2.it/sparql",
+    "used_for": [ "named_entity", "descriptor" ]
   },
   {
     "name": "MESH",
-    "namespace": "http://purl.bioontology.org/ontology/MESH",
-    "endpoint": "http://sparql.bioontology.org/"
+    "namespace": "purl.bioontology.org/ontology/MESH",
+    "endpoint": "http://sparql.bioontology.org/",
+    "used_for": [ "named_entity", "descriptor" ]
   },
   {
     "name": "NCBITaxon",
-    "namespace": "http://purl.bioontology.org/ontology/NCBITAXON",
-    "endpoint": "http://sparql.bioontology.org/"
+    "namespace": "purl.bioontology.org/ontology/NCBITAXON",
+    "endpoint": "http://sparql.bioontology.org/",
+    "used_for": [ "named_entity", "descriptor" ]
   },
   {
     "name": "Schema.org",
-    "namespace": "http://schema.org/",
-    "endpoint": ""
+    "namespace": "schema.org",
+    "endpoint": "",
+    "used_for": [ "named_entity", "descriptor" ]
+  },
+  {
+    "name": "Geonames",
+    "namespace": "sws.geonames.org/",
+    "endpoint": "http://erebe-vm3.i3s.unice.fr/sparql",
+    "used_for": [ "geographic_entity" ]
   }
 ]
