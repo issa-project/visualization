@@ -88,7 +88,7 @@ const Descriptors = () => {
         descriptors.forEach(e => {
             // Check if e already exists in descriptors2
             let index = descriptors2.findIndex(f =>
-                f.descriptorText.toLowerCase() === e.descriptorText.toLowerCase());
+                f.entityUri === e.entityUri);
             if (index === -1) {
                 // First time: simply add it to entities2
                 descriptors2.push(e);
@@ -103,7 +103,7 @@ const Descriptors = () => {
 
 
     /**
-     * Present a descriptor ofthe article as a highlighted text span with pop-over
+     * Present a descriptor of the article as a highlighted text span with pop-over
      *
      * @param id : pop-over identifier
      * @param descriptor : the data about the descriptor (uri, label associated with the uri if any)
