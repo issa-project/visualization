@@ -54,7 +54,7 @@ const Abstract = () => {
                 let entities = [];
                 response.data.result.forEach(entity => {
                     let inDomains = KB.some(kb =>
-                        kb.used_for.find(e => e === "named_entity") != undefined &&
+                        kb.used_for.find(e => e === "named_entity") !== undefined &&
                         entity.entityUri.includes(kb.namespace)
                     )
                     if (inDomains) {
@@ -167,6 +167,9 @@ const Abstract = () => {
                 // No overlap: keep the first and move on to the next one
                 entities2.push(first);
                 idx++;
+                // if last loop, also keep the last one
+                if (idx === entities.length - 1)
+                    entities2.push(second);
             } else {
                 // There is an overlap: keep only the longest one
                 if (first.entityText.length > second.entityText.length) {
