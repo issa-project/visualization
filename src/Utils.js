@@ -1,5 +1,5 @@
 /**
- * Check whether the response from one of the backedn services is empty.
+ * Check whether the response from one of the backend services is empty.
  *
  * @param query the query string submitted to the backend
  * @param response
