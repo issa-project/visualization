@@ -74,7 +74,7 @@ const MapComponent = () => {
     return (
         <div className="component">
             <span className="content_header">Map :</span>
-            <MapContainer center={[18, 105]} zoom={5} scrollWheelZoom={true} style={{height: '300px'}}>
+            <MapContainer center={[30, 2]} zoom={2} scrollWheelZoom={true} style={{height: '400px'}}>
                 <TileLayer
                     attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
                     url="https://{s}.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png"
