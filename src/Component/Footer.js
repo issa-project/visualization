@@ -17,7 +17,7 @@ export const Footer = () => (
                         <a href="https://github.com/issa-project">Github</a>
                     </li>
                     <li>
-                        <a href="mailto:anne.toulet@cirad.fr">Contact</a>
+                        <a href="mailto:issa-contact@cirad.fr">Contact</a>
                     </li>
                 </ul>
             </div>

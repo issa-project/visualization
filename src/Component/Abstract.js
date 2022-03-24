@@ -26,6 +26,7 @@ const Abstract = () => {
         let query = process.env.REACT_APP_BACKEND_URL + "/getArticleMetadata/?uri=" + articleUri;
         axios(query).then(response => {
             if (!isEmptyResponse(query, response)) {
+
                 let abstract = response.data.result[0].abs;
 
                 // Seems that some abstracts start with the term "Abstract" and that the named entities offset
