@@ -1,8 +1,11 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './Footer.css';
-import logo from './images/logo_inria.png'
+import logo_inria from './images/logo_inria.png'
 import logo_uca from './images/logo_uca.png'
+import logo_cnrs from './images/logo_cnrs.png'
+import logo_mines from './images/logo_mines.png'
+import logo_cirad from './images/logo_cirad.png'
 
 export const Footer = () => (
     <div className="panelFooter">
@@ -23,12 +26,19 @@ export const Footer = () => (
             </div>
 
             <div className="widgetFooter">
-                <img src={logo} width={150} alt="Inria"/>
-
+                <img src={logo_cirad} width={120} alt="Cirad"/>
             </div>
-
             <div className="widgetFooter">
-                <img src={logo_uca} width={100} alt="Inria"/>
+                <img src={logo_mines} width={100} alt="Mines d'Alès"/>
+            </div>
+            <div className="widgetFooter">
+                <img src={logo_inria} width={130} alt="Inria"/>
+            </div>
+            <div className="widgetFooter">
+                <img src={logo_uca} width={90} alt="UCA"/>
+            </div>
+            <div className="widgetFooter">
+                <img src={logo_cnrs} width={70} alt="CNRS"/>
             </div>
         </div>
     </div>
