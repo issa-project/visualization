@@ -18,6 +18,7 @@ const Metadata = () => {
     const [url, setUrl] = useState('');
     const [license, setLicense] = useState('');
     const [lang, setLang] = useState('');
+    const [langUri, setLangUri] = useState('');
 
 
     /**
@@ -40,9 +41,53 @@ const Metadata = () => {
                 setLicense(response.data.result[0].license);
 
                 let lang = response.data.result[0].lang;
-                if (lang === "eng") lang = "English"
-                else if (lang === "fre") lang = "French";
+                if (lang !== undefined) {
+                    switch(lang) {
+                        case "ara":
+                            lang = "Arabic";
+                            break;
+                        case "dut":
+                            lang = "Dutch";
+                            break;
+                        case "eng":
+                            lang = "English";
+                            break;
+                        case "fre":
+                            lang = "French";
+                            break;
+                        case "ger":
+                            lang = "German";
+                            break;
+                        case "ita":
+                            lang = "Italian";
+                            break;
+                        case "por":
+                            lang = "Portuguese";
+                            break;
+                        case "spa":
+                            lang = "Spanish";
+                            break;
+                        case "ind":
+                            lang = "Indonesian";
+                            break;
+                        case "lao":
+                            lang = "Lao";
+                            break;
+                        case "mlg":
+                            lang = "Malagasy";
+                            break;
+                        case "tha":
+                            lang = "Thai";
+                            break;
+                        case "vie":
+                            lang = "Vietnamese";
+                            break;
+                        default:
+                            break;
+                    }
+                }
                 setLang(lang);
+                setLangUri(response.data.result[0].lang2);
             }
         })
     }, []);
@@ -69,6 +114,9 @@ const Metadata = () => {
         })
     });
 
+    let langTag = (langUri === undefined) ?
+        <span className="block">Language: {lang}</span> :
+        <span className="block">Language: <a href={langUri}>{lang}</a></span>
 
     return (
         <div className="component">
@@ -96,9 +144,8 @@ const Metadata = () => {
                     </td>
 
                     <td valign="top" align="left">
-                        <span className="block">Language: {lang}</span>
-                        <span className="block">Licence: {license}</span>
-                        <span className="block document_filename">{linkPdf}</span>
+                        {langTag}
+                        <span className="block">Licence: <a href={license}>{license}</a></span>
                         <span className="block"><a href={linkPdf}>Download</a></span>
                     </td>
                 </tr>
