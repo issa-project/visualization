@@ -25,12 +25,15 @@ const Descriptors = () => {
 
                 // Filter out the URIs that are not in one of the accepted knowledge bases
                 response.data.result.forEach(entity => {
-                    let inDomains = KB.some(kb =>
-                        kb.used_for.find(e => e === "descriptor") !== undefined &&
-                        entity.entityUri.includes(kb.namespace)
-                    )
-                    if (inDomains) {
-                        descriptors.push(entity);
+                    let kb = KB.find(_kb => entity.entityUri.includes(_kb.namespace));
+                    if (kb.used_for.some(usage => usage === "descriptor")) {
+                        if (kb.dereferencing_template === undefined) {
+                            descriptors.push(entity);
+                        } else {
+                            // Rewrite the URI with the template given for that KB
+                            entity.entityUri = kb.dereferencing_template.replace("{uri}", encodeURIComponent(entity.entityUri));
+                            descriptors.push(entity);
+                        }
                     }
                 });
                 if (process.env.REACT_APP_LOG === "on") {
@@ -71,8 +74,7 @@ const Descriptors = () => {
 
         // Format the link, label and badge
         content.push(
-            // #######  Crappy fix to have link to agrovoc browser but not generalizable
-            <div><a href={"https://agrovoc.fao.org/browse/agrovoc/en/page/?uri=" + descriptor.entityUri} target="_external_entity">
+            <div><a href={descriptor.entityUri} target="_external_entity">
                 <span className="badge-kb">{badge}&nbsp;</span>
                 <span className="entity-label">{entityLabel}</span>
             </a></div>

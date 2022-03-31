@@ -59,17 +59,22 @@ const Abstract = () => {
         }
         axios(query).then(response => {
             if (!isEmptyResponse(query, response)) {
+
                 // Filter out the URIs that are not in one of the accepted knowledge bases
                 let entities = [];
                 response.data.result.forEach(entity => {
-                    let inDomains = KB.some(kb =>
-                        kb.used_for.find(e => e === "named_entity") !== undefined &&
-                        entity.entityUri.includes(kb.namespace)
-                    )
-                    if (inDomains) {
-                        entities.push(entity);
+                    let kb = KB.find(_kb => entity.entityUri.includes(_kb.namespace));
+                    if (kb.used_for.some(usage => usage === "named_entity")) {
+                        if (kb.dereferencing_template === undefined) {
+                            entities.push(entity);
+                        } else {
+                            // Rewrite the URI with the template given for that KB
+                            entity.entityUri = kb.dereferencing_template.replace("{uri}", encodeURIComponent(entity.entityUri));
+                            entities.push(entity);
+                        }
                     }
                 });
+
                 if (process.env.REACT_APP_LOG === "on") {
                     console.log("------------------------- Retrieved " + entities.length + " entities.");
                     entities.sort(sortByStartPos).forEach(e => console.log(e));
