@@ -11,7 +11,7 @@ export const Footer = () => (
     <div className="panelFooter">
         <div className="footer-wrap">
             <div className="widgetFooter">
-                <h4 className="">Useful links</h4>
+                <h5 className="">Useful links</h5>
                 <ul id="footerUsefulLink">
                     <li>
                         <a href="https://issa.cirad.fr/">Project website</a>
@@ -25,20 +25,22 @@ export const Footer = () => (
                 </ul>
             </div>
 
-            <div className="widgetFooter">
-                <img src={logo_cirad} width={120} alt="Cirad"/>
-            </div>
-            <div className="widgetFooter">
-                <img src={logo_mines} width={100} alt="Mines d'Alès"/>
-            </div>
-            <div className="widgetFooter">
-                <img src={logo_inria} width={130} alt="Inria"/>
-            </div>
-            <div className="widgetFooter">
-                <img src={logo_uca} width={90} alt="UCA"/>
-            </div>
-            <div className="widgetFooter">
-                <img src={logo_cnrs} width={70} alt="CNRS"/>
+            <div className="">
+                <div className="widgetFooter">
+                    <img src={logo_cirad} width={80} alt="Cirad"/>
+                </div>
+                <div className="widgetFooter">
+                    <img src={logo_mines} width={70} alt="Mines d'Alès"/>
+                </div>
+                <div className="widgetFooter">
+                    <img src={logo_inria} width={90} alt="Inria"/>
+                </div>
+                <div className="widgetFooter">
+                    <img src={logo_uca} width={60} alt="UCA"/>
+                </div>
+                <div className="widgetFooter">
+                    <img src={logo_cnrs} width={45} alt="CNRS"/>
+                </div>
             </div>
         </div>
     </div>

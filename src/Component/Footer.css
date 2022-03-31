@@ -2,6 +2,7 @@
     height: auto;
     float: left;
     padding: 2.5%;
+    text-align: left;
 }
 
 ul#footerUsefulLink, ul#footerMediaLinks {
