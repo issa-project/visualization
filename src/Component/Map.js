@@ -7,6 +7,7 @@ import iconShadow from 'leaflet/dist/images/marker-shadow.png';
 import axios from 'axios';
 import React from "react";
 import {isEmptyResponse} from "../Utils";
+import {forEach} from "react-bootstrap/ElementChildren";
 
 const MapComponent = () => {
 
@@ -33,7 +34,6 @@ const MapComponent = () => {
                     console.log("------------------------- Retrieved " + entities.length + " results for geographical entities.");
                     entities.forEach(e => console.log(e));
                 }
-
                 setEntities(entities);
             }
         })
@@ -67,8 +67,8 @@ const MapComponent = () => {
     }
 
     let result = [];
-    for (let i = 0; i < namedEntities.length; i++) {
-        result.push(<Point2 entity={namedEntities[i]} />)
+    for (let ne of namedEntities) {
+        result.push(<Point2 entity={ne} />)
     }
 
     return (

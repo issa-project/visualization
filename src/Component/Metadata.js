@@ -27,6 +27,9 @@ const Metadata = () => {
         let articleUri = new URLSearchParams(window.location.search).get("uri");
         console.log(("articleUri: " + articleUri));
         let query = process.env.REACT_APP_BACKEND_URL + "/getArticleMetadata/?uri=" + articleUri;
+        if (process.env.REACT_APP_LOG === "on") {
+            console.log("Will submit backend query: " + query);
+        }
         axios(query).then(response => {
             if (!isEmptyResponse(query, response)) {
                 setTitle(response.data.result[0].title);
@@ -36,7 +39,7 @@ const Metadata = () => {
                 setUrl(response.data.result[0].url);
                 setLicense(response.data.result[0].license);
 
-                var lang = response.data.result[0].lang;
+                let lang = response.data.result[0].lang;
                 if (lang === "eng") lang = "English"
                 else if (lang === "fre") lang = "French";
                 setLang(lang);
@@ -50,6 +53,9 @@ const Metadata = () => {
     useEffect(() => {
         let articleUri = new URLSearchParams(window.location.search).get("uri");
         let query = process.env.REACT_APP_BACKEND_URL + "/getArticleAuthors/?uri=" + articleUri;
+        if (process.env.REACT_APP_LOG === "on") {
+            console.log("Will submit backend query: " + query);
+        }
         axios(query).then(response => {
             if (!isEmptyResponse(query, response)) {
                 let authorsST = ''.substring(0);

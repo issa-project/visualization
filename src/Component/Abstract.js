@@ -24,15 +24,20 @@ const Abstract = () => {
     useEffect(() => {
         let articleUri = new URLSearchParams(window.location.search).get("uri");
         let query = process.env.REACT_APP_BACKEND_URL + "/getArticleMetadata/?uri=" + articleUri;
+        if (process.env.REACT_APP_LOG === "on") {
+            console.log("Will submit backend query: " + query);
+        }
         axios(query).then(response => {
             if (!isEmptyResponse(query, response)) {
-
                 let abstract = response.data.result[0].abs;
-
-                // Seems that some abstracts start with the term "Abstract" and that the named entities offset
-                // does not take it into account. This is a nasty workaround.
-                if (abstract.substring(0, 9).toLowerCase() === "abstract ") {
-                    abstract = abstract.substr(9);
+                if (abstract === undefined) {
+                    abstract = "";
+                } else {
+                    // Seems that some abstracts start with the term "Abstract" and that the named entities offset
+                    // does not take it into account. This is a nasty workaround.
+                    if (abstract.substring(0, 9).toLowerCase() === "abstract ") {
+                        abstract = abstract.substr(9);
+                    }
                 }
                 if (process.env.REACT_APP_LOG === "on") {
                     console.log("Retrieved abstract: " + abstract);
@@ -49,6 +54,9 @@ const Abstract = () => {
     useEffect(() => {
         let articleUri = new URLSearchParams(window.location.search).get("uri");
         let query = process.env.REACT_APP_BACKEND_URL + "/getAbstractNamedEntities/?uri=" + articleUri;
+        if (process.env.REACT_APP_LOG === "on") {
+            console.log("Will submit backend query: " + query);
+        }
         axios(query).then(response => {
             if (!isEmptyResponse(query, response)) {
                 // Filter out the URIs that are not in one of the accepted knowledge bases

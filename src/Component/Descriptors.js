@@ -16,6 +16,9 @@ const Descriptors = () => {
     useEffect(() => {
         let articleUri = new URLSearchParams(window.location.search).get("uri");
         let query = process.env.REACT_APP_BACKEND_URL + "/getArticleDescriptors/?uri=" + articleUri;
+        if (process.env.REACT_APP_LOG === "on") {
+            console.log("Will submit backend query: " + query);
+        }
         axios(query).then(response => {
             if (!isEmptyResponse(query, response)) {
                 let descriptors = [];
@@ -62,13 +65,14 @@ const Descriptors = () => {
 
         // Display the label from the KB if we have it, otherwise simply the URI
         let entityLabel = descriptor.entityLabel;
-        if (entityLabel === "") {
+        if (entityLabel === undefined) {
             entityLabel = descriptor.entityUri;
         }
 
         // Format the link, label and badge
         content.push(
-            <div><a href={descriptor.entityUri} target="_external_entity">
+            // #######  Crappy fix to have link to agrovoc browser but not generalizable
+            <div><a href={"https://agrovoc.fao.org/browse/agrovoc/en/page/?uri=" + descriptor.entityUri} target="_external_entity">
                 <span className="badge-kb">{badge}&nbsp;</span>
                 <span className="entity-label">{entityLabel}</span>
             </a></div>
