@@ -73,7 +73,7 @@ const MapComponent = () => {
 
     return (
         <div className="component">
-            <span className="content_header">Map :</span>
+            <div className="content_header">Geographic named enties extracted from the text</div>
             <MapContainer center={[30, 2]} zoom={2} scrollWheelZoom={true} style={{height: '400px'}}>
                 <TileLayer
                     attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'

@@ -100,7 +100,7 @@ const Descriptors = () => {
 
     return <div>
         <div className="component">
-            <div className="content_header">Descriptors:</div>
+            <div className="content_header">Agrovoc descriptors</div>
             <div> {result} </div>
         </div>
     </div>

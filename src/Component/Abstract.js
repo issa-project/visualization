@@ -281,8 +281,9 @@ const Abstract = () => {
     result.push(<span>{r}</span>);
 
     return (
-        <div className="component"><span
-            className="content_header">Abstract</span>: {isLoading ? result : articleAbstract}
+        <div className="component">
+            <div className="content_header">Abstract</div>
+            {isLoading ? result : articleAbstract}
             <LoadingButton/>
         </div>
     );

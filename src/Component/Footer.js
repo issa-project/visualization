@@ -11,7 +11,7 @@ export const Footer = () => (
     <div className="panelFooter">
         <div className="footer-wrap">
             <div className="widgetFooter">
-                <h5 className="">Useful links</h5>
+                <span className="text-muted">ISSA project links</span>
                 <ul id="footerUsefulLink">
                     <li>
                         <a href="https://issa.cirad.fr/">Project website</a>

@@ -6,7 +6,7 @@
     height: 60px;
 }
 
-#logo_cirad {
+#logo_issa {
     height: 80px;
 }
 
@@ -35,6 +35,7 @@ h1 {
     font-weight: normal;
     color: #e2007a;
     line-height: 1;
+    margin-bottom: 7px;
 }
 
 .divider {
