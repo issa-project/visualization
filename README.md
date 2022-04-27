@@ -26,7 +26,7 @@ yarn start
 
 Note for Windows users: you may need to authorize the execution of scripts on Powershell (as admin): `set-executionpolicy unrestricted`
 
-By default the application listens on port 3001. This can be changed in file [.env](.env).
+By default the application listens on port 3001. This can be changed in file [.env](.env.development).
 Make sure the application is properly started by pointing your browser to:
 ```
 http://localhost:3001/?uri=http://data-issa.cirad.fr/article/592919
@@ -36,7 +36,16 @@ http://localhost:3001/?uri=http://data-issa.cirad.fr/article/592919
 
 ### Logging
 
-Log traces are printed out on the browser's console. It can be deactivated in file [.env](.env) by setting property:
+Log traces are printed out on the browser's console. It can be deactivated in file [.env](.env.development) by setting property:
 ```
 REACT_APP_LOG = off
 ```
+
+## License
+
+See the [LICENSE file](LICENSE).
+
+
+## Cite this work
+
+Youssef MEKOUAR, Franck MICHEL, ISSA Project (2022). ISSA visualization web application. https://github.com/issa-project/web-visualization/.
