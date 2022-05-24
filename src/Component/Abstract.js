@@ -265,7 +265,7 @@ const Abstract = () => {
         const clickAgain = () => setLoading(false);
         return (
             <Button className="annotate-button" variant="secondary" onClick={isLoading ? clickAgain : handleClick}>
-                {isLoading ? 'Hide annotations' : 'Show annotations'}
+                {isLoading ? 'Hide named entities' : 'Show named entities'}
             </Button>
         );
     }

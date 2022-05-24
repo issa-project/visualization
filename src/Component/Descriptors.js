@@ -27,6 +27,7 @@ const Descriptors = () => {
                 response.data.result.forEach(entity => {
                     let kb = KB.find(_kb => entity.entityUri.includes(_kb.namespace));
                     if (kb.used_for.some(usage => usage === "descriptor")) {
+                        entity.kbName = kb.name;
                         if (kb.dereferencing_template === undefined) {
                             descriptors.push(entity);
                         } else {
@@ -57,15 +58,7 @@ const Descriptors = () => {
     function wrap(id, descriptor, result) {
 
         let content = [];
-
-        // Find the knowledge base that the URI comes from to use its name as a badge
-        let badge = "";
-        KB.forEach(kb => {
-            if (descriptor.entityUri.includes(kb.namespace)) {
-                badge = kb.name;
-            }
-        });
-
+        
         // Display the label from the KB if we have it, otherwise simply the URI
         let entityLabel = descriptor.entityLabel;
         if (entityLabel === undefined) {
@@ -75,7 +68,7 @@ const Descriptors = () => {
         // Format the link, label and badge
         content.push(
             <div><a href={descriptor.entityUri} target="_external_entity">
-                <span className="badge-kb">{badge}&nbsp;</span>
+                <span className="badge-kb">{descriptor.kbName}&nbsp;</span>
                 <span className="entity-label">{entityLabel}</span>
             </a></div>
         );
