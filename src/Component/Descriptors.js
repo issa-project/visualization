@@ -58,7 +58,7 @@ const Descriptors = () => {
     function wrap(id, descriptor, result) {
 
         let content = [];
-        
+
         // Display the label from the KB if we have it, otherwise simply the URI
         let entityLabel = descriptor.entityLabel;
         if (entityLabel === undefined) {
