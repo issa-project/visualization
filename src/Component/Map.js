@@ -6,12 +6,13 @@ import icon from 'leaflet/dist/images/marker-icon.png';
 import iconShadow from 'leaflet/dist/images/marker-shadow.png';
 import axios from 'axios';
 import React from "react";
+import { useLocation } from 'react-router-dom';
 import {isEmptyResponse} from "../Utils";
-import {forEach} from "react-bootstrap/ElementChildren";
 
 const MapComponent = () => {
 
     const [namedEntities, setEntities] = useState('');
+    const articleUri = new URLSearchParams(useLocation().search).get("uri");
 
     // This is needed to diplay an icon for each point on the map
     let DefaultIcon = L.icon({
@@ -24,7 +25,6 @@ const MapComponent = () => {
      * Retrieve the geographical named entities of the article abstract from the backend
      */
     useEffect(() => {
-        let articleUri = new URLSearchParams(window.location.search).get("uri");
         let query = process.env.REACT_APP_BACKEND_URL + "/getGeographicNamedEntities/?uri=" + articleUri;
         let entities2 = [];
         axios(query).then(response => {

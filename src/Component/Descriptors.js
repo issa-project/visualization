@@ -1,4 +1,5 @@
 import React, {useState, useEffect} from 'react';
+import { useLocation } from 'react-router-dom';
 import EntityHighlight from "./EntityHighlight";
 import axios from "axios";
 import {isEmptyResponse} from '../Utils';
@@ -12,9 +13,9 @@ import KB from "../config/knowledge_bases.json";
 const Descriptors = () => {
 
     const [listDescriptor, setListDescriptor] = useState('');
+    const articleUri = new URLSearchParams(useLocation().search).get("uri");
 
     useEffect(() => {
-        let articleUri = new URLSearchParams(window.location.search).get("uri");
         let query = process.env.REACT_APP_BACKEND_URL + "/getArticleDescriptors/?uri=" + articleUri;
         if (process.env.REACT_APP_LOG === "on") {
             console.log("Will submit backend query: " + query);

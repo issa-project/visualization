@@ -1,4 +1,5 @@
 import React, {useEffect, useState} from 'react';
+import { useLocation } from 'react-router-dom';
 import './Metadata.css';
 import fileIcon from './images/file_icon.png';
 import axios from 'axios';
@@ -19,13 +20,13 @@ const Metadata = () => {
     const [license, setLicense] = useState('');
     const [lang, setLang] = useState('');
     const [langUri, setLangUri] = useState('');
+    const articleUri = new URLSearchParams(useLocation().search).get("uri");
 
 
     /**
      * Get the article's metadata
      */
     useEffect(() => {
-        let articleUri = new URLSearchParams(window.location.search).get("uri");
         console.log(("articleUri: " + articleUri));
         let query = process.env.REACT_APP_BACKEND_URL + "/getArticleMetadata/?uri=" + articleUri;
         if (process.env.REACT_APP_LOG === "on") {

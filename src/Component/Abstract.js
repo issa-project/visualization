@@ -1,4 +1,5 @@
 import React, {useEffect, useState} from 'react';
+import { useLocation } from 'react-router-dom';
 import EntityHighlight from "./EntityHighlight";
 import Button from 'react-bootstrap/Button'
 import axios from 'axios';
@@ -15,6 +16,7 @@ const Abstract = () => {
     const [articleAbstract, setArticleAbstract] = useState('');
     const [namedEntities, setEntities] = useState('');
     const [isLoading, setLoading] = useState(false);
+    const articleUri = new URLSearchParams(useLocation().search).get("uri");
     let result = [];
 
 
@@ -22,7 +24,6 @@ const Abstract = () => {
      * Retrieve the text of the article abstract from the backend
      */
     useEffect(() => {
-        let articleUri = new URLSearchParams(window.location.search).get("uri");
         let query = process.env.REACT_APP_BACKEND_URL + "/getArticleMetadata/?uri=" + articleUri;
         if (process.env.REACT_APP_LOG === "on") {
             console.log("Will submit backend query: " + query);
