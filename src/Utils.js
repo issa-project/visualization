@@ -14,9 +14,14 @@ export function isEmptyResponse(query, response) {
     if (response.data.result.length === 0) {
         console.log("WARNING: empty response.data.result\n: " + JSON.stringify(response) + " . Query was: " + query);
         return true;
-    } else if (Object.entries(response.data.result[0]).length === 0) {
+    } else if (response.data.result[0] === undefined) {
+        console.log("WARNING: response.data.result[0] undefined\n: " + JSON.stringify(response) + " . Query was: " + query);
+        return true;
+    }
+    else if (Object.entries(response.data.result[0]).length === 0) {
         console.log("WARNING: empty response.data.result[0]\n: " + JSON.stringify(response) + " . Query was: " + query);
         return true;
     }
+
     return false;
 }
