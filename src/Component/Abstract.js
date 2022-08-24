@@ -65,13 +65,15 @@ const Abstract = () => {
                 let entities = [];
                 response.data.result.forEach(entity => {
                     let kb = KB.find(_kb => entity.entityUri.includes(_kb.namespace));
-                    if (kb.used_for.some(usage => usage === "named_entity")) {
-                        if (kb.dereferencing_template === undefined) {
-                            entities.push(entity);
-                        } else {
-                            // Rewrite the URI with the template given for that KB
-                            entity.entityUri = kb.dereferencing_template.replace("{uri}", encodeURIComponent(entity.entityUri));
-                            entities.push(entity);
+                    if (kb !== undefined) {
+                        if (kb.used_for.some(usage => usage === "named_entity")) {
+                            if (kb.dereferencing_template === undefined) {
+                                entities.push(entity);
+                            } else {
+                                // Rewrite the URI with the template given for that KB
+                                entity.entityUri = kb.dereferencing_template.replace("{uri}", encodeURIComponent(entity.entityUri));
+                                entities.push(entity);
+                            }
                         }
                     }
                 });
@@ -219,9 +221,9 @@ const Abstract = () => {
 
             // Find the knowledge base that the URI comes from to use its name as a badge
             let badge = "";
-            KB.forEach(kb => {
-                if (e.entityUris[i].includes(kb.namespace)) {
-                    badge = kb.name;
+            KB.forEach(_kb => {
+                    if (e.entityUris[i].includes(_kb.namespace)) {
+                    badge = _kb.name;
                 }
             });
 

@@ -13,7 +13,7 @@
   },
   {
     "name": "Agrovoc",
-    "namespace": "aims.fao.org/aos/agrovoc",
+    "namespace": "aims.fao.org",
     "endpoint": "https://agrovoc.uniroma2.it/sparql",
     "used_for": [ "named_entity", "descriptor" ],
     "dereferencing_template": "https://agrovoc.fao.org/browse/agrovoc/en/page/?uri={uri}"
@@ -39,7 +39,7 @@
   {
     "name": "Geonames",
     "namespace": "sws.geonames.org/",
-    "endpoint": "http://erebe-vm3.i3s.unice.fr/sparql",
+    "endpoint": "https://data-issa.cirad.fr/sparql",
     "used_for": [ "geographic_entity" ]
   }
 ]

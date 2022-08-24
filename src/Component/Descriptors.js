@@ -27,14 +27,16 @@ const Descriptors = () => {
                 // Filter out the URIs that are not in one of the accepted knowledge bases
                 response.data.result.forEach(entity => {
                     let kb = KB.find(_kb => entity.entityUri.includes(_kb.namespace));
-                    if (kb.used_for.some(usage => usage === "descriptor")) {
-                        entity.kbName = kb.name;
-                        if (kb.dereferencing_template === undefined) {
-                            descriptors.push(entity);
-                        } else {
-                            // Rewrite the URI with the template given for that KB
-                            entity.entityUri = kb.dereferencing_template.replace("{uri}", encodeURIComponent(entity.entityUri));
-                            descriptors.push(entity);
+                    if (kb !== undefined) {
+                        if (kb.used_for.some(usage => usage === "descriptor")) {
+                            entity.kbName = kb.name;
+                            if (kb.dereferencing_template === undefined) {
+                                descriptors.push(entity);
+                            } else {
+                                // Rewrite the URI with the template given for that KB
+                                entity.entityUri = kb.dereferencing_template.replace("{uri}", encodeURIComponent(entity.entityUri));
+                                descriptors.push(entity);
+                            }
                         }
                     }
                 });
