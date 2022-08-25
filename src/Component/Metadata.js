@@ -97,7 +97,6 @@ const Metadata = () => {
      * Get the article's authors
      */
     useEffect(() => {
-        let articleUri = new URLSearchParams(window.location.search).get("uri");
         let query = process.env.REACT_APP_BACKEND_URL + "/getArticleAuthors/?uri=" + articleUri;
         if (process.env.REACT_APP_LOG === "on") {
             console.log("Will submit backend query: " + query);

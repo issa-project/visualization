@@ -1,5 +1,5 @@
 import {Component} from "react";
-import {Navbar, Nav, Button, Form, FormControl} from "react-bootstrap";
+import {Navbar, Nav} from "react-bootstrap";
 import logo_agritrop from './images/logo_agritrop.png';
 import logo_issa from './images/logo_issa.png';
 

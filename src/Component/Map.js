@@ -1,5 +1,5 @@
 import L from 'leaflet';
-import {MapContainer, TileLayer, Marker, Popup, GeoJSON} from 'react-leaflet'
+import {MapContainer, TileLayer, Marker, Popup} from 'react-leaflet'
 import 'leaflet/dist/leaflet.css';
 import {useEffect, useState} from "react";
 import icon from 'leaflet/dist/images/marker-icon.png';
@@ -26,7 +26,6 @@ const MapComponent = () => {
      */
     useEffect(() => {
         let query = process.env.REACT_APP_BACKEND_URL + "/getGeographicNamedEntities/?uri=" + articleUri;
-        let entities2 = [];
         axios(query).then(response => {
             if (!isEmptyResponse(query, response)) {
                 let entities = response.data.result;

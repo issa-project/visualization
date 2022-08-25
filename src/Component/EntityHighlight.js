@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {Button, Popover, PopoverHeader, PopoverBody} from 'reactstrap';
+import {Button, Popover, PopoverHeader} from 'reactstrap';
 import './EntityHighlight.css';
 
 /**
@@ -24,7 +24,6 @@ const EntityHighlight = (props) => {
             </Button>
             <Popover placement="auto" isOpen={popoverOpen} target={props.id} toggle={toggle}>
                 <PopoverHeader> {props.title} </PopoverHeader>
-                {/* <PopoverBody> {props.content} </PopoverBody>*/}
                 <div className="popoverContent">
                     {props.content}
                 </div>
