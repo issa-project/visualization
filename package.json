@@ -1,7 +1,9 @@
 {
   "name": "issa-web-visualization",
   "version": "0.1.0",
-  "private": true,
+  "license" : "Apache-2.0",
+  "homepage": "/visu/",
+  "repository": "github:issa-project/web-visualization",
   "dependencies": {
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
