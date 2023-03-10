@@ -1,13 +1,14 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './Footer.css';
+
 import logo_inria from './images/logo_inria.png'
 import logo_uca from './images/logo_uca.png'
 import logo_cnrs from './images/logo_cnrs.png'
 import logo_mines from './images/logo_mines.png'
 import logo_cirad from './images/logo_cirad.png'
 
-export const Footer = () => (
+const Footer = () => (
     <div className="panelFooter">
         <div className="footer-wrap">
             <div className="widgetFooter">
@@ -45,3 +46,5 @@ export const Footer = () => (
         </div>
     </div>
 );
+
+export default Footer;

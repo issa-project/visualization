@@ -120,20 +120,18 @@ const Metadata = () => {
 
     return (
         <div className="component">
-            <div className="">
-                <div>
-                    <h1 className="">{title} </h1>
-                    <p>
-                        <span className="metadata font-weight-bold"> {authors}. </span>
-                        <span className="metadata">{date}. </span>
-                        <span className="metadata">{title}. </span>
-                        <span className="metadata font-italic"> {pub}. </span>
-                        <span className="block"><a href={url} target="_article_page">{url}</a></span>
-                    </p>
-                </div>
+            <div>
+                <h1 className="">{title} </h1>
+                <p>
+                    <span className="metadata font-weight-bold"> {authors}. </span>
+                    <span className="metadata">{date}. </span>
+                    <span className="metadata">{title}. </span>
+                    <span className="metadata font-italic"> {pub}. </span>
+                    <span className="block"><a href={url} target="_article_page">{url}</a></span>
+                </p>
             </div>
 
-            <div className="divider"></div>
+            <div className="divider"/>
 
             <div className="">
                 <tr>
