@@ -1,9 +1,10 @@
 import React, {useEffect, useState} from 'react';
 import { useLocation } from 'react-router-dom';
-import './Metadata.css';
-import fileIcon from './images/file_icon.png';
 import axios from 'axios';
 import {isEmptyResponse} from '../Utils';
+
+import './Metadata.css';
+import fileIcon from './images/file_icon.png';
 
 
 /**
@@ -147,7 +148,6 @@ const Metadata = () => {
                         <span className="block"><a href={linkPdf}>Download</a></span>
                     </td>
                 </tr>
-
             </div>
         </div>
     );

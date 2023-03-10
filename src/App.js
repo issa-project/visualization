@@ -1,5 +1,6 @@
 import './App.css';
 
+import {Container} from 'reactstrap';
 import Abstract from './Component/Abstract';
 import Footer from './Component/Footer';
 import Descriptors from './Component/Descriptors';
@@ -9,14 +10,14 @@ import MapComponent from "./Component/Map";
 
 function App() {
     return (
-        <div className="container">
+        <Container>
             <NavBar/>
             <Metadata/>
             <Abstract/>
             <Descriptors/>
             <MapComponent/>
             <Footer/>
-        </div>
+        </Container>
     );
 }
 
