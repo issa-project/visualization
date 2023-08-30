@@ -29,7 +29,7 @@ Note for Windows users: you may need to authorize the execution of scripts on Po
 By default the application listens on port 3001. This can be changed in file [.env](.env.development).
 Make sure the application is properly started by pointing your browser to:
 ```
-http://localhost:3001/?uri=http://data-issa.cirad.fr/article/592919
+http://localhost:3001/notice?uri=http://data-issa.cirad.fr/document/592919
 ```
 (this is an example article URI that may no longer be valid at some point).
 
