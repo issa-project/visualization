@@ -124,10 +124,10 @@ const Metadata = () => {
             <div>
                 <h1 className="">{title} </h1>
                 <p>
-                    <span className="metadata font-weight-bold"> {authors}. </span>
+                    <span className="metadata fw-bold"> {authors}. </span>
                     <span className="metadata">{date}. </span>
                     <span className="metadata">{title}. </span>
-                    <span className="metadata font-italic"> {pub}. </span>
+                    <span className="metadata fst-italic">{pub}. </span>
                     <span className="block"><a href={url} target="_article_page">{url}</a></span>
                 </p>
             </div>
@@ -144,7 +144,7 @@ const Metadata = () => {
 
                     <td valign="top" align="left">
                         {langTag}
-                        <span className="block">Licence: <a href={license}>{license}</a></span>
+                        <span className="">Licence: <a href={license}>{license}</a></span>
                         <span className="block"><a href={linkPdf}>Download</a></span>
                     </td>
                 </tr>

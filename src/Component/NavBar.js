@@ -16,8 +16,8 @@ class NavBar extends Component {
         return (
             <Navbar bg="" variant="">
                 <Navbar.Brand href=""></Navbar.Brand>
-                <img className="mt-4 mr-4" id="logo_issa" src={logo_issa} alt="ISSA"></img>
-                <div className="mt-4 mr-4 col-sm-3" >
+                <img className="mt-4 me-5" id="logo_issa" src={logo_issa} alt="ISSA"></img>
+                <div className="mt-4 me-0 col-sm-3">
                     This interface developed by the <a href="https://issa.cirad.fr/">ISSA</a>  project demonstrates the enriched
                     visualization of <a href="https://agritrop.cirad.fr/">Agritrop</a> documents.
                 </div>
@@ -25,7 +25,7 @@ class NavBar extends Component {
                 <Nav className="mr-auto">
                     <ul>
                         <li>
-                            <Link to="/document">Document</Link>
+                            <Link to="/notice">Document</Link>
                         </li>
                         <li>
                             <Link to="/search">Search</Link>

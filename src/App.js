@@ -1,6 +1,6 @@
 import './App.css';
 
-import {Container} from 'reactstrap';
+import {Container} from 'react-bootstrap';
 import Abstract from './Component/Abstract';
 import Footer from './Component/Footer';
 import Descriptors from './Component/Descriptors';
@@ -10,7 +10,7 @@ import MapComponent from "./Component/Map";
 
 function App() {
     return (
-        <Container>
+        <Container fluid="xl">
             <NavBar/>
             <Metadata/>
             <Abstract/>

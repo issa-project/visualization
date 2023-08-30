@@ -13,8 +13,8 @@ ReactDOM.render(
     <React.StrictMode>
         <Router>
             <Routes>
-                <Route path="/document" element={<App/>} />
-                <Route path="/search" element={<Search/>} />
+                <Route path="notice" element={<App/>} />
+                <Route path="search" element={<Search/>} />
             </Routes>
         </Router>
     </React.StrictMode>,
