@@ -1,4 +1,6 @@
 import React, {useState, useEffect} from 'react';
+import { BsFillPersonFill } from "react-icons/bs";
+import { LiaRobotSolid } from "react-icons/lia";
 import { useLocation } from 'react-router-dom';
 import EntityHighlight from "./EntityHighlight";
 import axios from "axios";
@@ -54,8 +56,8 @@ const Descriptors = () => {
     /**
      * Present a descriptor of the article as a highlighted text span with pop-over
      *
-     * @param id : pop-over identifier
-     * @param descriptor : the data about the descriptor (uri, label associated with the uri if any)
+     * @param id : string pop-over identifier
+     * @param descriptor : object data about the descriptor (uri, label associated with the uri if any)
      * @param result
      */
     function wrap(id, descriptor, result) {
@@ -82,6 +84,7 @@ const Descriptors = () => {
                 word={entityLabel}
                 title={entityLabel}
                 content={content}
+                icons={descriptor.types}
             />
         );
         result.push(<span>&nbsp;</span>);
@@ -96,7 +99,10 @@ const Descriptors = () => {
 
     return <div>
         <div className="component">
-            <div className="content_header">Agrovoc descriptors</div>
+            <div className="content_header">Agrovoc descriptors &nbsp;&nbsp;
+                <span className={"small"}>(<BsFillPersonFill/> manual, <LiaRobotSolid/> automatic)</span>
+            </div>
+
             <div> {result} </div>
         </div>
     </div>
