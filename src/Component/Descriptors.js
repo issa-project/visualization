@@ -92,18 +92,47 @@ const Descriptors = () => {
 
     // ------------------------------------------------------------------------
 
-    let result = [];
+    let thematicDescriptors = [];
     for (let i = 0; i < listDescriptor.length; i++) {
-        wrap("word-desc-" + i, listDescriptor[i], result);
+        if (listDescriptor[i].isGeographicalDescriptor === undefined)
+            wrap("word-desc-" + i, listDescriptor[i], thematicDescriptors);
+        else {
+            if (listDescriptor[i].isGeographicalDescriptor === 0)
+                wrap("word-desc-" + i, listDescriptor[i], thematicDescriptors);
+        }
     }
+
+    let geographicDescriptors = [];
+    for (let i = 0; i < listDescriptor.length; i++) {
+        if (listDescriptor[i].isGeographicalDescriptor === 1)
+            wrap("word-desc-" + i, listDescriptor[i], geographicDescriptors);
+    }
+
+    let result = [];
+    if (thematicDescriptors.length > 0)
+        result.push(
+            <div>
+                <div className="content_header">Thematic descriptors &nbsp;&nbsp;
+                    <span className={"small"}>(<BsFillPersonFill/> manual, <LiaRobotSolid/> automatic)</span>
+                </div>
+                <div> {thematicDescriptors} </div>
+                <div className="spacer">&nbsp;</div>
+            </div>
+        );
+
+    if (geographicDescriptors.length > 0)
+        result.push(
+            <div>
+                <div className="content_header">Geographic descriptors &nbsp;&nbsp;
+                    <span className={"small"}>(<BsFillPersonFill/> manual, <LiaRobotSolid/> automatic)</span>
+                </div>
+                <div> {geographicDescriptors} </div>
+            </div>
+        );
 
     return <div>
         <div className="component">
-            <div className="content_header">Agrovoc descriptors &nbsp;&nbsp;
-                <span className={"small"}>(<BsFillPersonFill/> manual, <LiaRobotSolid/> automatic)</span>
-            </div>
-
-            <div> {result} </div>
+            {result}
         </div>
     </div>
 };

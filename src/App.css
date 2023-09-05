@@ -73,3 +73,8 @@ h1 {
 .inline {
     display: inline;
 }
+
+.spacer {
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
