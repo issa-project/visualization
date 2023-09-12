@@ -28,9 +28,9 @@ const Metadata = () => {
      * Get the article's metadata
      */
     useEffect(() => {
-        console.log(("articleUri: " + articleUri));
         let query = process.env.REACT_APP_BACKEND_URL + "/getArticleMetadata/?uri=" + articleUri;
         if (process.env.REACT_APP_LOG === "on") {
+            console.log(("articleUri: " + articleUri));
             console.log("Will submit backend query: " + query);
         }
         axios(query).then(response => {
@@ -92,6 +92,7 @@ const Metadata = () => {
                 setLangUri(response.data.result[0].lang2);
             }
         })
+        //eslint-disable-next-line
     }, []);
 
     /**
@@ -136,13 +137,13 @@ const Metadata = () => {
 
             <div className="">
                 <tr>
-                    <td valign="middle" align="right">
+                    <td key="link" valign="middle" align="right">
                         <a href={linkPdf}>
                             <img className="doc_icon" src={fileIcon} alt="File icon"/>
                         </a>
                     </td>
 
-                    <td valign="top" align="left">
+                    <td key="licence" valign="top" align="left">
                         {langTag}
                         <span className="">Licence: <a href={license}>{license}</a></span>
                         <span className="block"><a href={linkPdf}>Download</a></span>

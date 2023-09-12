@@ -14,7 +14,7 @@ import KB from "../config/knowledge_bases.json";
 const Abstract = () => {
 
     const [articleAbstract, setArticleAbstract] = useState('');
-    const [namedEntities, setEntities] = useState('');
+    const [namedEntities, setEntities] = useState([]);
     const [isLoading, setLoading] = useState(false);
     const articleUri = new URLSearchParams(useLocation().search).get("uri");
     let result = [];
@@ -46,6 +46,7 @@ const Abstract = () => {
                 setArticleAbstract(abstract);
             }
         })
+        //eslint-disable-next-line
     }, []);
 
 
@@ -97,6 +98,7 @@ const Abstract = () => {
                 setEntities(noOverlap);
             }
         })
+        //eslint-disable-next-line
     }, []);
 
 

@@ -11,7 +11,7 @@ import {isEmptyResponse} from "../Utils";
 
 const MapComponent = () => {
 
-    const [namedEntities, setEntities] = useState('');
+    const [namedEntities, setEntities] = useState([]);
     const articleUri = new URLSearchParams(useLocation().search).get("uri");
 
     // This is needed to diplay an icon for each point on the map
@@ -36,6 +36,7 @@ const MapComponent = () => {
                 setEntities(entities);
             }
         })
+        //eslint-disable-next-line
     }, []);
 
 
@@ -67,7 +68,7 @@ const MapComponent = () => {
 
     let result = [];
     for (let ne of namedEntities) {
-        result.push(<Point2 entity={ne} />)
+        result.push(<Point2 key={"key_" + ne.name + ne.latitude + ne.longitude} entity={ne} />)
     }
 
     return (

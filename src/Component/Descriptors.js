@@ -50,6 +50,7 @@ const Descriptors = () => {
                 setListDescriptor(descriptors);
             }
         })
+        //eslint-disable-next-line
     }, []);
 
 
@@ -80,6 +81,7 @@ const Descriptors = () => {
 
         result.push(
             <EntityHighlight
+                key={id}
                 id={id}
                 word={entityLabel}
                 title={entityLabel}
