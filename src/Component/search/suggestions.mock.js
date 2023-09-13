@@ -1,6 +1,6 @@
 export let suggestionsMockSimple = ['Apple', 'Banana', 'Cherry', 'Date', 'Fig', 'Grapes', 'Lemon', 'Mango', 'Orange'];
 
-export let suggestionsMockRich = [
+export let suggestionsMock = [
     {
         entityLabel: 'Apple',
         entityUri: 'http://Apple'

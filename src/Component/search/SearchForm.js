@@ -3,8 +3,8 @@ import {Button, Form, Row, Col} from "react-bootstrap";
 import ListGroup from 'react-bootstrap/ListGroup';
 import axios from "axios";
 import {isEmptyResponse} from "../../Utils";
+import {suggestionsMock} from './suggestions.mock';
 import './SearchForm.css';
-import {suggestionsMockSimple} from './suggestions.mock';
 
 
 function SearchForm() {
@@ -19,6 +19,7 @@ function SearchForm() {
 
     /**
      * Autocomplete suggestions from the current input value.
+     * Each suggestion ends up as an array element [label, iri] and is added to state variable 'suggestions'.
      */
     useEffect(() => {
 
@@ -27,8 +28,9 @@ function SearchForm() {
         } else {
             // Use a mock search service for tests
             if (process.env.REACT_APP_USE_MOCK_SEARCH_SERVICE === "true") {
-                const filteredSuggestions = suggestionsMockSimple.filter((possibleValue) =>
-                    possibleValue.toLowerCase().includes(input.toLowerCase())
+                const filteredSuggestions = suggestionsMock.filter((_s) =>
+                    _s.entityLabel.toLowerCase().includes(input)).map((_s) =>
+                    [_s.entityLabel, _s.entityUri]
                 );
                 setSuggestions(filteredSuggestions);
 
@@ -45,10 +47,10 @@ function SearchForm() {
                         setSuggestions([]);
                     } else {
                         let newSuggestions = response.data.result.map(
-                            (result) => result.entityLabel.toLowerCase()
+                            (_suggestion) => [_suggestion.entityLabel.toLowerCase(), _suggestion.entityUri]
                         ).filter(
                             // Do not suggest an entities that is already selected
-                            (result) => !entities.includes(result)
+                            (_suggestion) => !entities.includes(_suggestion)
                         );
                         setSuggestions(newSuggestions);
                         if (process.env.REACT_APP_LOG === "on") {
@@ -99,7 +101,7 @@ function SearchForm() {
                 <div className="entity-list">
                     {entities.map((entity, index) => (
                         <div className="entity-box" key={index}>
-                            <div className="entity-text">{entity}</div>
+                            <div className="entity-text">{entity[0]}</div>
                             <button className="entity-remove-button" onClick={() => handleRemoveEntity(index)}>
                                 &times;
                             </button>
@@ -129,18 +131,17 @@ function SearchForm() {
 
                     <ListGroup className="suggestion-list">
                         {suggestions.map((suggestion, index) => (
-                            <ListGroup.Item className="suggestion-item" action variant="light"
+                            <ListGroup.Item key={index} className="suggestion-item" action variant="light"
                                             onClick={() => handleSelectSuggestion(suggestion)}>
-                                {suggestion}
+                                {suggestion[0]}
                             </ListGroup.Item>
                         ))}
                     </ListGroup>
 
                 </Form>
-
             </div>
         </div>
     );
-};
+}
 
 export default SearchForm;
