@@ -9,13 +9,23 @@
     width: 300px;
     padding: 5px;
     font-size: 14px;
-    margin: 10px 10px 0px 10px;
+    margin: 10px 20px 0px 10px;
 }
 
 .search-button {
     padding: 5px;
     font-size: 14px;
-    margin: 10px 10px 0px 20px;
+    margin: 10px 10px 0px 10px;
+}
+
+.suggestion-list {
+    margin: 0px 10px 0px 10px;
+    width: 300px;
+    position: absolute;
+}
+
+.suggestion-item {
+    line-height: 1em;
 }
 
 .entity-list {
@@ -39,7 +49,7 @@
     color: inherit;
 }
 
-.remove-button {
+.entity-remove-button {
     background-color: inherit;
     color: inherit;
     border: 0px;
@@ -48,16 +58,6 @@
     cursor: pointer;
 }
 
-.remove-button:hover {
+.entity-remove-button:hover {
     background-color: inherit;
 }
-
-.suggestion-list {
-    width: 300px;
-    /* position: absolute; */
-}
-
-.suggestion-item {
-    line-height: 1em;
-}
-
