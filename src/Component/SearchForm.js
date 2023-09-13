@@ -24,7 +24,7 @@ function SearchForm() {
         if (input.length < process.env.REACT_APP_MIN_SIZE_FOR_AUTOCOMPLETE) {
             setSuggestions([]);
         } else {
-            // Use a mok search service for tests
+            // Use a mock search service for tests
             if (process.env.REACT_APP_USE_MOCK_SEARCH_SERVICE === "true") {
                 const possibleValues = ['Apple', 'Banana', 'Cherry', 'Date', 'Fig', 'Grapes', 'Lemon', 'Mango', 'Orange', 'Peach', 'Pear', 'Pineapple', 'Strawberry', 'Watermelon',];
                 const filteredSuggestions = possibleValues.filter((possibleValue) =>
@@ -33,7 +33,7 @@ function SearchForm() {
                 setSuggestions(filteredSuggestions);
 
             } else {
-
+                // Invoke the auto-completion service
                 let query = process.env.REACT_APP_BACKEND_URL + "/autoCompleteAgrovoc/?input=" + input;
                 if (process.env.REACT_APP_LOG === "on") {
                     console.log("input: " + input);
