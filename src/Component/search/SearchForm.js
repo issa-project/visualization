@@ -2,8 +2,9 @@ import React, {useState, useEffect} from 'react';
 import {Button, Form, Row, Col} from "react-bootstrap";
 import ListGroup from 'react-bootstrap/ListGroup';
 import axios from "axios";
-import {isEmptyResponse} from "../Utils";
+import {isEmptyResponse} from "../../Utils";
 import './SearchForm.css';
+import {suggestionsMockSimple} from './suggestions.mock';
 
 
 function SearchForm() {
@@ -26,8 +27,7 @@ function SearchForm() {
         } else {
             // Use a mock search service for tests
             if (process.env.REACT_APP_USE_MOCK_SEARCH_SERVICE === "true") {
-                const possibleValues = ['Apple', 'Banana', 'Cherry', 'Date', 'Fig', 'Grapes', 'Lemon', 'Mango', 'Orange', 'Peach', 'Pear', 'Pineapple', 'Strawberry', 'Watermelon',];
-                const filteredSuggestions = possibleValues.filter((possibleValue) =>
+                const filteredSuggestions = suggestionsMockSimple.filter((possibleValue) =>
                     possibleValue.toLowerCase().includes(input.toLowerCase())
                 );
                 setSuggestions(filteredSuggestions);
@@ -63,9 +63,9 @@ function SearchForm() {
     }, [input]);
 
     const handleInputChange = (e) => {
-            const currentInput = e.target.value.toLowerCase();
-            setInput(currentInput);
-        };
+        const currentInput = e.target.value.toLowerCase();
+        setInput(currentInput);
+    };
 
     /**
      * When enter is pressed, add the selected suggestion to the list of entities
@@ -129,7 +129,8 @@ function SearchForm() {
 
                     <ListGroup className="suggestion-list">
                         {suggestions.map((suggestion, index) => (
-                            <ListGroup.Item className="suggestion-item" action variant="light" onClick={() => handleSelectSuggestion(suggestion)}>
+                            <ListGroup.Item className="suggestion-item" action variant="light"
+                                            onClick={() => handleSelectSuggestion(suggestion)}>
                                 {suggestion}
                             </ListGroup.Item>
                         ))}
