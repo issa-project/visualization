@@ -6,30 +6,35 @@
 }
 
 .input-field {
-    width: 500px;
+    width: 300px;
     padding: 5px;
     font-size: 14px;
-    margin: 10px;
+    margin: 10px 10px 0px 10px;
 }
 
-.input-list {
+.search-button {
+    padding: 5px;
+    font-size: 14px;
+    margin: 10px 10px 0px 20px;
+}
+
+.entity-list {
+    display: grid;
     display: flex;
     flex-wrap: wrap;
 }
 
-.input-box {
+.entity-box {
     display: flex;
     align-items: center;
     background-color: #9999cc;
     color: white;
     padding: 3px 10px 3px 10px;
     margin: 3px;
-    font-size: 1em;
-    line-height: 1em;
     border-radius: 15px;
 }
 
-.item-text {
+.entity-text {
     flex-grow: 1; /* Allow the text to expand within the box */
     color: inherit;
 }
@@ -47,4 +52,12 @@
     background-color: inherit;
 }
 
+.suggestion-list {
+    width: 300px;
+    /* position: absolute; */
+}
+
+.suggestion-item {
+    line-height: 1em;
+}
 
