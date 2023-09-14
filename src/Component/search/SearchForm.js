@@ -2,7 +2,6 @@ import React, {useState, useEffect} from 'react';
 import {Button, Form, Row, Col} from "react-bootstrap";
 import ListGroup from 'react-bootstrap/ListGroup';
 import axios from "axios";
-import {isEmptyResponse} from "../../Utils";
 import {suggestionsMock} from './suggestions.mock';
 import './SearchForm.css';
 
@@ -42,15 +41,21 @@ function SearchForm() {
                     console.log("Will submit backend query: " + query);
                 }
                 axios(query).then(response => {
-                    if (isEmptyResponse(query, response)) {
+                    if (response.data === undefined) {
                         // Empty the previous list of suggestions if empty response
                         setSuggestions([]);
                     } else {
-                        let newSuggestions = response.data.result.map(
-                            (_suggestion) => [_suggestion.entityLabel.toLowerCase(), _suggestion.entityUri]
+                        let newSuggestions = response.data.map(
+                            _s => {
+                                if (_s.entityPrefLabel === undefined)
+                                    return [_s.entityLabel, _s.entityUri]
+                                else
+                                    return [_s.entityLabel, _s.entityUri, '(' + _s.entityPrefLabel + ')']
+                            }
                         ).filter(
-                            // Do not suggest an entities that is already selected
-                            (_suggestion) => !entities.includes(_suggestion)
+                            // Do not suggest an entity that is already selected
+                            _s => ! entities.some(_e => _e[0].toLowerCase() === _s[0].toLowerCase()
+                                                        && _s[1] === _e[1])
                         );
                         setSuggestions(newSuggestions);
                         if (process.env.REACT_APP_LOG === "on") {
@@ -101,7 +106,9 @@ function SearchForm() {
                 <div className="entity-list">
                     {entities.map((entity, index) => (
                         <div className="entity-box" key={index}>
-                            <div className="entity-text">{entity[0]}</div>
+                            <div className="entity-text">
+                                {entity[0]}
+                            </div>
                             <button className="entity-remove-button" onClick={() => handleRemoveEntity(index)}>
                                 &times;
                             </button>
@@ -133,7 +140,8 @@ function SearchForm() {
                         {suggestions.map((suggestion, index) => (
                             <ListGroup.Item key={index} className="suggestion-item" action variant="light"
                                             onClick={() => handleSelectSuggestion(suggestion)}>
-                                {suggestion[0]}
+                                {suggestion[0]} &nbsp;
+                                <span className={"suggestion-pref-label"}>{suggestion[2]}</span>
                             </ListGroup.Item>
                         ))}
                     </ListGroup>

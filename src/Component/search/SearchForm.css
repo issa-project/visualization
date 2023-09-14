@@ -20,7 +20,7 @@
 
 .suggestion-list {
     margin: 0px 10px 0px 10px;
-    width: 300px;
+    min-width: 300px;
     position: absolute;
 }
 
@@ -28,8 +28,13 @@
     line-height: 1em;
 }
 
+.suggestion-pref-label {
+    font-size: 11px;
+    color: grey;
+    font-style: italic;
+}
+
 .entity-list {
-    display: grid;
     display: flex;
     flex-wrap: wrap;
 }
