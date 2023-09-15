@@ -6,7 +6,11 @@ export let suggestionsMock = [
         entityUri: 'http://Apple'
     }, {
         entityLabel: 'Banana',
-        entityUri: 'http://Banana'
+        entityUri: 'http://Banana',
+    }, {
+        entityLabel: 'Yellow banana',
+        entityUri: 'http://Banana',
+        entityPrefLabel: 'Banana'
     }, {
         entityLabel: 'Cherry',
         entityUri: 'http://Cherry'
@@ -16,6 +20,10 @@ export let suggestionsMock = [
     }, {
         entityLabel: 'Fig',
         entityUri: 'http://Fig'
+    }, {
+        entityLabel: 'Figue',
+        entityUri: 'http://Fig',
+        entityPrefLabel: 'Fig'
     }, {
         entityLabel: 'Grapes',
         entityUri: 'http://Grapes'
