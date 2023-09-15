@@ -25,7 +25,7 @@ SearchEntity.propTypes = {
     id: PropTypes.number.isRequired,
     entityLabel: PropTypes.string.isRequired,
     entityUri: PropTypes.string.isRequired,
-    entityPrefLabel: PropTypes.string.isRequired,
+    entityPrefLabel: PropTypes.string,
     handleRemove: PropTypes.func.isRequired
 }
 

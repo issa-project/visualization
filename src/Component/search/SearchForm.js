@@ -90,12 +90,16 @@ function SearchForm() {
      * Enter is like clicking on the search button
      * @param {Object} e - event
      */
-    const handleInputKeyPress = (e) => {
-        if (e.key === 'Enter' && input.trim() !== '') {
-            // @TODO
-            setInput('');
-            setSuggestions([]); // Clear suggestions when an item is added
+    const handleInputKeyUp = (e) => {
+        if (e.key === 'Escape') {
+            setSuggestions([]); // Clear suggestions on Escape
         }
+
+        // if (e.key === 'Enter' && input.trim() !== '') {
+        //     // @TODO
+        //     setInput('');
+        //     setSuggestions([]); // Clear suggestions when an item is added
+        // }
     };
 
     /**
@@ -139,6 +143,7 @@ function SearchForm() {
                 <div className="entity-list">
                     {entities.map((entity, index) => (
                         <SearchEntity
+                            key={index}
                             id={index}
                             entityLabel={entity.entityLabel}
                             entityUri={entity.entityUri}
@@ -152,13 +157,13 @@ function SearchForm() {
                 <Form>
                     <Row className="mb-1">
                         <Col sm={8}>
-                            <input
+                            <Form.Control
                                 type="text"
                                 className="input-field"
-                                placeholder="Enter text and select option"
+                                placeholder="Enter text and select among the suggestions"
                                 value={input}
                                 onChange={handleInputChange}
-                                onKeyUp={handleInputKeyPress}
+                                onKeyUp={handleInputKeyUp}
                             />
                         </Col>
                         <Col sm={2}>
@@ -173,7 +178,9 @@ function SearchForm() {
                     <ListGroup className="suggestion-list overflow-auto">
                         {suggestions.map((suggestion, index) => (
                             <SuggestionEntity
+                                key={index}
                                 id={index}
+                                input={input}
                                 entityLabel={suggestion.entityLabel}
                                 entityUri={suggestion.entityUri}
                                 entityPrefLabel={suggestion.entityPrefLabel}

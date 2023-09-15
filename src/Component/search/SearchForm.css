@@ -29,6 +29,10 @@
     line-height: 1em;
 }
 
+.suggestion-item-hightlight {
+    font-weight: bold;
+}
+
 .suggestion-pref-label {
     font-size: 11px;
     color: grey;
