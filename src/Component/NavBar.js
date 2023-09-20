@@ -22,15 +22,13 @@ class NavBar extends Component {
                     visualization of <a href="https://agritrop.cirad.fr/">Agritrop</a> documents.
                 </div>
                 <img className="mt-4 mx-3" id="logo_agritrop" src={logo_agritrop} alt="Agritrop"></img>
-                <Nav className="mr-auto">
-                    <ul>
-                        <li>
+                <Nav className="mr-auto flex-column">
+                        <Nav.Item>
                             <Link to="/notice">Document</Link>
-                        </li>
-                        <li>
+                        </Nav.Item>
+                        <Nav.Item>
                             <Link to="/search">Search</Link>
-                        </li>
-                    </ul>
+                        </Nav.Item>
                 </Nav>
             </Navbar>
     )}

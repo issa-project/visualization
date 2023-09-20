@@ -12,7 +12,7 @@ export function isEmptyResponse(query, response) {
         return true;
     }
     if (response.data.result.length === 0) {
-        console.log("WARNING: empty response.data.result\n: " + JSON.stringify(response) + " . Query was: " + query);
+        console.log("Empty response.data.result\n: " + JSON.stringify(response) + " . Query was: " + query);
         return true;
     } else if (response.data.result[0] === undefined) {
         console.log("WARNING: response.data.result[0] undefined\n: " + JSON.stringify(response) + " . Query was: " + query);

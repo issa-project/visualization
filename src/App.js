@@ -10,7 +10,7 @@ import MapComponent from "./Component/Map";
 
 function App() {
     return (
-        <Container fluid="xl">
+        <Container fluid="lg">
             <NavBar/>
             <Metadata/>
             <Abstract/>

@@ -44,6 +44,14 @@ h1 {
     border-top: 2px solid #ebebeb;
 }
 
+.divider-light {
+    margin-top: 5px;
+    margin-bottom: 5px;
+    border-bottom-color: rgb(0, 106, 143);
+    border-bottom-style: dashed;
+    border-bottom-width: 1px;
+}
+
 .annotate-button {
     display: block;
     padding: 2px 20px;

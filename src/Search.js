@@ -7,7 +7,7 @@ import NavBar from './Component/NavBar';
 
 function Search() {
     return (
-        <Container fluid="xl">
+        <Container fluid="lg">
             <NavBar/>
             <SearchForm/>
             <Footer/>
