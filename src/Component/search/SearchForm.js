@@ -7,6 +7,9 @@ import SuggestionEntity from "./SuggestionEntity";
 
 import {suggestionsMock} from './suggestions.mock';
 import SearchEntity from "./SearchEntity";
+import {isEmptyResponse} from "../../Utils";
+import KB from "../../config/knowledge_bases.json";
+import SearchResult from "./SearchResult";
 
 /**
  * The search form is meant to help a user select entities from a vocabulary (e.g. Agrovoc)
@@ -27,11 +30,14 @@ function SearchForm() {
     const [input, setInput] = useState('');
 
     // Entities previously selected
-    const [entities, setEntities] = useState([]);
+    const [searchEntities, setSearchEntities] = useState([]);
 
      // Suggestions for autocompletion.
      // Each suggestion should be an object like {entityLabel: "...", entityUri: "...", entityPrefLabel: "..."}
     const [suggestions, setSuggestions] = useState([]);
+
+    const [searchResults, setSearchResults] = useState([]);
+
 
     /**
      * Use the autocomplete service to propose suggestions based on the current input value.
@@ -67,7 +73,7 @@ function SearchForm() {
                     } else {
                         let newSuggestions = response.data.filter(
                             // Do not suggest an entity that is already in the list of selected entities
-                            _s => !entities.some(_e => _e.entityLabel.toLowerCase() === _s.entityLabel.toLowerCase()
+                            _s => !searchEntities.some(_e => _e.entityLabel.toLowerCase() === _s.entityLabel.toLowerCase()
                                 && _s[1] === _e.entityUri)
                         );
                         setSuggestions(newSuggestions);
@@ -113,7 +119,7 @@ function SearchForm() {
             entityUri: suggestions[index].entityUri,
             entityPrefLabel:'(' + suggestions[index].entityPrefLabel + ')'
         };
-        setEntities([...entities, newEntity]);
+        setSearchEntities([...searchEntities, newEntity]);
         setInput('');
         setSuggestions([]);
     };
@@ -124,16 +130,47 @@ function SearchForm() {
      */
     const handleRemoveEntity = (index) => {
         if (process.env.REACT_APP_LOG === "on") {
-            console.log("Removing entity: " + entities[index].entityLabel);
+            console.log("Removing entity: " + searchEntities[index].entityLabel);
         }
-        const newEntities = [...entities];
+        const newEntities = [...searchEntities];
         newEntities.splice(index, 1);
-        setEntities(newEntities);
+        setSearchEntities(newEntities);
         if (process.env.REACT_APP_LOG === "on") {
             if (newEntities.length === 0)
             console.log("Removed all entities.");
         }
     };
+
+
+    /**
+     * Search action triggered by the search button
+     */
+    const searchAction = () => {
+        if (searchEntities.length === 0) {
+            if (process.env.REACT_APP_LOG === "on") {
+                console.log("------------------------- No search entity was selected, not invoking search service.");
+            }
+            setSearchResults([]);
+
+        } else {
+            let query = process.env.REACT_APP_BACKEND_URL + "/searchDocumentsByDescriptor/?uri=" + searchEntities.map(_s => _s.entityUri).join(',');
+            if (process.env.REACT_APP_LOG === "on") {
+                console.log("Will submit backend query: " + query);
+            }
+            axios(query).then(response => {
+                if (isEmptyResponse(query, response)) {
+                    setSearchResults([]);
+                } else {
+                    let results = response.data.result;
+                    if (process.env.REACT_APP_LOG === "on") {
+                        console.log("------------------------- Retrieved " + results.length + " search results.");
+                        results.forEach(e => console.log(e));
+                    }
+                    setSearchResults(results);
+                }
+            })
+        }
+    }
 
     return (
         <div className="component">
@@ -141,7 +178,7 @@ function SearchForm() {
 
                 { /* List of the entities that have already been selected */}
                 <div className="entity-list">
-                    {entities.map((entity, index) => (
+                    {searchEntities.map((entity, index) => (
                         <SearchEntity
                             key={index}
                             id={index}
@@ -153,10 +190,10 @@ function SearchForm() {
                     ))}
                 </div>
 
-                { /* Input field and search button */}
                 <Form>
+                    { /* Input field and search button */}
                     <Row className="mb-1">
-                        <Col sm={8}>
+                        <Col xs={10}>
                             <Form.Control
                                 type="text"
                                 className="input-field"
@@ -166,13 +203,22 @@ function SearchForm() {
                                 onKeyUp={handleInputKeyUp}
                             />
                         </Col>
-                        <Col sm={2}>
-                            <Button id="search" className="search-button" size="sm" variant="secondary" type="button"
-                                    onClick="">
+                        <Col xs={2}>
+                            <Button id="search-button" className="search-button" size="sm" variant="secondary" type="button"
+                                    onClick={searchAction}>
                                 Search
                             </Button>
                         </Col>
                     </Row>
+                    { /* <Row className="mx-3">
+                        <Col>
+                            <Form.Switch
+                                id="search-switch"
+                                label="Also search full-text"
+                                className="search-switch"
+                            />
+                        </Col>
+                    </Row> */ }
 
                     { /* Auto-complete: list of suggestions of entities base on the input */}
                     <ListGroup className="suggestion-list overflow-auto">
@@ -191,6 +237,26 @@ function SearchForm() {
 
                 </Form>
             </div>
+
+            <div className="divider"/>
+
+            { /* Search results */}
+            <div>
+                <span className="mx-auto">{searchResults.length} result(s).</span>
+                <div className="divider-light"/>
+
+                {searchResults.map((_result, index) => (
+                    <SearchResult
+                        key={index}
+                        uri={_result.document}
+                        title={_result.title}
+                        authors={_result.authors}
+                        date={_result.date}
+                        publisher={_result.publisher}
+                    />
+                ))}
+            </div>
+
         </div>
     );
 }

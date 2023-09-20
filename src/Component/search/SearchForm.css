@@ -6,7 +6,7 @@
 }
 
 .input-field {
-    width: 300px;
+    min-width: 300px;
     padding: 5px;
     font-size: 14px;
     margin: 10px 20px 0px 10px;
@@ -16,6 +16,13 @@
     padding: 5px;
     font-size: 14px;
     margin: 10px 10px 0px 10px;
+}
+
+.search-switch {
+    padding: 5px;
+    font-size: 14px;
+    color: grey;
+    margin: 0px 10px 0px 10px;
 }
 
 .suggestion-list {
@@ -29,7 +36,7 @@
     line-height: 1em;
 }
 
-.suggestion-item-hightlight {
+.suggestion-item-highlight {
     font-weight: bold;
 }
 

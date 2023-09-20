@@ -24,6 +24,9 @@ const SuggestionEntity = (props) => {
      * Split the entity label in pieces separated by the value of the current input.
      * Example: if the label is "banana supply chain" and input is "anan", then the result is:
      * [ "b", "anan", "a supply chain" ]
+     *
+     * @TODO make this function case-insensitive but keep case of suggestions (using String.search instead of String.split)
+     *
      * @param {string} label
      * @param {string} input
      */
@@ -45,13 +48,16 @@ const SuggestionEntity = (props) => {
         <ListGroup.Item key={id} className="suggestion-item" action variant="light"
                         onClick={() => handleSelect(id)}>
 
-            { formatLabel(entityLabel, input).map((token, index) => {
+            { /* formatLabel(entityLabel, input).map((token, index) => {
                     if (token === input.toLowerCase())
-                        return <span key={index} className="suggestion-item-hightlight">{token}</span>;
+                        return <span key={index} className="suggestion-item-highlight">{token}</span>;
                     else
                         return <span key={index}>{token}</span>;
                 }
-            )} &nbsp;
+            ) */ }
+            <span>{entityLabel}</span>
+
+            &nbsp;
 
             <span className={"suggestion-pref-label"}>{entityPrefLabel}</span>
 
