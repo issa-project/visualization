@@ -8,14 +8,15 @@
 .input-field {
     min-width: 300px;
     padding: 5px;
-    font-size: 14px;
+    font-size: 13px;
     margin: 10px 20px 0px 10px;
 }
 
 .search-button {
     padding: 5px;
-    font-size: 14px;
     margin: 10px 10px 0px 10px;
+    width: 8em;
+    font-size: 13px;
 }
 
 .search-switch {
@@ -77,4 +78,20 @@
 
 .entity-remove-button:hover {
     background-color: inherit;
+}
+
+
+.navigation-button {
+    padding: 1px 3px 1px 3px;
+    font-size: 11px;
+    margin-left: 2px;
+    margin-right: 2px;
+    width: 2em;
+}
+
+.navigation-buttons {
+    margin-top: 5px;
+    margin-bottom: 10px;
+    text-align: center;
+
 }

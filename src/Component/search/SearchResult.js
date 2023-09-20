@@ -2,7 +2,9 @@ import React, {useState} from 'react';
 import PropTypes from 'prop-types';
 import { Link } from "react-router-dom";
 import './SearchResult.css';
-import {Col, Row} from "react-bootstrap";
+import {Col, Nav, Row} from "react-bootstrap";
+import {BiDownload} from "react-icons/bi";
+import {HiOutlineDocumentMagnifyingGlass} from "react-icons/hi2";
 
 /**
  *
@@ -13,22 +15,24 @@ const SearchResult = (props) => {
         title,
         authors,
         date,
-        publisher
+        publisher,
+        lang,
+        linkPDF
     } = props;
 
     return (
         <div>
-            <Row className="result">
-                <Col xs={10}>
+            <Row className="result align-items-center">
+                <Col xs={11}>
                     <span className="result-title">{title}.&nbsp;</span>
                     <span className="result-authors">{authors}.&nbsp;</span>
                     <span className="">{date}.&nbsp;</span>
-                    <span className="result-publisher">{publisher}. </span>
+                    <span className="fst-italic">{publisher}. </span>
                 </Col>
-                <Col>
-                    <span className="">
-                        <Link to={"/notice?uri=" + uri} target={title}>View</Link>
-                    </span>
+                <Col xs={1} className="fs-5">
+                    <Link className="a_icons" to={"/notice?uri=" + uri} target={title}><HiOutlineDocumentMagnifyingGlass/></Link>
+                    &nbsp;
+                    <a href={linkPDF} target={title}><BiDownload/></a>
                 </Col>
             </Row>
             <div className="divider-light"/>
@@ -41,7 +45,9 @@ SearchResult.propTypes = {
     title: PropTypes.string.isRequired,
     authors: PropTypes.string,
     date: PropTypes.string,
-    publisher: PropTypes.string
+    publisher: PropTypes.string,
+    lang: PropTypes.string,
+    linkPDF: PropTypes.string
 }
 
 export default SearchResult;

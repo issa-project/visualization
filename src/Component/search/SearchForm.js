@@ -8,7 +8,6 @@ import SuggestionEntity from "./SuggestionEntity";
 import {suggestionsMock} from './suggestions.mock';
 import SearchEntity from "./SearchEntity";
 import {isEmptyResponse} from "../../Utils";
-import KB from "../../config/knowledge_bases.json";
 import SearchResult from "./SearchResult";
 
 /**
@@ -29,21 +28,33 @@ function SearchForm() {
     // Term typed in the input field
     const [input, setInput] = useState('');
 
-    // Entities previously selected
-    const [searchEntities, setSearchEntities] = useState([]);
-
      // Suggestions for autocompletion.
      // Each suggestion should be an object like {entityLabel: "...", entityUri: "...", entityPrefLabel: "..."}
     const [suggestions, setSuggestions] = useState([]);
 
+    // Search entities already selected
+    const [searchEntities, setSearchEntities] = useState([]);
+
+    // Status of the search button
+    const [isLoading, setLoading] = useState(false);
+
+    // Results returned by the last search
     const [searchResults, setSearchResults] = useState([]);
+
+    // Part of the results that is currently displayed (corresponding to the page number)
+    const [searchResultsDisplayed, setSearchResultsDisplayed] = useState([]);
+
+    // Page of results that is currently displayed
+    const [searchResultsPage, setSearchResultsPage] = useState(1);
+
+    // Number of pages of results
+    const [searchResultPageCount, setSearchResultPageCount] = useState(0);
 
 
     /**
      * Use the autocomplete service to propose suggestions based on the current input value.
      */
     useEffect(() => {
-
         if (input.length < process.env.REACT_APP_MIN_SIZE_FOR_AUTOCOMPLETE) {
             setSuggestions([]);
         } else {
@@ -74,7 +85,7 @@ function SearchForm() {
                         let newSuggestions = response.data.filter(
                             // Do not suggest an entity that is already in the list of selected entities
                             _s => !searchEntities.some(_e => _e.entityLabel.toLowerCase() === _s.entityLabel.toLowerCase()
-                                && _s[1] === _e.entityUri)
+                                && _s.entityUri === _e.entityUri)
                         );
                         setSuggestions(newSuggestions);
                         if (process.env.REACT_APP_LOG === "on") {
@@ -88,9 +99,6 @@ function SearchForm() {
         //eslint-disable-next-line
     }, [input]);
 
-    const handleInputChange = (e) => {
-        setInput(e.target.value);
-    };
 
     /**
      * Enter is like clicking on the search button
@@ -102,7 +110,7 @@ function SearchForm() {
         }
 
         // if (e.key === 'Enter' && input.trim() !== '') {
-        //     // @TODO
+        //     // @TODO - possible to use the arrows to navigate the suggestions and enter to select one?
         //     setInput('');
         //     setSuggestions([]); // Clear suggestions when an item is added
         // }
@@ -145,43 +153,66 @@ function SearchForm() {
     /**
      * Search action triggered by the search button
      */
-    const searchAction = () => {
-        if (searchEntities.length === 0) {
-            if (process.env.REACT_APP_LOG === "on") {
-                console.log("------------------------- No search entity was selected, not invoking search service.");
-            }
-            setSearchResults([]);
-
-        } else {
-            let query = process.env.REACT_APP_BACKEND_URL + "/searchDocumentsByDescriptor/?uri=" + searchEntities.map(_s => _s.entityUri).join(',');
-            if (process.env.REACT_APP_LOG === "on") {
-                console.log("Will submit backend query: " + query);
-            }
-            axios(query).then(response => {
-                if (isEmptyResponse(query, response)) {
-                    setSearchResults([]);
-                } else {
-                    let results = response.data.result;
-                    if (process.env.REACT_APP_LOG === "on") {
-                        console.log("------------------------- Retrieved " + results.length + " search results.");
-                        results.forEach(e => console.log(e));
-                    }
-                    setSearchResults(results);
+    useEffect(() => {
+        if (isLoading) {
+            if (searchEntities.length === 0) {
+                if (process.env.REACT_APP_LOG === "on") {
+                    console.log("------------------------- No search entity was selected, not invoking search service.");
                 }
-            })
+                setLoading(false);
+                setSearchResults([]);
+
+            } else {
+                let query = process.env.REACT_APP_BACKEND_URL + "/searchDocumentsByDescriptor/?uri=" + searchEntities.map(_s => _s.entityUri).join(',');
+                if (process.env.REACT_APP_LOG === "on") {
+                    console.log("Will submit backend query: " + query);
+                }
+                axios(query).then(response => {
+                    setLoading(false);
+                    if (isEmptyResponse(query, response)) {
+                        setSearchResults([]);
+                    } else {
+                        let results = response.data.result;
+                        if (process.env.REACT_APP_LOG === "on") {
+                            console.log("------------------------- Retrieved " + results.length + " search results.");
+                            results.forEach(e => console.log(e));
+                        }
+                        setSearchResults(results);
+
+                        // Update the count of pages and display the first page
+                        let count = Math.ceil(results.length / process.env.REACT_APP_RESULT_PAGE_SIZE);
+                        setSearchResultPageCount(count);
+                        setSearchResultsPage(1);
+                    }
+                })  
+            }
         }
-    }
+        //eslint-disable-next-line
+    }, [isLoading]);
+
+
+    /**
+     * Update the results currently displayed.
+     * Invoked whenever a new search is performed, or when a page button is clicked
+     */
+    useEffect(() => {
+        const results = searchResults.slice(
+            (searchResultsPage - 1) * process.env.REACT_APP_RESULT_PAGE_SIZE,
+            searchResultsPage * process.env.REACT_APP_RESULT_PAGE_SIZE
+        );
+        setSearchResultsDisplayed(results);
+        //eslint-disable-next-line
+    }, [searchResults,searchResultsPage]);
+
 
     return (
         <div className="component">
             <div className="multiple-inputs-container">
 
-                { /* List of the entities that have already been selected */}
+                { /* List of the search entities that have already been selected */}
                 <div className="entity-list">
                     {searchEntities.map((entity, index) => (
-                        <SearchEntity
-                            key={index}
-                            id={index}
+                        <SearchEntity key={index} id={index}
                             entityLabel={entity.entityLabel}
                             entityUri={entity.entityUri}
                             entityPrefLabel={entity.entityPrefLabel}
@@ -194,19 +225,18 @@ function SearchForm() {
                     { /* Input field and search button */}
                     <Row className="mb-1">
                         <Col xs={10}>
-                            <Form.Control
-                                type="text"
-                                className="input-field"
+                            <Form.Control type="text" className="input-field"
                                 placeholder="Enter text and select among the suggestions"
                                 value={input}
-                                onChange={handleInputChange}
+                                onChange={(e) => setInput(e.target.value) }
                                 onKeyUp={handleInputKeyUp}
                             />
                         </Col>
                         <Col xs={2}>
-                            <Button id="search-button" className="search-button" size="sm" variant="secondary" type="button"
-                                    onClick={searchAction}>
-                                Search
+                            <Button id="search-button" className="search-button" variant="secondary"
+                                    disabled={isLoading}
+                                    onClick={!isLoading ? () => setLoading(true) : null}>
+                                {isLoading ? 'Searching...' : 'Search'}
                             </Button>
                         </Col>
                     </Row>
@@ -223,9 +253,7 @@ function SearchForm() {
                     { /* Auto-complete: list of suggestions of entities base on the input */}
                     <ListGroup className="suggestion-list overflow-auto">
                         {suggestions.map((suggestion, index) => (
-                            <SuggestionEntity
-                                key={index}
-                                id={index}
+                            <SuggestionEntity key={index} id={index}
                                 input={input}
                                 entityLabel={suggestion.entityLabel}
                                 entityUri={suggestion.entityUri}
@@ -240,19 +268,35 @@ function SearchForm() {
 
             <div className="divider"/>
 
+            { /* ========================================================================================== */}
+
+            { /* Navigation through the result pages */}
+            <div className="navigation-buttons">
+                <span className="">{searchResults.length} result(s).</span>
+                &nbsp;
+
+                {Array.from({ length: searchResultPageCount }, (_, index) => index + 1).map(
+                    (page, index) => (
+                        <span key={index}>
+                            <Button className="navigation-button" variant="outline-secondary" size="sm" onClick={() => setSearchResultsPage(page)}>
+                                {page}
+                            </Button>{' '}
+                        </span>
+                    ))}
+            </div>
+
             { /* Search results */}
             <div>
-                <span className="mx-auto">{searchResults.length} result(s).</span>
                 <div className="divider-light"/>
 
-                {searchResults.map((_result, index) => (
-                    <SearchResult
-                        key={index}
-                        uri={_result.document}
+                {searchResultsDisplayed.map((_result, index) => (
+                    <SearchResult key={index}
+                        uri={_result.uri}
                         title={_result.title}
                         authors={_result.authors}
                         date={_result.date}
                         publisher={_result.publisher}
+                        linkPDF={_result.linkPDF}
                     />
                 ))}
             </div>
