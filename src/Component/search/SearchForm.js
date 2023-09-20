@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {Button, Form, Row, Col} from "react-bootstrap";
+import {ButtonGroup, Button, Form, Row, Col, ToggleButton} from "react-bootstrap";
 import ListGroup from 'react-bootstrap/ListGroup';
 import axios from "axios";
 import './SearchForm.css';
@@ -28,8 +28,8 @@ function SearchForm() {
     // Term typed in the input field
     const [input, setInput] = useState('');
 
-     // Suggestions for autocompletion.
-     // Each suggestion should be an object like {entityLabel: "...", entityUri: "...", entityPrefLabel: "..."}
+    // Suggestions for autocompletion.
+    // Each suggestion should be an object like {entityLabel: "...", entityUri: "...", entityPrefLabel: "..."}
     const [suggestions, setSuggestions] = useState([]);
 
     // Search entities already selected
@@ -125,7 +125,7 @@ function SearchForm() {
         let newEntity = {
             entityLabel: suggestions[index].entityLabel,
             entityUri: suggestions[index].entityUri,
-            entityPrefLabel:'(' + suggestions[index].entityPrefLabel + ')'
+            entityPrefLabel: '(' + suggestions[index].entityPrefLabel + ')'
         };
         setSearchEntities([...searchEntities, newEntity]);
         setInput('');
@@ -145,7 +145,7 @@ function SearchForm() {
         setSearchEntities(newEntities);
         if (process.env.REACT_APP_LOG === "on") {
             if (newEntities.length === 0)
-            console.log("Removed all entities.");
+                console.log("Removed all entities.");
         }
     };
 
@@ -161,7 +161,6 @@ function SearchForm() {
                 }
                 setLoading(false);
                 setSearchResults([]);
-
             } else {
                 let query = process.env.REACT_APP_BACKEND_URL + "/searchDocumentsByDescriptor/?uri=" + searchEntities.map(_s => _s.entityUri).join(',');
                 if (process.env.REACT_APP_LOG === "on") {
@@ -184,7 +183,7 @@ function SearchForm() {
                         setSearchResultPageCount(count);
                         setSearchResultsPage(1);
                     }
-                })  
+                })
             }
         }
         //eslint-disable-next-line
@@ -196,13 +195,18 @@ function SearchForm() {
      * Invoked whenever a new search is performed, or when a page button is clicked
      */
     useEffect(() => {
-        const results = searchResults.slice(
-            (searchResultsPage - 1) * process.env.REACT_APP_RESULT_PAGE_SIZE,
-            searchResultsPage * process.env.REACT_APP_RESULT_PAGE_SIZE
-        );
-        setSearchResultsDisplayed(results);
+        if (searchResults.length === 0) {
+            setSearchResultsDisplayed([]);
+            setSearchResultPageCount(0);
+        } else {
+            const results = searchResults.slice(
+                (searchResultsPage - 1) * process.env.REACT_APP_RESULT_PAGE_SIZE,
+                searchResultsPage * process.env.REACT_APP_RESULT_PAGE_SIZE
+            );
+            setSearchResultsDisplayed(results);
+        }
         //eslint-disable-next-line
-    }, [searchResults,searchResultsPage]);
+    }, [searchResults, searchResultsPage]);
 
 
     return (
@@ -213,10 +217,10 @@ function SearchForm() {
                 <div className="entity-list">
                     {searchEntities.map((entity, index) => (
                         <SearchEntity key={index} id={index}
-                            entityLabel={entity.entityLabel}
-                            entityUri={entity.entityUri}
-                            entityPrefLabel={entity.entityPrefLabel}
-                            handleRemove={handleRemoveEntity}
+                                      entityLabel={entity.entityLabel}
+                                      entityUri={entity.entityUri}
+                                      entityPrefLabel={entity.entityPrefLabel}
+                                      handleRemove={handleRemoveEntity}
                         />
                     ))}
                 </div>
@@ -226,10 +230,10 @@ function SearchForm() {
                     <Row className="mb-1">
                         <Col xs={10}>
                             <Form.Control type="text" className="input-field"
-                                placeholder="Enter text and select among the suggestions"
-                                value={input}
-                                onChange={(e) => setInput(e.target.value) }
-                                onKeyUp={handleInputKeyUp}
+                                          placeholder="Enter text and select among the suggestions"
+                                          value={input}
+                                          onChange={(e) => setInput(e.target.value)}
+                                          onKeyUp={handleInputKeyUp}
                             />
                         </Col>
                         <Col xs={2}>
@@ -248,17 +252,17 @@ function SearchForm() {
                                 className="search-switch"
                             />
                         </Col>
-                    </Row> */ }
+                    </Row> */}
 
                     { /* Auto-complete: list of suggestions of entities base on the input */}
                     <ListGroup className="suggestion-list overflow-auto">
                         {suggestions.map((suggestion, index) => (
                             <SuggestionEntity key={index} id={index}
-                                input={input}
-                                entityLabel={suggestion.entityLabel}
-                                entityUri={suggestion.entityUri}
-                                entityPrefLabel={suggestion.entityPrefLabel}
-                                handleSelect={handleSelectSuggestion}
+                                              input={input}
+                                              entityLabel={suggestion.entityLabel}
+                                              entityUri={suggestion.entityUri}
+                                              entityPrefLabel={suggestion.entityPrefLabel}
+                                              handleSelect={handleSelectSuggestion}
                             />
                         ))}
                     </ListGroup>
@@ -275,14 +279,18 @@ function SearchForm() {
                 <span className="">{searchResults.length} result(s).</span>
                 &nbsp;
 
-                {Array.from({ length: searchResultPageCount }, (_, index) => index + 1).map(
-                    (page, index) => (
-                        <span key={index}>
-                            <Button className="navigation-button" variant="outline-secondary" size="sm" onClick={() => setSearchResultsPage(page)}>
+                <ButtonGroup>
+                    {Array.from({length: searchResultPageCount}, (_, index) => index + 1).map(
+                        (page, index) => (
+                            <ToggleButton key={index} className="navigation-button" variant="outline-secondary"
+                                            type="radio"
+                                            onClick={() => setSearchResultsPage(page)}
+                                            value={page}
+                                            checked={page === searchResultsPage}>
                                 {page}
-                            </Button>{' '}
-                        </span>
-                    ))}
+                            </ToggleButton>
+                        ))}
+                </ButtonGroup>
             </div>
 
             { /* Search results */}
@@ -291,12 +299,12 @@ function SearchForm() {
 
                 {searchResultsDisplayed.map((_result, index) => (
                     <SearchResult key={index}
-                        uri={_result.uri}
-                        title={_result.title}
-                        authors={_result.authors}
-                        date={_result.date}
-                        publisher={_result.publisher}
-                        linkPDF={_result.linkPDF}
+                                  uri={_result.uri}
+                                  title={_result.title}
+                                  authors={_result.authors}
+                                  date={_result.date}
+                                  publisher={_result.publisher}
+                                  linkPDF={_result.linkPDF}
                     />
                 ))}
             </div>

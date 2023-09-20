@@ -84,8 +84,7 @@
 .navigation-button {
     padding: 1px 3px 1px 3px;
     font-size: 11px;
-    margin-left: 2px;
-    margin-right: 2px;
+    margin-right: 6px;
     width: 2em;
 }
 
@@ -93,5 +92,4 @@
     margin-top: 5px;
     margin-bottom: 10px;
     text-align: center;
-
 }
