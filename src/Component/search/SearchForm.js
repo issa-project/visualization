@@ -198,10 +198,10 @@ function SearchForm() {
                     //results.forEach(e => console.log(e));
                 }
 
+                // Filter the results to keep only those documents that were not in the first set of results (with exact match)
                 let additionalResults = _results.filter((_a) =>
-                        ! searchResults.find((_r) => _r.uri === _a.uri)
+                        ! searchResults.find((_r) => _r.document === _a.document)
                 );
-
                 setSearchResultsSubconcept(additionalResults);
             }
         })

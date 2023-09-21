@@ -83,7 +83,7 @@ const SearchResultsList = (props) => {
 
                 {resultsDisplayed.map((_result, index) => (
                     <SearchResult key={index}
-                                  uri={_result.uri}
+                                  document={_result.document}
                                   title={_result.title}
                                   authors={_result.authors}
                                   date={_result.date}

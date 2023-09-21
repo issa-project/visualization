@@ -11,7 +11,7 @@ import {useEffect, useState} from "react";
  */
 const SearchResult = (props) => {
     const {
-        uri,
+        document,
         title,
         authors,
         date,
@@ -22,8 +22,13 @@ const SearchResult = (props) => {
 
     const [firstAuthors, setFirstAuthors] = useState('');
 
+    // Limit the number of authors displayed
     const maxAuthors = 3;
 
+    /**
+     * Format the list of authors by limiting the total number
+     * and adding [...] at the end if needed
+     */
     useEffect(() => {
         let _firstAuthors = "";
         let _firstAuthorsArr = authors.split('$');
@@ -51,7 +56,7 @@ const SearchResult = (props) => {
                     <span className="fst-italic">{publisher}. </span>
                 </Col>
                 <Col xs={1} className="fs-5">
-                    <Link className="a_icons" to={"/notice?uri=" + uri}
+                    <Link className="a_icons" to={"/notice?uri=" + document}
                           target={title}><HiOutlineDocumentMagnifyingGlass/></Link>
                     &nbsp;
                     <a href={linkPDF} target={title}><BiDownload/></a>
@@ -63,7 +68,7 @@ const SearchResult = (props) => {
 };
 
 SearchResult.propTypes = {
-    uri: PropTypes.string.isRequired,
+    document: PropTypes.string.isRequired,
     title: PropTypes.string.isRequired,
     authors: PropTypes.string,
     date: PropTypes.string,
