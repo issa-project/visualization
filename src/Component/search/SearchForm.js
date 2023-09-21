@@ -40,6 +40,9 @@ function SearchForm() {
     // Results returned by the last search
     const [searchResults, setSearchResults] = useState([]);
 
+    // Results returned by the last search
+    const [searchResultsSubConcept, setSearchResultsSubconcept] = useState([]);
+
 
     /**
      * Use the autocomplete service to propose suggestions based on the current input value.
@@ -80,7 +83,7 @@ function SearchForm() {
                         setSuggestions(newSuggestions);
                         if (process.env.REACT_APP_LOG === "on") {
                             console.log("------------------------- Retrieved " + newSuggestions.length + " suggestions.");
-                            newSuggestions.forEach(e => console.log(e));
+                            //newSuggestions.forEach(e => console.log(e));
                         }
                     }
                 })
@@ -141,7 +144,8 @@ function SearchForm() {
 
 
     /**
-     * Search action triggered by the search button
+     * Search documents matching exactly the selected entities.
+     * Triggered by the search button
      */
     useEffect(() => {
         if (isLoading) {
@@ -161,12 +165,12 @@ function SearchForm() {
                     if (isEmptyResponse(query, response)) {
                         setSearchResults([]);
                     } else {
-                        let results = response.data.result;
+                        let _results = response.data.result;
                         if (process.env.REACT_APP_LOG === "on") {
-                            console.log("------------------------- Retrieved " + results.length + " search results.");
-                            results.forEach(e => console.log(e));
+                            console.log("------------------------- Retrieved " + _results.length + " search results.");
+                            //results.forEach(e => console.log(e));
                         }
-                        setSearchResults(results);
+                        setSearchResults(_results);
                     }
                 })
             }
@@ -175,7 +179,38 @@ function SearchForm() {
     }, [isLoading]);
 
 
+    /**
+     * Search for documents that match the selected concepts including their sub-concepts.
+     * Started after getting the exact match results.
+     */
+    useEffect(() => {
+        let query = process.env.REACT_APP_BACKEND_URL + "/searchDocumentsByDescriptorSubConcept/?uri=" + searchEntities.map(_s => _s.entityUri).join(',');
+        if (process.env.REACT_APP_LOG === "on") {
+            console.log("Will submit backend query: " + query);
+        }
+        axios(query).then(response => {
+            if (isEmptyResponse(query, response)) {
+                setSearchResultsSubconcept([]);
+            } else {
+                let _results = response.data.result;
+                if (process.env.REACT_APP_LOG === "on") {
+                    console.log("------------------------- Retrieved " + _results.length + " search results.");
+                    //results.forEach(e => console.log(e));
+                }
+
+                let additionalResults = _results.filter((_a) =>
+                        ! searchResults.find((_r) => _r.uri === _a.uri)
+                );
+
+                setSearchResultsSubconcept(additionalResults);
+            }
+        })
+        //eslint-disable-next-line
+    }, [searchResults]);
+
+
     return (
+    <>
         <div className="component">
             <div className="multiple-inputs-container">
 
@@ -237,14 +272,22 @@ function SearchForm() {
                 </Form>
             </div>
 
-            <div className="divider"/>
-
-            { /* ========================================================================================== */}
-
-            { /* Search results and buttons to navigate the pages */}
-            <SearchResultsList searchResults={searchResults}/>
-
         </div>
+
+        { /* ========================================================================================== */}
+
+        <div className="component">
+            { /* Search results and buttons to navigate the pages */}
+            <div className="content_header">Results matching only the descriptors</div>
+            <SearchResultsList searchResults={searchResults}/>
+        </div>
+
+        <div className="component">
+            { /* Search results and buttons to navigate the pages */}
+            <div className="content_header">Results matching the descriptors and any of their sub-concepts</div>
+            <SearchResultsList searchResults={searchResultsSubConcept}/>
+        </div>
+    </>
     );
 }
 
