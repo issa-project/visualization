@@ -40,8 +40,9 @@ function SearchForm() {
     // Results returned by the last search
     const [searchResults, setSearchResults] = useState([]);
 
-    // Results returned by the last search
     const [searchResultsSubConcept, setSearchResultsSubconcept] = useState([]);
+
+    const [searchResultsRelated, setSearchResultsRelated] = useState([]);
 
 
     /**
@@ -148,6 +149,8 @@ function SearchForm() {
      * Triggered by the search button
      */
     useEffect(() => {
+        setSearchResultsSubconcept([]);
+        setSearchResultsRelated([]);
         if (isLoading) {
             if (searchEntities.length === 0) {
                 if (process.env.REACT_APP_LOG === "on") {
@@ -200,7 +203,7 @@ function SearchForm() {
 
                 // Filter the results to keep only those documents that were not in the first set of results (with exact match)
                 let additionalResults = _results.filter((_a) =>
-                        ! searchResults.find((_r) => _r.document === _a.document)
+                    !searchResults.find((_r) => _r.document === _a.document)
                 );
                 setSearchResultsSubconcept(additionalResults);
             }
@@ -209,43 +212,75 @@ function SearchForm() {
     }, [searchResults]);
 
 
+    /**
+     * Search for documents that match concepts related to the selected concepts
+     * Started after getting the exact match results.
+     */
+    useEffect(() => {
+        let query = process.env.REACT_APP_BACKEND_URL + "/searchDocumentsByDescriptorRelated/?uri=" + searchEntities.map(_s => _s.entityUri).join(',');
+        if (process.env.REACT_APP_LOG === "on") {
+            console.log("Will submit backend query: " + query);
+        }
+        axios(query).then(response => {
+            if (isEmptyResponse(query, response)) {
+                setSearchResultsRelated([]);
+            } else {
+                let _results = response.data.result;
+                if (process.env.REACT_APP_LOG === "on") {
+                    console.log("------------------------- Retrieved " + _results.length + " search results.");
+                    //results.forEach(e => console.log(e));
+                }
+
+                // Filter the results to keep only those documents that were not in the previous sets of results
+                let additionalResults = _results.filter((_a) =>
+                    !searchResults.find((_r) => _r.document === _a.document)
+
+                );
+                setSearchResultsRelated(additionalResults);
+            }
+        })
+        //eslint-disable-next-line
+    }, [searchResultsSubConcept]);
+
+
     return (
-    <>
-        <div className="component">
-            <div className="multiple-inputs-container">
+        <>
+            <div className="component">
+                <h1 className="">Search documents by descriptors</h1>
+                <div className="multiple-inputs-container">
 
-                { /* List of the search entities that have already been selected */}
-                <div className="entity-list">
-                    {searchEntities.map((entity, index) => (
-                        <SearchEntity key={index} id={index}
-                                      entityLabel={entity.entityLabel}
-                                      entityUri={entity.entityUri}
-                                      entityPrefLabel={entity.entityPrefLabel}
-                                      handleRemove={handleRemoveEntity}
-                        />
-                    ))}
-                </div>
-
-                <Form>
-                    { /* Input field and search button */}
-                    <Row className="mb-1">
-                        <Col xs={10}>
-                            <Form.Control type="text" className="input-field"
-                                          placeholder="Enter text and select among the suggestions"
-                                          value={input}
-                                          onChange={(e) => setInput(e.target.value)}
-                                          onKeyUp={handleInputKeyUp}
+                    { /* List of the search entities that have already been selected */}
+                    <div className="entity-list">
+                        {searchEntities.map((entity, index) => (
+                            <SearchEntity key={index} id={index}
+                                          entityLabel={entity.entityLabel}
+                                          entityUri={entity.entityUri}
+                                          entityPrefLabel={entity.entityPrefLabel}
+                                          handleRemove={handleRemoveEntity}
                             />
-                        </Col>
-                        <Col xs={2}>
-                            <Button id="search-button" className="search-button" variant="secondary"
-                                    disabled={isLoading}
-                                    onClick={!isLoading ? () => setLoading(true) : null}>
-                                {isLoading ? 'Searching...' : 'Search'}
-                            </Button>
-                        </Col>
-                    </Row>
-                    { /* <Row className="mx-3">
+                        ))}
+                    </div>
+
+                    <Form>
+                        { /* Input field and search button */}
+                        <Row className="mb-1">
+                            <Col xs={10}>
+                                <Form.Control type="text" className="input-field"
+                                              placeholder="Enter text and select a suggestion"
+                                              value={input}
+                                              onChange={(e) => setInput(e.target.value)}
+                                              onKeyUp={handleInputKeyUp}
+                                />
+                            </Col>
+                            <Col xs={2}>
+                                <Button id="search-button" className="search-button" variant="secondary"
+                                        disabled={isLoading}
+                                        onClick={!isLoading ? () => setLoading(true) : null}>
+                                    {isLoading ? 'Searching...' : 'Search'}
+                                </Button>
+                            </Col>
+                        </Row>
+                        { /* <Row className="mx-3">
                         <Col>
                             <Form.Switch
                                 id="search-switch"
@@ -255,39 +290,60 @@ function SearchForm() {
                         </Col>
                     </Row> */}
 
-                    { /* Auto-complete: list of suggestions of entities base on the input */}
-                    <ListGroup className="suggestion-list overflow-auto">
-                        {suggestions.map((suggestion, index) => (
-                            <SuggestionEntity key={index} id={index}
-                                              input={input}
-                                              entityLabel={suggestion.entityLabel}
-                                              entityUri={suggestion.entityUri}
-                                              entityPrefLabel={suggestion.entityPrefLabel}
-                                              entityCount={suggestion.count}
-                                              handleSelect={handleSelectSuggestion}
-                            />
-                        ))}
-                    </ListGroup>
+                        { /* Auto-complete: list of suggestions of entities base on the input */}
+                        <ListGroup className="suggestion-list overflow-auto">
+                            {suggestions.map((suggestion, index) => (
+                                <SuggestionEntity key={index} id={index}
+                                                  input={input}
+                                                  entityLabel={suggestion.entityLabel}
+                                                  entityUri={suggestion.entityUri}
+                                                  entityPrefLabel={suggestion.entityPrefLabel}
+                                                  entityCount={suggestion.count}
+                                                  handleSelect={handleSelectSuggestion}
+                                />
+                            ))}
+                        </ListGroup>
+                    </Form>
 
-                </Form>
+                </div>
             </div>
 
-        </div>
+            { /* ========================================================================================== */}
 
-        { /* ========================================================================================== */}
+            {
+                searchResults.length !== 0 ?
 
-        <div className="component">
-            { /* Search results and buttons to navigate the pages */}
-            <div className="content_header">Results matching only the descriptors</div>
-            <SearchResultsList searchResults={searchResults}/>
-        </div>
+                    <div className="component">
+                        { /* Search results and buttons to navigate the pages */}
+                        <div className="content_header">Results matching only the selected descriptors</div>
+                        <SearchResultsList searchResults={searchResults}/>
+                    </div>
+                    : null
+            }
 
-        <div className="component">
-            { /* Search results and buttons to navigate the pages */}
-            <div className="content_header">Results matching the descriptors and any of their sub-concepts</div>
-            <SearchResultsList searchResults={searchResultsSubConcept}/>
-        </div>
-    </>
+            {
+                searchResultsSubConcept.length !== 0 ?
+                    <div className="component">
+                        { /* Search results and buttons to navigate the pages */}
+                        <div className="content_header">Results matching the selected descriptors or any more specific descriptors
+                        </div>
+                        <SearchResultsList searchResults={searchResultsSubConcept}/>
+                    </div>
+                    : null
+            }
+
+            {
+                searchResultsRelated.length !== 0 ?
+                    <div className="component">
+                        { /* Search results and buttons to navigate the pages */}
+                        <div className="content_header">Results matching descriptors related to those selected
+                        </div>
+                        <SearchResultsList searchResults={searchResultsRelated}/>
+                    </div>
+                    : null
+            }
+
+        </>
     );
 }
 

@@ -72,7 +72,7 @@ SuggestionEntity.propTypes = {
     entityLabel: PropTypes.string.isRequired,
     entityUri: PropTypes.string.isRequired,
     entityPrefLabel: PropTypes.string,
-    entityCount: PropTypes.number,
+    entityCount: PropTypes.string,
     handleSelect: PropTypes.func.isRequired
 }
 
