@@ -47,7 +47,7 @@ h1 {
 .divider-light {
     margin-top: 5px;
     margin-bottom: 5px;
-    border-bottom-color: rgb(0, 106, 143);
+    border-bottom-color: rgb(170, 170, 170);
     border-bottom-style: dashed;
     border-bottom-width: 1px;
 }

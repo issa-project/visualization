@@ -262,6 +262,7 @@ function SearchForm() {
                                               entityLabel={suggestion.entityLabel}
                                               entityUri={suggestion.entityUri}
                                               entityPrefLabel={suggestion.entityPrefLabel}
+                                              entityCount={suggestion.count}
                                               handleSelect={handleSelectSuggestion}
                             />
                         ))}

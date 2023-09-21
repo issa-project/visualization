@@ -14,9 +14,10 @@ const SuggestionEntity = (props) => {
     const {
         id,
         input,              // current value of the input field
-        entityLabel,        // the label that was used by the auto-complete service
+        entityLabel,        // the label proposed by the auto-complete service for the current input
         entityUri,          // the URI of the entity/concept corresponding to the label
         entityPrefLabel,    // optional preferred label in case entityLabel is an alternate label
+        entityCount,        // the number of documents that are annotated with this entity/concept
         handleSelect
     } = props;
 
@@ -56,10 +57,10 @@ const SuggestionEntity = (props) => {
                 }
             ) */ }
             <span>{entityLabel}</span>
-
             &nbsp;
-
             <span className={"suggestion-pref-label"}>{entityPrefLabel}</span>
+            &nbsp;
+            <span className={"suggestion-pref-label"}>({entityCount})</span>
 
         </ListGroup.Item>
     );
@@ -71,6 +72,7 @@ SuggestionEntity.propTypes = {
     entityLabel: PropTypes.string.isRequired,
     entityUri: PropTypes.string.isRequired,
     entityPrefLabel: PropTypes.string,
+    entityCount: PropTypes.number,
     handleSelect: PropTypes.func.isRequired
 }
 
