@@ -1,13 +1,12 @@
-import React, {useState} from 'react';
 import PropTypes from 'prop-types';
 import { Link } from "react-router-dom";
-import './SearchResult.css';
-import {Col, Nav, Row} from "react-bootstrap";
+import {Col, Row} from "react-bootstrap";
 import {BiDownload} from "react-icons/bi";
 import {HiOutlineDocumentMagnifyingGlass} from "react-icons/hi2";
+import './SearchResult.css';
 
 /**
- *
+ * Represent a single article that was returned by the search action
  */
 const SearchResult = (props) => {
     const {

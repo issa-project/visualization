@@ -1,14 +1,13 @@
 import React, {useState, useEffect} from 'react';
-import {ButtonGroup, Button, Form, Row, Col, ToggleButton} from "react-bootstrap";
-import ListGroup from 'react-bootstrap/ListGroup';
+import {Button, Form, Row, Col, ListGroup} from "react-bootstrap";
 import axios from "axios";
-import './SearchForm.css';
 import SuggestionEntity from "./SuggestionEntity";
+import SearchEntity from "./SearchEntity";
+import SearchResultsList from "./SearchResultsList";
+import {isEmptyResponse} from "../../Utils";
+import './SearchForm.css';
 
 import {suggestionsMock} from './suggestions.mock';
-import SearchEntity from "./SearchEntity";
-import {isEmptyResponse} from "../../Utils";
-import SearchResult from "./SearchResult";
 
 /**
  * The search form is meant to help a user select entities from a vocabulary (e.g. Agrovoc)
@@ -40,15 +39,6 @@ function SearchForm() {
 
     // Results returned by the last search
     const [searchResults, setSearchResults] = useState([]);
-
-    // Part of the results that is currently displayed (corresponding to the page number)
-    const [searchResultsDisplayed, setSearchResultsDisplayed] = useState([]);
-
-    // Page of results that is currently displayed
-    const [searchResultsPage, setSearchResultsPage] = useState(1);
-
-    // Number of pages of results
-    const [searchResultPageCount, setSearchResultPageCount] = useState(0);
 
 
     /**
@@ -177,36 +167,12 @@ function SearchForm() {
                             results.forEach(e => console.log(e));
                         }
                         setSearchResults(results);
-
-                        // Update the count of pages and display the first page
-                        let count = Math.ceil(results.length / process.env.REACT_APP_RESULT_PAGE_SIZE);
-                        setSearchResultPageCount(count);
-                        setSearchResultsPage(1);
                     }
                 })
             }
         }
         //eslint-disable-next-line
     }, [isLoading]);
-
-
-    /**
-     * Update the results currently displayed.
-     * Invoked whenever a new search is performed, or when a page button is clicked
-     */
-    useEffect(() => {
-        if (searchResults.length === 0) {
-            setSearchResultsDisplayed([]);
-            setSearchResultPageCount(0);
-        } else {
-            const results = searchResults.slice(
-                (searchResultsPage - 1) * process.env.REACT_APP_RESULT_PAGE_SIZE,
-                searchResultsPage * process.env.REACT_APP_RESULT_PAGE_SIZE
-            );
-            setSearchResultsDisplayed(results);
-        }
-        //eslint-disable-next-line
-    }, [searchResults, searchResultsPage]);
 
 
     return (
@@ -275,40 +241,8 @@ function SearchForm() {
 
             { /* ========================================================================================== */}
 
-            { /* Navigation through the result pages */}
-            <div className="navigation-buttons">
-                <span className="">{searchResults.length} result(s).</span>
-                &nbsp;
-
-                <ButtonGroup>
-                    {Array.from({length: searchResultPageCount}, (_, index) => index + 1).map(
-                        (page, index) => (
-                            <ToggleButton key={index} className="navigation-button" variant="outline-secondary"
-                                            type="radio"
-                                            onClick={() => setSearchResultsPage(page)}
-                                            value={page}
-                                            checked={page === searchResultsPage}>
-                                {page}
-                            </ToggleButton>
-                        ))}
-                </ButtonGroup>
-            </div>
-
-            { /* Search results */}
-            <div>
-                <div className="divider-light"/>
-
-                {searchResultsDisplayed.map((_result, index) => (
-                    <SearchResult key={index}
-                                  uri={_result.uri}
-                                  title={_result.title}
-                                  authors={_result.authors}
-                                  date={_result.date}
-                                  publisher={_result.publisher}
-                                  linkPDF={_result.linkPDF}
-                    />
-                ))}
-            </div>
+            { /* Search results and buttons to navigate the pages */}
+            <SearchResultsList searchResults={searchResults}/>
 
         </div>
     );

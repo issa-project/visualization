@@ -9,3 +9,16 @@
 .result-publisher {
     font-style: italic;
 }
+
+.navigation-button {
+    padding: 1px 3px 1px 3px;
+    font-size: 11px;
+    margin-right: 6px;
+    width: 2em;
+}
+
+.navigation-buttons {
+    margin-top: 5px;
+    margin-bottom: 10px;
+    text-align: center;
+}
