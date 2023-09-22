@@ -2,7 +2,7 @@
   "name": "issa-web-visualization",
   "version": "0.1.0",
   "license": "Apache-2.0",
-  "homepage": "/notice/",
+  "homepage": "/search/",
   "repository": "github:issa-project/web-visualization",
   "dependencies": {
     "@testing-library/jest-dom": "^5.11.4",
