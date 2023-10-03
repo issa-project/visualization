@@ -34,6 +34,6 @@
     vertical-align: inherit;
 }
 
-.descriptor-link {
-    color: white;
+.highlight-descriptor:hover {
+    background-color: #7474a6;
 }

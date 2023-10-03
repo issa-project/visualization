@@ -5,9 +5,11 @@ import {useLocation} from 'react-router-dom';
 import EntityHighlight from "./EntityHighlight";
 import axios from "axios";
 import {isEmptyResponse} from '../../Utils';
+import {getClickableEntityLink} from "../../Utils";
 
 // Get the list of KBs that we consider in the named entities and descriptors
 import KB from "../../config/knowledge_bases.json";
+
 
 /**
  * Formats the article's global descriptors (similar to named entities but not referring to a part of the text)
@@ -33,13 +35,8 @@ const Descriptors = () => {
                     if (kb !== undefined) {
                         if (kb.used_for.some(usage => usage === "descriptor")) {
                             _descr.kbName = kb.name;
-                            if (kb.dereferencing_template === undefined) {
-                                descriptors.push(_descr);
-                            } else {
-                                // Rewrite the URI with the template given for that KB
-                                _descr.entityUri = kb.dereferencing_template.replace("{uri}", encodeURIComponent(_descr.entityUri));
-                                descriptors.push(_descr);
-                            }
+                            _descr.entityUri = getClickableEntityLink(_descr.entityUri);
+                            descriptors.push(_descr);
                         }
                     }
                 });

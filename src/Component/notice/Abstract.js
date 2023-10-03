@@ -1,9 +1,10 @@
 import React, {useEffect, useState} from 'react';
-import { useLocation } from 'react-router-dom';
+import {useLocation} from 'react-router-dom';
 import EntityHighlight from "./EntityHighlight";
 import Button from 'react-bootstrap/Button'
 import axios from 'axios';
 import {isEmptyResponse} from '../../Utils';
+import {getClickableEntityLink} from "../../Utils";
 
 // Get the list of KBs that we consider in the named entities and descriptors
 import KB from "../../config/knowledge_bases.json";
@@ -67,13 +68,8 @@ const Abstract = () => {
                     let kb = KB.find(_kb => entity.entityUri.includes(_kb.namespace));
                     if (kb !== undefined) {
                         if (kb.used_for.some(usage => usage === "named_entity")) {
-                            if (kb.dereferencing_template === undefined) {
-                                entities.push(entity);
-                            } else {
-                                // Rewrite the URI with the template given for that KB
-                                entity.entityUri = kb.dereferencing_template.replace("{uri}", encodeURIComponent(entity.entityUri));
-                                entities.push(entity);
-                            }
+                            entity.entityUri = getClickableEntityLink(entity.entityUri);
+                            entities.push(entity);
                         }
                     }
                 });
@@ -223,7 +219,7 @@ const Abstract = () => {
             // Find the knowledge base that the URI comes from to use its name as a badge
             let badge = "";
             KB.forEach(_kb => {
-                    if (e.entityUris[i].includes(_kb.namespace)) {
+                if (e.entityUris[i].includes(_kb.namespace)) {
                     badge = _kb.name;
                 }
             });

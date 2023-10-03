@@ -63,9 +63,12 @@
     border-radius: 15px;
 }
 
-.entity-text {
-    flex-grow: 1; /* Allow the text to expand within the box */
-    color: inherit;
+.entity-box:hover {
+    background-color: #7474a6;
+}
+
+.entity-link {
+    color: white;
 }
 
 .entity-remove-button {

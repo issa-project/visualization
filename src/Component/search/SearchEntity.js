@@ -1,6 +1,6 @@
-import React from 'react';
 import PropTypes from 'prop-types';
 import './SearchForm.css';
+import {getClickableEntityLink} from "../../Utils";
 
 const SearchEntity = (props) => {
     const {
@@ -11,9 +11,14 @@ const SearchEntity = (props) => {
         handleRemove
     } = props;
 
+
     return (
         <div className="entity-box" key={id}>
-            <div className="entity-text">{entityLabel}</div>
+            <div>
+                <a className="entity-link" href={getClickableEntityLink(entityUri)} target="_external_entity">
+                    {entityLabel}
+                </a>
+            </div>
             <button className="entity-remove-button" onClick={() => handleRemove(id)}>
                 &times;
             </button>
