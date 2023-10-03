@@ -4,10 +4,10 @@ import {LiaRobotSolid} from "react-icons/lia";
 import {useLocation} from 'react-router-dom';
 import EntityHighlight from "./EntityHighlight";
 import axios from "axios";
-import {isEmptyResponse} from '../Utils';
+import {isEmptyResponse} from '../../Utils';
 
 // Get the list of KBs that we consider in the named entities and descriptors
-import KB from "../config/knowledge_bases.json";
+import KB from "../../config/knowledge_bases.json";
 
 /**
  * Formats the article's global descriptors (similar to named entities but not referring to a part of the text)

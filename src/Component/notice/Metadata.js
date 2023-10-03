@@ -1,10 +1,10 @@
 import React, {useEffect, useState} from 'react';
 import { useLocation } from 'react-router-dom';
 import axios from 'axios';
-import {isEmptyResponse} from '../Utils';
+import {isEmptyResponse} from '../../Utils';
 
 import './Metadata.css';
-import fileIcon from './images/file_icon.png';
+import fileIcon from '../images/file_icon.png';
 
 
 /**

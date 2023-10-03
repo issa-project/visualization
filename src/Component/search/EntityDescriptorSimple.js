@@ -42,7 +42,7 @@ const EntityDescriptorSimple = (props) => {
 }
 
 EntityDescriptorSimple.propTypes = {
-    id: PropTypes.string.isRequired,
+    id: PropTypes.number.isRequired,
     label: PropTypes.string.isRequired,
     link: PropTypes.string.isRequired
 }

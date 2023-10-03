@@ -7,7 +7,7 @@ import iconShadow from 'leaflet/dist/images/marker-shadow.png';
 import axios from 'axios';
 import React from "react";
 import { useLocation } from 'react-router-dom';
-import {isEmptyResponse} from "../Utils";
+import {isEmptyResponse} from "../../Utils";
 
 const MapComponent = () => {
 
