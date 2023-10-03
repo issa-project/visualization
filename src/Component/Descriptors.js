@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
-import { BsFillPersonFill } from "react-icons/bs";
-import { LiaRobotSolid } from "react-icons/lia";
-import { useLocation } from 'react-router-dom';
+import {BsFillPersonFill} from "react-icons/bs";
+import {LiaRobotSolid} from "react-icons/lia";
+import {useLocation} from 'react-router-dom';
 import EntityHighlight from "./EntityHighlight";
 import axios from "axios";
 import {isEmptyResponse} from '../Utils';
@@ -14,7 +14,8 @@ import KB from "../config/knowledge_bases.json";
  */
 const Descriptors = () => {
 
-    const [listDescriptor, setListDescriptor] = useState('');
+    const [listDescriptor, setListDescriptor] = useState([]);
+
     const articleUri = new URLSearchParams(useLocation().search).get("uri");
 
     useEffect(() => {
@@ -27,17 +28,17 @@ const Descriptors = () => {
                 let descriptors = [];
 
                 // Filter out the URIs that are not in one of the accepted knowledge bases
-                response.data.result.forEach(entity => {
-                    let kb = KB.find(_kb => entity.entityUri.includes(_kb.namespace));
+                response.data.result.forEach(_descr => {
+                    let kb = KB.find(_kb => _descr.entityUri.includes(_kb.namespace));
                     if (kb !== undefined) {
                         if (kb.used_for.some(usage => usage === "descriptor")) {
-                            entity.kbName = kb.name;
+                            _descr.kbName = kb.name;
                             if (kb.dereferencing_template === undefined) {
-                                descriptors.push(entity);
+                                descriptors.push(_descr);
                             } else {
                                 // Rewrite the URI with the template given for that KB
-                                entity.entityUri = kb.dereferencing_template.replace("{uri}", encodeURIComponent(entity.entityUri));
-                                descriptors.push(entity);
+                                _descr.entityUri = kb.dereferencing_template.replace("{uri}", encodeURIComponent(_descr.entityUri));
+                                descriptors.push(_descr);
                             }
                         }
                     }
@@ -95,20 +96,16 @@ const Descriptors = () => {
     // ------------------------------------------------------------------------
 
     let thematicDescriptors = [];
-    for (let i = 0; i < listDescriptor.length; i++) {
-        if (listDescriptor[i].isGeographicalDescriptor === undefined)
-            wrap("word-desc-" + i, listDescriptor[i], thematicDescriptors);
-        else {
-            if (listDescriptor[i].isGeographicalDescriptor === 0)
-                wrap("word-desc-" + i, listDescriptor[i], thematicDescriptors);
-        }
-    }
+    listDescriptor.forEach((_descr, _index) => {
+        if (_descr.isGeographicalDescriptor === undefined || _descr.isGeographicalDescriptor === 0)
+            wrap("word-desc-" + _index, _descr, thematicDescriptors);
+    });
 
     let geographicDescriptors = [];
-    for (let i = 0; i < listDescriptor.length; i++) {
-        if (listDescriptor[i].isGeographicalDescriptor === 1)
-            wrap("word-desc-" + i, listDescriptor[i], geographicDescriptors);
-    }
+    listDescriptor.forEach((_descr, _index) => {
+        if (_descr.isGeographicalDescriptor === 1)
+            wrap("word-desc-" + _index, _descr, geographicDescriptors);
+    });
 
     let result = [];
     if (thematicDescriptors.length > 0)
@@ -132,10 +129,13 @@ const Descriptors = () => {
             </div>
         );
 
-    return <div>
-        <div className="component">
-            {result}
+    return (
+        <div>
+            <div className="component">
+                {result}
+            </div>
         </div>
-    </div>
+    )
 };
+
 export default Descriptors;
