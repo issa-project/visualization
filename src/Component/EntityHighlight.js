@@ -22,18 +22,18 @@ const EntityHighlight = (props) => {
 
     const toggle = () => setPopoverOpen(!popoverOpen);
 
-    let result = []
+    let icon = []
     if (props.icons !== undefined) {
         if (props.icons.includes("human"))
-            result.push(<BsFillPersonFill/>);
+            icon.push(<BsFillPersonFill/>);
         if (props.icons.includes("computed"))
-            result.push(<LiaRobotSolid/>);
+            icon.push(<LiaRobotSolid/>);
     }
 
     return (
         <span className="entity">
             <Button id={props.id} type="button" className="btn highlight-entity">
-                {props.word} {result}
+                {props.word} {icon}
             </Button>
             <Popover placement="auto" isOpen={popoverOpen} target={props.id} toggle={toggle}>
                 <PopoverHeader> {props.title} </PopoverHeader>

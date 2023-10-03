@@ -52,7 +52,6 @@ const SearchResultsList = (props) => {
             resultPage * process.env.REACT_APP_RESULT_PAGE_SIZE
         );
         setResultsDisplayed(results);
-
         //eslint-disable-next-line
     }, [resultPage,searchResults]);
 
@@ -89,6 +88,7 @@ const SearchResultsList = (props) => {
                                   date={_result.date}
                                   publisher={_result.publisher}
                                   linkPDF={_result.linkPDF}
+                                  matchedEntities={_result.matchedEntities}
                     />
                 ))}
             </div>

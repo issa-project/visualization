@@ -17,10 +17,13 @@ const SearchResult = (props) => {
         date,
         publisher,
         lang,
-        linkPDF
+        linkPDF,
+        matchedEntities
     } = props;
 
     const [firstAuthors, setFirstAuthors] = useState('');
+
+    const [matchedEntitiesDisplay, setMatchedEntitiesDisplay] = useState('');
 
     // Limit the number of authors displayed
     const maxAuthors = 3;
@@ -31,19 +34,36 @@ const SearchResult = (props) => {
      */
     useEffect(() => {
         let _firstAuthors = "";
-        let _firstAuthorsArr = authors.split('$');
-        _firstAuthorsArr.forEach((_a, _index) => {
+        authors.forEach((_a, _index) => {
             if (_index === 0)
                 _firstAuthors = _a;
             else if (_index < maxAuthors) {
                 _firstAuthors += ', ' + _a;
             }
         })
-        if (_firstAuthorsArr.length > maxAuthors) {
+        if (authors.length > maxAuthors) {
             _firstAuthors += ' [...]';
         }
         setFirstAuthors(_firstAuthors);
     }, [authors]);
+
+
+    /**
+     * Format the list of matched entities
+     */
+    useEffect(() => {
+        let _matchedEntitiesDisplay = "";
+        if (matchedEntities !== undefined) {
+            matchedEntities.forEach((_a, _index) => {
+    console.log('entity: ' + _a.entityLabel);
+                if (_index === 0)
+                    _matchedEntitiesDisplay = _a.entityLabel;
+                else
+                    _matchedEntitiesDisplay += ', ' + _a.entityLabel;
+            })
+        }
+        setMatchedEntitiesDisplay(_matchedEntitiesDisplay);
+    }, [matchedEntities]);
 
 
     return (
@@ -54,6 +74,7 @@ const SearchResult = (props) => {
                     <span className="result-authors">{firstAuthors}.&nbsp;</span>
                     <span className="">{date}.&nbsp;</span>
                     <span className="fst-italic">{publisher}. </span>
+                    <span className="">{matchedEntitiesDisplay}</span>
                 </Col>
                 <Col xs={1} className="fs-5">
                     <Link className="a_icons" to={"/notice?uri=" + document}
@@ -70,11 +91,12 @@ const SearchResult = (props) => {
 SearchResult.propTypes = {
     document: PropTypes.string.isRequired,
     title: PropTypes.string.isRequired,
-    authors: PropTypes.string,
+    authors: PropTypes.array,
     date: PropTypes.string,
     publisher: PropTypes.string,
     lang: PropTypes.string,
-    linkPDF: PropTypes.string
+    linkPDF: PropTypes.string,
+    matchedEntities: PropTypes.array
 }
 
 export default SearchResult;

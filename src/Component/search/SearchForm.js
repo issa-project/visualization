@@ -171,7 +171,7 @@ function SearchForm() {
                         let _results = response.data.result;
                         if (process.env.REACT_APP_LOG === "on") {
                             console.log("------------------------- Retrieved " + _results.length + " search results.");
-                            //results.forEach(e => console.log(e));
+                            //_results.forEach(e => console.log(e));
                         }
                         setSearchResults(_results);
                     }
@@ -198,7 +198,7 @@ function SearchForm() {
                 let _results = response.data.result;
                 if (process.env.REACT_APP_LOG === "on") {
                     console.log("------------------------- Retrieved " + _results.length + " search results.");
-                    //results.forEach(e => console.log(e));
+                    //_results.forEach(e => console.log(e));
                 }
 
                 // Filter the results to keep only those documents that were not in the first set of results (with exact match)
@@ -228,7 +228,7 @@ function SearchForm() {
                 let _results = response.data.result;
                 if (process.env.REACT_APP_LOG === "on") {
                     console.log("------------------------- Retrieved " + _results.length + " search results.");
-                    //results.forEach(e => console.log(e));
+                    //_results.forEach(e => console.log(e));
                 }
 
                 // Filter the results to keep only those documents that were not in the previous sets of results
