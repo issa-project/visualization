@@ -312,7 +312,6 @@ function SearchForm() {
 
             {
                 searchResults.length !== 0 ?
-
                     <div className="component">
                         { /* Search results and buttons to navigate the pages */}
                         <div className="content_header">Results matching only the selected descriptors</div>

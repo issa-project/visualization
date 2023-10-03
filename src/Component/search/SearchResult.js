@@ -1,10 +1,11 @@
 import PropTypes from 'prop-types';
+import React, {useEffect, useState} from "react";
 import {Link} from "react-router-dom";
 import {Col, Row} from "react-bootstrap";
 import {BiDownload} from "react-icons/bi";
 import {HiOutlineDocumentMagnifyingGlass} from "react-icons/hi2";
+import EntityDescriptorSimple from "./EntityDescriptorSimple";
 import './SearchResult.css';
-import {useEffect, useState} from "react";
 
 /**
  * Represent a single article that was returned by the search action
@@ -23,7 +24,7 @@ const SearchResult = (props) => {
 
     const [firstAuthors, setFirstAuthors] = useState('');
 
-    const [matchedEntitiesDisplay, setMatchedEntitiesDisplay] = useState('');
+    const [matchedEntitiesDisplay, setMatchedEntitiesDisplay] = useState([]);
 
     // Limit the number of authors displayed
     const maxAuthors = 3;
@@ -52,17 +53,18 @@ const SearchResult = (props) => {
      * Format the list of matched entities
      */
     useEffect(() => {
-        let _matchedEntitiesDisplay = "";
+        let _entities = [];
         if (matchedEntities !== undefined) {
-            matchedEntities.forEach((_a, _index) => {
-    console.log('entity: ' + _a.entityLabel);
-                if (_index === 0)
-                    _matchedEntitiesDisplay = _a.entityLabel;
-                else
-                    _matchedEntitiesDisplay += ', ' + _a.entityLabel;
-            })
+            matchedEntities.forEach((_e, _id) => {
+                _entities.push(
+                    <EntityDescriptorSimple
+                        id={_id}
+                        label={_e.entityLabel}
+                        link={_e.entityUri}
+                    />)
+            });
         }
-        setMatchedEntitiesDisplay(_matchedEntitiesDisplay);
+        setMatchedEntitiesDisplay(_entities);
     }, [matchedEntities]);
 
 
@@ -70,11 +72,11 @@ const SearchResult = (props) => {
         <div>
             <Row className="result align-items-center">
                 <Col xs={11}>
+                    <div className="">{matchedEntitiesDisplay}</div>
                     <span className="result-title">{title}.&nbsp;</span>
                     <span className="result-authors">{firstAuthors}.&nbsp;</span>
                     <span className="">{date}.&nbsp;</span>
-                    <span className="fst-italic">{publisher}. </span>
-                    <span className="">{matchedEntitiesDisplay}</span>
+                    <span className="fst-italic">{publisher !== undefined ? publisher + '.' : ''} </span>
                 </Col>
                 <Col xs={1} className="fs-5">
                     <Link className="a_icons" to={"/notice?uri=" + document}

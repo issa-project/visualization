@@ -88,7 +88,7 @@ const SearchResultsList = (props) => {
                                   date={_result.date}
                                   publisher={_result.publisher}
                                   linkPDF={_result.linkPDF}
-                                  matchedEntities={_result.matchedEntities}
+                                  matchedEntities={_result.matchedEntities !== undefined ? _result.matchedEntities : []}
                     />
                 ))}
             </div>
