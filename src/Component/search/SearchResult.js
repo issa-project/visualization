@@ -58,6 +58,7 @@ const SearchResult = (props) => {
             matchedEntities.forEach((_e, _id) => {
                 _entities.push(
                     <EntityDescriptorSimple
+                        key={_id}
                         id={_id}
                         label={_e.entityLabel}
                         link={_e.entityUri}

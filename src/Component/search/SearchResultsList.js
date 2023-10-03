@@ -53,7 +53,7 @@ const SearchResultsList = (props) => {
         );
         setResultsDisplayed(results);
         //eslint-disable-next-line
-    }, [resultPage,searchResults]);
+    }, [resultPage, searchResults]);
 
 
     return (
