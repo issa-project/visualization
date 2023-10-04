@@ -1,11 +1,11 @@
 import React from 'react';
 import './Footer.css';
 
-import logo_inria from './images/logo_inria.png'
-import logo_uca from './images/logo_uca.png'
-import logo_cnrs from './images/logo_cnrs.png'
-import logo_mines from './images/logo_mines.png'
-import logo_cirad from './images/logo_cirad.png'
+import logo_inria from '../images/logo_inria.png'
+import logo_uca from '../images/logo_uca.png'
+import logo_cnrs from '../images/logo_cnrs.png'
+import logo_mines from '../images/logo_mines.png'
+import logo_cirad from '../images/logo_cirad.png'
 
 const Footer = () => (
     <div className="panelFooter">

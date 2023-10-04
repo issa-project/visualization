@@ -6,14 +6,14 @@ import reportWebVitals from './reportWebVitals';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './index.css';
 
-import App from './App';
-import Search from './Search';
+import Notice from './Component/notice/Notice';
+import Search from './Component/search/Search';
 
 ReactDOM.render(
     <React.StrictMode>
         <Router>
             <Routes>
-                <Route path="notice" element={<App/>} />
+                <Route path="notice" element={<Notice/>} />
                 <Route path="search" element={<Search/>} />
             </Routes>
         </Router>

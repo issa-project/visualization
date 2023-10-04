@@ -52,7 +52,7 @@ function SearchForm() {
         if (input.length < process.env.REACT_APP_MIN_SIZE_FOR_AUTOCOMPLETE) {
             setSuggestions([]);
         } else {
-            if (process.env.REACT_APP_USE_MOCK_SEARCH_SERVICE === "true") {
+            if (process.env.REACT_APP_USE_MOCK_AUTOCOMPLETE_SERVICE === "true") {
 
                 // -----------------------------------------------
                 // Use a mock suggestion service for tests
