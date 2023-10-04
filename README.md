@@ -46,3 +46,10 @@ See the [LICENSE file](LICENSE).
 ## Cite this work
 
 Franck MICHEL, Youssef MEKOUAR, ISSA Project (2022). ISSA visualization web application. https://github.com/issa-project/web-visualization/.
+
+
+## Publications
+
+ISSA: Generic Pipeline, Knowledge Model and Visualization tools to Help Scientists Search and Make Sense of a Scientific Archive.
+Anne Toulet, Franck Michel, Anna Bobasheva, Aline Menin, Sébastien Dupré, Marie-Claude Deboin, Marco Winckler, Andon Tchechmedjiev.
+_21st International Semantic Web Conference (ISWC)_, Oct 2022, Hangzhou, China. DOI: [⟨10.1007/978-3-031-19433-7_38⟩](https://dx.doi.org/10.1007/978-3-031-19433-7_38). [HAL](https://hal.science/hal-03807744)

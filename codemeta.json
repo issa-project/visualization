@@ -11,6 +11,7 @@
   "description": "The ISSA project (https://issa.cirad.fr/) focuses on the semantic indexing of scientific publications in an open archive. This project is a React-based web application meant to search articles from the ISSA knowledge base, and provide a visualization of their metadata.",
   "funding": "ISSA project",
   "developmentStatus": "active",
+  "referencePublication": "https://hal.science/hal-03807744",
   "isPartOf": "https://issa.cirad.fr/",
   "funder": {
     "@type": "Organization",
