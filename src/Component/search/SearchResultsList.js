@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from 'react';
 import PropTypes from 'prop-types';
-import {ButtonGroup, ToggleButton} from "react-bootstrap";
 import SearchResult from "./SearchResult";
 import ReactPaginate from "react-paginate";
 import './SearchResult.css';
@@ -71,7 +70,6 @@ const SearchResultsList = (props) => {
                     breakLabel="..."
                     nextLabel=">"
                     previousLabel="<"
-
                     containerClassName={'navigation-buttons-group'}
                     pageClassName={'navigation-button'}
                     activeClassName={'navigation-button navigation-button-active'}
