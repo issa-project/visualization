@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 import PropTypes from 'prop-types';
 import {ButtonGroup, ToggleButton} from "react-bootstrap";
 import SearchResult from "./SearchResult";
+import ReactPaginate from "react-paginate";
 import './SearchResult.css';
 
 /**
@@ -59,21 +60,25 @@ const SearchResultsList = (props) => {
     return (
         <div>
             { /* Buttons to navigate through the result pages */}
-            <div className="navigation-buttons">
-                <span className="">{searchResults.length} result(s).</span> &nbsp;
+            <div className="navigation-section">
+                <div className="">{searchResults.length} result(s).</div>
+                <ReactPaginate
+                    pageCount={resultPageCount}
+                    pageRangeDisplayed={5}
+                    marginPagesDisplayed={1}
+                    onPageChange={(event) => setResultPage(event.selected + 1)}
+                    renderOnZeroPageCount={null}
+                    breakLabel="..."
+                    nextLabel=">"
+                    previousLabel="<"
 
-                <ButtonGroup>
-                    {Array.from({length: resultPageCount}, (_, index) => index + 1).map(
-                        (page, index) => (
-                            <ToggleButton key={index} className="navigation-button" variant="outline-secondary"
-                                          type="radio"
-                                          checked={page === resultPage}
-                                          value={page}
-                                          onClick={() => setResultPage(page)}>
-                                {page}
-                            </ToggleButton>
-                        ))}
-                </ButtonGroup>
+                    containerClassName={'navigation-buttons-group'}
+                    pageClassName={'navigation-button'}
+                    activeClassName={'navigation-button navigation-button-active'}
+                    nextClassName={'navigation-button'}
+                    previousClassName={'navigation-button'}
+                    breakClassName={'navigation-button'}
+                />
             </div>
 
             { /* Show the current page of search results */}

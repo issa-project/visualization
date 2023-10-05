@@ -49,13 +49,6 @@ const SuggestionEntity = (props) => {
         <ListGroup.Item key={id} className="suggestion-item" action variant="light"
                         onClick={() => handleSelect(id)}>
 
-            { /* formatLabel(entityLabel, input).map((token, index) => {
-                    if (token === input.toLowerCase())
-                        return <span key={index} className="suggestion-item-highlight">{token}</span>;
-                    else
-                        return <span key={index}>{token}</span>;
-                }
-            ) */ }
             <span>{entityLabel}</span>
             &nbsp;
             <span className={"suggestion-pref-label"}>{entityPrefLabel}</span>

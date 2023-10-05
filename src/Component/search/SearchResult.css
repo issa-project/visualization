@@ -10,18 +10,37 @@
     font-style: italic;
 }
 
+
+.navigation-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.navigation-buttons-group {
+    display: flex;
+    padding: unset;
+    margin-top: 5px;
+    margin-bottom: 10px;
+}
+
 .navigation-button {
+    border-radius: 5px;
+    text-align: center;
+    list-style-type: none;
     padding: 1px 3px 1px 3px;
     font-size: 11px;
     margin-right: 6px;
-    width: 2em;
+    min-width: 2em;
+    color: rgb(108, 117, 125);
+    border: solid 1px;
 }
 
-.navigation-buttons {
-    margin-top: 5px;
-    margin-bottom: 10px;
-    text-align: center;
+.navigation-button-active {
+    color: white;
+    background-color: #6c757d;
 }
+
 
 .highlight-descriptor {
     padding: 2px;
