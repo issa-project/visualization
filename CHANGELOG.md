@@ -1,4 +1,6 @@
-# ISSA Visualization front-end application
+## [Current]
+
+- Add loading spinners in the serach page
 
 ## [1.1] 2023-10-04
 
