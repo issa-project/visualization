@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {BrowserRouter as Router, Routes, Route} from 'react-router-dom';
+import {BrowserRouter as Router, Navigate, Route, Routes} from 'react-router-dom';
 import reportWebVitals from './reportWebVitals';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -13,6 +13,7 @@ ReactDOM.render(
     <React.StrictMode>
         <Router>
             <Routes>
+                <Route path="/" element={<Navigate to="/search"/>}/>
                 <Route path="notice" element={<Notice/>}/>
                 <Route path="search" element={<Search/>}/>
             </Routes>
