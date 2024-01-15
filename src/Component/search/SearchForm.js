@@ -113,9 +113,15 @@ function SearchForm() {
         }
 
         // if (e.key === 'Enter' && input.trim() !== '') {
-        //     // @TODO - possible to use the arrows to navigate the suggestions and enter to select one?
         //     setInput('');
         //     setSuggestions([]); // Clear suggestions when an item is added
+        // }
+
+        // if (e.key === 'ArrowDown' ) {
+        //     // use the arrows to navigate the suggestions and enter to select one
+        // }
+        // if (e.key === 'ArrowUp' ) {
+        //     // use the arrows to navigate the suggestions and enter to select one
         // }
     };
 
@@ -290,6 +296,7 @@ function SearchForm() {
                                               value={input}
                                               onChange={(e) => setInput(e.target.value)}
                                               onKeyUp={handleInputKeyUp}
+                                              autoFocus
                                 />
                             </Col>
                             <Col xs={2}>
