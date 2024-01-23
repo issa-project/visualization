@@ -21,7 +21,7 @@
 
 .search-switch {
     padding: 5px;
-    font-size: 14px;
+    font-size: 13px;
     color: grey;
     margin: 0px 10px 0px 10px;
 }
@@ -51,6 +51,7 @@
 .entity-list {
     display: flex;
     flex-wrap: wrap;
+    margin-top: 10px;
 }
 
 .entity-box {
