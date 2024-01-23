@@ -19,6 +19,7 @@ const SuggestionEntity = (props) => {
         entityUri,          // the URI of the entity/concept corresponding to the label
         entityPrefLabel,    // optional preferred label in case entityLabel is an alternate label
         entityCount,        // the number of documents that are annotated with this entity/concept
+        entityType,         // where that entity comes from
         handleSelect
     } = props;
 
@@ -48,13 +49,13 @@ const SuggestionEntity = (props) => {
 
     return (
         <ListGroup.Item key={id} className="suggestion-item" action variant="light" onClick={() => handleSelect(id)}>
-
-            <span>{entityLabel}</span>
+           <span>{entityLabel.length <= 30 ? entityLabel : entityLabel.substring(0,30) + '(...)'}</span>
             &nbsp;
             <span className={"suggestion-pref-label"}>{entityPrefLabel}</span>
             &nbsp;
+            <span className={"suggestion-pref-label"}>[{entityType}]</span>
+            &nbsp;
             <Badge bg="secondary">{entityCount}</Badge>
-
         </ListGroup.Item>
     );
 }
@@ -66,6 +67,7 @@ SuggestionEntity.propTypes = {
     entityUri: PropTypes.string.isRequired,
     entityPrefLabel: PropTypes.string,
     entityCount: PropTypes.string,
+    entityType: PropTypes.string.isRequired,
     handleSelect: PropTypes.func.isRequired
 }
 

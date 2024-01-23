@@ -148,7 +148,8 @@ function SearchForm() {
         let newEntity = {
             entityLabel: suggestions[index].entityLabel,
             entityUri: suggestions[index].entityUri,
-            entityPrefLabel: '(' + suggestions[index].entityPrefLabel + ')'
+            entityPrefLabel: '(' + suggestions[index].entityPrefLabel + ')',
+            entityType: suggestions[index].entityType
         };
         setSearchEntities([...searchEntities, newEntity]);
         setInput('');
@@ -357,6 +358,7 @@ function SearchForm() {
                                                       entityLabel={suggestion.entityLabel}
                                                       entityUri={suggestion.entityUri}
                                                       entityPrefLabel={suggestion.entityPrefLabel}
+                                                      entityType={suggestion.entityType}
                                                       entityCount={suggestion.count}
                                                       handleSelect={handleSelectSuggestion}
                                     />
@@ -372,6 +374,7 @@ function SearchForm() {
                                           entityLabel={entity.entityLabel}
                                           entityUri={entity.entityUri}
                                           entityPrefLabel={entity.entityPrefLabel}
+                                          entityType={entity.entityType}
                                           handleRemove={handleRemoveEntity}
                             />
                         ))}
