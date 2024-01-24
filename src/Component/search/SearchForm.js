@@ -311,8 +311,9 @@ function SearchForm() {
                                     <Form.Switch
                                         inline
                                         id="switch-agrovoc-descr"
-                                        label="Agrovoc descriptors"
                                         className="search-switch"
+                                        style={{color: "#7474a6"}}
+                                        label="Agrovoc descriptors"
                                         checked={switchAgrovocDescr}
                                         onChange={toggleSwitchAgrovocDescr}
                                     />
@@ -321,8 +322,9 @@ function SearchForm() {
                                     <Form.Switch
                                         inline
                                         id="switch-wikidata-ne"
-                                        label="Wikidata named entites"
                                         className="search-switch"
+                                        style={{color: "#6f948c"}}
+                                        label="Wikidata named entites"
                                         checked={switchWikidataNE}
                                         onChange={toggleSwitchWikidata}
                                     />
