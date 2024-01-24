@@ -25,18 +25,6 @@
     "used_for": [ "named_entity", "descriptor" ]
   },
   {
-    "name": "NCBITaxon",
-    "namespace": "purl.bioontology.org/ontology/NCBITAXON",
-    "endpoint": "http://sparql.bioontology.org/",
-    "used_for": [ "named_entity", "descriptor" ]
-  },
-  {
-    "name": "Schema.org",
-    "namespace": "schema.org",
-    "endpoint": "",
-    "used_for": [ "named_entity", "descriptor" ]
-  },
-  {
     "name": "Geonames",
     "namespace": "sws.geonames.org/",
     "endpoint": "https://data-issa.cirad.fr/sparql",

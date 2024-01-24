@@ -4,7 +4,7 @@ import {RotatingLines} from 'react-loader-spinner'
 import axios from "axios";
 import SuggestionEntity from "./SuggestionEntity";
 import SearchEntity from "./SearchEntity";
-import SearchResultsList from "./SearchResultsList";
+import SearchResultsList from "./result/SearchResultsList";
 import {isEmptyResponse} from "../../Utils";
 import './SearchForm.css';
 
@@ -77,9 +77,9 @@ function SearchForm() {
 
                 let entityTypes = [];
                 if (switchAgrovocDescr)
-                    entityTypes.push("agrovocdescr");
+                    entityTypes.push("Agrovoc");
                 if (switchWikidataNE)
-                    entityTypes.push("wikidata");
+                    entityTypes.push("Wikidata");
 
                 let query = process.env.REACT_APP_BACKEND_URL + `/autoComplete/?input=${input}`;
                 if (entityTypes.length === 0)
@@ -213,7 +213,7 @@ function SearchForm() {
                 setLoadingExactMatch(false);
                 setSearchResultsExactMatch([]);
             } else {
-                let query = process.env.REACT_APP_BACKEND_URL + "/searchDocumentsByDescriptor/?uri=" + searchEntities.map(_s => _s.entityUri).join(',');
+                let query = process.env.REACT_APP_BACKEND_URL + "/searchDocumentByConcept/?uri=" + searchEntities.map(_s => _s.entityUri).join(',');
                 if (process.env.REACT_APP_LOG === "on") {
                     console.log("Will submit backend query: " + query);
                 }
@@ -241,7 +241,7 @@ function SearchForm() {
      * Started after getting the exact match results.
      */
     useEffect(() => {
-        let query = process.env.REACT_APP_BACKEND_URL + "/searchDocumentsByDescriptorSubConcept/?uri=" + searchEntities.map(_s => _s.entityUri).join(',');
+        let query = process.env.REACT_APP_BACKEND_URL + "/searchDocumentBySubConcept/?uri=" + searchEntities.map(_s => _s.entityUri).join(',');
         if (process.env.REACT_APP_LOG === "on") {
             console.log("Will submit backend query: " + query);
         }
@@ -272,7 +272,7 @@ function SearchForm() {
      * Started after getting the exact match results.
      */
     useEffect(() => {
-        let query = process.env.REACT_APP_BACKEND_URL + "/searchDocumentsByDescriptorRelated/?uri=" + searchEntities.map(_s => _s.entityUri).join(',');
+        let query = process.env.REACT_APP_BACKEND_URL + "/searchDocumentByRelatedConcept/?uri=" + searchEntities.map(_s => _s.entityUri).join(',');
         if (process.env.REACT_APP_LOG === "on") {
             console.log("Will submit backend query: " + query);
         }

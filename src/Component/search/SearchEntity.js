@@ -13,7 +13,7 @@ const SearchEntity = (props) => {
     } = props;
 
     let classes = "entity-box ";
-    if (entityType === "Agrovoc descriptor")
+    if (entityType === "Agrovoc")
         classes += "entity-box-bg1";
     else if (entityType === "Wikidata")
         classes += "entity-box-bg3";

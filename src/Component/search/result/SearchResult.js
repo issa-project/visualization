@@ -4,7 +4,7 @@ import {Link} from "react-router-dom";
 import {Col, Row} from "react-bootstrap";
 import {BiDownload} from "react-icons/bi";
 import {HiOutlineDocumentMagnifyingGlass} from "react-icons/hi2";
-import EntityDescriptorSimple from "./EntityDescriptorSimple";
+import EntityMatched from "./EntityMatched";
 import './SearchResult.css';
 
 /**
@@ -57,11 +57,12 @@ const SearchResult = (props) => {
         if (matchedEntities !== undefined) {
             matchedEntities.forEach((_e, _id) => {
                 _entities.push(
-                    <EntityDescriptorSimple
+                    <EntityMatched
                         key={_id}
                         id={_id}
                         label={_e.entityLabel}
                         link={_e.entityUri}
+                        type={_e.entityType}
                     />)
             });
         }

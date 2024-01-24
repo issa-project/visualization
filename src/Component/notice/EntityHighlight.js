@@ -5,7 +5,7 @@ import {BsFillPersonFill} from "react-icons/bs";
 import {LiaRobotSolid} from "react-icons/lia";
 
 import './EntityHighlight.css';
-import SearchResult from "../search/SearchResult";
+import SearchResult from "../search/result/SearchResult";
 
 /**
  * Highlighted text span with a pop-over.

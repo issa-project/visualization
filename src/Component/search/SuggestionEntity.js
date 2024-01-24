@@ -24,6 +24,13 @@ const SuggestionEntity = (props) => {
     } = props;
 
     /**
+     * Maximum length of the labels to be displayed.
+     * If longer than this, the label is cut and terminated "(...)"
+     * @type {number}
+     */
+    const LABEL_MAX_LENGTH = 30;
+
+    /**
      * Split the entity label in pieces separated by the value of the current input.
      * Example: if the label is "banana supply chain" and input is "anan", then the result is:
      * [ "b", "anan", "a supply chain" ]
@@ -49,7 +56,7 @@ const SuggestionEntity = (props) => {
 
     return (
         <ListGroup.Item key={id} className="suggestion-item" action variant="light" onClick={() => handleSelect(id)}>
-           <span>{entityLabel.length <= 30 ? entityLabel : entityLabel.substring(0,30) + '(...)'}</span>
+            <span>{entityLabel.length <= LABEL_MAX_LENGTH ? entityLabel : entityLabel.substring(0, LABEL_MAX_LENGTH) + '(...)'}</span>
             &nbsp;
             <span className={"suggestion-pref-label"}>{entityPrefLabel}</span>
             &nbsp;
