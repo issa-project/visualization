@@ -156,6 +156,9 @@ function SearchForm() {
         setSearchEntities([...searchEntities, newEntity]);
         setInput('');
         setSuggestions([]);
+
+        // Reset the focus on the input field to avoid having to click again on it before continuing to type
+        inputRef.current.focus();
     };
 
     /**
@@ -173,6 +176,9 @@ function SearchForm() {
             if (newEntities.length === 0)
                 console.log("Removed all entities.");
         }
+
+        // Reset the focus on the input field to avoid having to click again on it before continuing to type
+        inputRef.current.focus();
     };
 
 
