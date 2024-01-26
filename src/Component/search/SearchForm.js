@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {Button, Card, Col, Form, ListGroup, Row} from "react-bootstrap";
 import {RotatingLines} from 'react-loader-spinner'
 import axios from "axios";
@@ -36,6 +36,8 @@ function SearchForm() {
 
     // Term typed in the input field
     const [input, setInput] = useState('');
+    // Reference to the input field so that we can move the focus on it when needed
+    const inputRef = useRef(null);
 
     // Search entities already selected
     const [searchEntities, setSearchEntities] = useState([]);
@@ -179,6 +181,9 @@ function SearchForm() {
         // If unchecked, then the other must be checked
         if (!switchWikidataNE)
             setSwitchWikidataNE(true);
+
+        // Reset the focus on the input field to avoid having to click again on it before continuing to type
+        inputRef.current.focus();
     }
 
     const toggleSwitchWikidata = () => {
@@ -186,6 +191,9 @@ function SearchForm() {
         // If unchecked, then the other must be checked
         if (!switchAgrovocDescr)
             setSwitchAgrovocDescr(true);
+
+        // Reset the focus on the input field to avoid having to click again on it before continuing to type
+        inputRef.current.focus();
     }
 
     /**
@@ -224,7 +232,7 @@ function SearchForm() {
                     } else {
                         let _results = response.data.result;
                         if (process.env.REACT_APP_LOG === "on") {
-                            console.log("------------------------- Retrieved " + _results.length + " search results.");
+                            console.log("------------------------- Retrieved " + _results.length + " search results for exact match.");
                             //_results.forEach(e => console.log(e));
                         }
                         setSearchResultsExactMatch(_results);
@@ -252,7 +260,7 @@ function SearchForm() {
             } else {
                 let _results = response.data.result;
                 if (process.env.REACT_APP_LOG === "on") {
-                    console.log("------------------------- Retrieved " + _results.length + " search results.");
+                    console.log("------------------------- Retrieved " + _results.length + " search results for sub-concepts.");
                     //_results.forEach(e => console.log(e));
                 }
 
@@ -283,7 +291,7 @@ function SearchForm() {
             } else {
                 let _results = response.data.result;
                 if (process.env.REACT_APP_LOG === "on") {
-                    console.log("------------------------- Retrieved " + _results.length + " search results.");
+                    console.log("------------------------- Retrieved " + _results.length + " search results for related concepts.");
                     //_results.forEach(e => console.log(e));
                 }
 
@@ -341,6 +349,7 @@ function SearchForm() {
                                                   onChange={(e) => setInput(e.target.value)}
                                                   onKeyUp={handleInputKeyUp}
                                                   autoFocus
+                                                  ref={inputRef}
                                     />
                                 </Col>
                                 <Col>
